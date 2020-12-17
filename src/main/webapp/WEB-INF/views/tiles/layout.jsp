@@ -7,20 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>로얄감자몰</title>
-<style type="text/css">
 
-
-section{
-	height: 400px;
-	background-color: pink;
-}
-
-footer{
-	height: 150px;
-	background-color: skyblue;
-}
-</style>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/rpmall.css">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -32,14 +20,10 @@ footer{
 
 </head>
 <body>
-	<header>
 	<tiles:insertAttribute name="header"/>
-	</header>
-	<section>
+	<hr>
 	<tiles:insertAttribute name="content"/>
-	</section>
-	<footer>
+	<hr>
 	<tiles:insertAttribute name="footer"/>
-	</footer>
 </body>
 </html>
