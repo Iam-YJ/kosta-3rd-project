@@ -69,7 +69,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int insertGoods(RegisterGoods registerGoods) {
-		// TODO Auto-generated method stub
+		registerGoodsRep.save(registerGoods);
 		return 0;
 	}
 

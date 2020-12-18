@@ -12,17 +12,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.servlet.annotation.MultipartConfig;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 public class RegisterGoods {
 	
 	@Id
@@ -37,7 +40,7 @@ public class RegisterGoods {
 	private String detail;
 	
 	@Column(nullable = false, length = 3000)
-	private String thumbnailImg;
+	private String thumnailImg;
 	
 	@Column(nullable = true, length = 3000)
 	private String adImg;

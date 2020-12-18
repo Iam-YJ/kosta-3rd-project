@@ -25,7 +25,7 @@ public class UserGrade {
 	private String grade;
 	private int lowPrice;
 	private int highPrice;
-	private int pointRate;
+	private double pointRate;
 	
 	
 	

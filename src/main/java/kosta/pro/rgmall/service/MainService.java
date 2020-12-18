@@ -9,9 +9,11 @@ import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 
 public interface MainService {
+
 
 	/**
 	 * index화면에 출력하는 내용
@@ -36,6 +38,19 @@ public interface MainService {
 	 * 사용자로부터 이름, 아이디, 비밀번호, 주소, 연락처를 입력받아 회원가입을 시도한다.
 	 */
 	public int userRegister(UserList userList);
+	
+	
+	/**
+	 * 회원가입 카카오API
+	 * 사용자로부터 이름, 아이디, 비밀번호, 주소, 연락처를 입력받아 회원가입을 시도한다.
+	 */
+	public int userRegisterKakao(UserList userList);
+	
+	/**
+	 * 회원정보 업데이트
+	 * 카카오API 회원가입 후 정보 더 받기 위함
+	 */
+	public int updateUserKakao(UserList userList);
 	
 	/**
 	 * 로그인
@@ -68,8 +83,6 @@ public interface MainService {
 	 */
 	public List<RegisterGoods> selectAllGoods(int mainCategoryNo, int subCategoryNo, int sortNo);
 	
-	public List<MainCategories> selectAllMainCategories();
-	
 	/**
 	 * 상품 검색(제목검색)
 	 */
@@ -93,5 +106,17 @@ public interface MainService {
 	 * FAQ
 	 */
 	public List<FAQ> selectAllFAQ();
+	
+	/**
+	 *  카테고리 목록 가져오기
+	 * */
+	public List<MainCategories> selectCategories();
+	
+	/**
+	 *  메인카테고리에 해당하는 서브카테고리 목록 가져오기
+	 * */
+	public List<SubCategories> selectSubCategories(Long mainCateNo);
+
+	
 	
 }
