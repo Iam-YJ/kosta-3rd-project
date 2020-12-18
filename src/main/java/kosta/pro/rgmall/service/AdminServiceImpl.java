@@ -2,8 +2,9 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
-
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,21 +94,43 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int insertFAQ(FAQ faq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<FAQ> selectAllFAQ() {
+		return FAQRep.findAll();
+	}
+	
+	@Override
+	public Page<FAQ> selectAll(Pageable pageable) {
+		return FAQRep.findAll(pageable);
+	}
+	
+	@Override
+	public void insertFAQ(FAQ faq) {
+		if(FAQRep.save(faq)== null) {
+			throw new RuntimeException("내용이 존재하지 않습니다");
+		}
+		FAQRep.save(faq);
 	}
 
 	@Override
-	public int updateFAQ(FAQ faq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateFAQ(FAQ faq) {
+		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		if(dbFaq ==null) {
+			throw new RuntimeException("FAQ번호 오류로 수정 실패");
+		}
+		
+		dbFaq.setQuestion(faq.getQuestion());
+		dbFaq.setAnswer(faq.getAnswer());
+		
 	}
 
 	@Override
-	public int deleteFAQ(FAQ faq) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteFAQ(FAQ faq) {
+		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		if(dbFaq ==null) {
+			throw new RuntimeException("FAQ번호 오류로 삭제 실패");
+		}
+		     
+		FAQRep.deleteById(faq.getFaqNo());
 	}
 
 	@Override
@@ -211,5 +234,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }
