@@ -62,6 +62,7 @@
 		</dependency>
 		<!-- <dependency> <groupId>org.springframework.security</groupId> <artifactId>spring-security-test</artifactId> 
 			<scope>test</scope> </dependency> -->
+			
 
 		<!-- view template를 jsp 사용하기 위한 설정 -->
 		<dependency>
@@ -102,6 +103,26 @@
 			<version>3.0.5</version>
 		</dependency>
 		<!-- titles관련 dependency 끝 -->
+		
+		 <!--Multipart File Up&Download -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.0</version>
+        </dependency>
+        
+  <!-- 파일업로드 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+
 
 
 

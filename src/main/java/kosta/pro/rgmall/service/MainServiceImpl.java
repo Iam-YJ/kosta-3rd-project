@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.repository.AdminRepository;
 import kosta.pro.rgmall.repository.CartRepository;
@@ -118,6 +120,16 @@ public class MainServiceImpl implements MainService {
 	public List<FAQ> selectAllFAQ() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<MainCategories> selectCategories() {
+		return mainCategoriesRep.findAll();
+	}
+
+	@Override
+	public List<SubCategories> selectSubCategories(Long mainCateNo) {
+		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
 	}
 
 }

@@ -6,11 +6,14 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 
 public interface MainService {
+
 
 	/**
 	 * index화면에 출력하는 내용
@@ -90,5 +93,17 @@ public interface MainService {
 	 * FAQ
 	 */
 	public List<FAQ> selectAllFAQ();
+	
+	/**
+	 *  카테고리 목록 가져오기
+	 * */
+	public List<MainCategories> selectCategories();
+	
+	/**
+	 *  메인카테고리에 해당하는 서브카테고리 목록 가져오기
+	 * */
+	public List<SubCategories> selectSubCategories(Long mainCateNo);
+
+	
 	
 }
