@@ -39,6 +39,19 @@ public interface MainService {
 	 */
 	public int userRegister(UserList userList);
 	
+	
+	/**
+	 * 회원가입 카카오API
+	 * 사용자로부터 이름, 아이디, 비밀번호, 주소, 연락처를 입력받아 회원가입을 시도한다.
+	 */
+	public int userRegisterKakao(UserList userList);
+	
+	/**
+	 * 회원정보 업데이트
+	 * 카카오API 회원가입 후 정보 더 받기 위함
+	 */
+	public int updateUserKakao(UserList userList);
+	
 	/**
 	 * 로그인
 	 * user의 아이디와 비밀번호를 받아 일치하는 정보가 있는 경우  

@@ -55,7 +55,7 @@ public class MainServiceImpl implements MainService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
-	
+
 	@Override
 	public Map<String, Object> mainView() {
 		// TODO Auto-generated method stub
@@ -64,26 +64,69 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public String userIdCheck(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		String result = "아이디사용불가";
+		if (userListRep.findByUserId(userId).size() == 0) {
+			// System.out.println(userListRep.findByUserId(userId).size());
+			result = "아이디 사용가능";
+		}
+		return result;
 	}
+
+	/**
+	 * 회원가입 사용자로부터 이름, 아이디, 비밀번호, 주소, 연락처를 입력받아 회원가입을 시도한다.
+	 */
+	@Override
+	public int userRegisterKakao(UserList userList) { //이거는 수정해야함(userGrade 테이블 수정해야함)
+		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setAuthority("ROLE_USER");
+		UserList userListResult = userListRep.save(userList);
+		if (userListResult == null) {
+			System.out.println("등록안됨");
+		} else {
+			System.out.println("등록됨");
+		}
+		return 0;
+	}
+
+	// 소은이꺼
 
 	@Override
 	public int userRegister(UserList userList) {
-		// TODO Auto-generated method stub
+		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setAuthority("ROLE_USER");
+		userListRep.save(userList);
+
+		return 1;
+	}
+
+	/**
+	 * 회원정보 업데이트 카카오API 회원가입 후 정보 더 받기 위함
+	 */
+	@Override
+	public int updateUserKakao(UserList userList) {
+		String name = userList.getName();
+		String userId = userList.getUserId();
+		String passWord = userList.getPassWord();
+		String addr = userList.getAddr();
+		String phone = userList.getPhone();
+		String email = userList.getEmail();
+
+		userListRep.updateUserKakao(name, userId, passWord, addr, phone, email);
 		return 0;
 	}
 
 	@Override
 	public UserList userLogin(String userId, String userPwd) {
-		// TODO Auto-generated method stub
-		return null;
+		return userListRep.login(userId, userPwd);
 	}
 
 	@Override
 	public String findUserId(UserList userList) {
-		// TODO Auto-generated method stub
-		return null;
+		String name = userList.getName();
+		String phone = userList.getPhone();
+		String email = userList.getEmail();
+		UserList user = userListRep.findUserId(name, phone, email);
+		return user.getUserId();
 	}
 
 	@Override
