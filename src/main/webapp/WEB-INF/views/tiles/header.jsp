@@ -12,7 +12,6 @@
 	$(document).ready(function(){
 		
 		
-		
 	});//ready
 </script>
 </head>
@@ -25,16 +24,15 @@
 			</div>
 			<div class="col-xl-5">
 				<div style="text-align: left">
-					<a href="#">마이페이지</a>
-					<a href="#">고객센터</a>
-					<a href="#">1:1상담</a>					
+					<a href="${pageContext.request.contextPath}/user/myPage">마이페이지</a>
+					<a href="${pageContext.request.contextPath}/main/cs/">고객센터</a>
 				</div>
 			</div>
 			<div class="col-xl-5">
 				<div style="text-align: right">
-					<a href="#">로그인</a>
-					<a href="#">회원가입</a>
-					<a href="#">주문/배송조회</a>
+					<a href="${pageContext.request.contextPath}/main/">로그인</a>
+					<a href="${pageContext.request.contextPath}/main/registerForm">회원가입</a>
+					<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
 					<a href="#">찜목록</a>
 					<a href="#">장바구니</a>
 				</div>
@@ -90,7 +88,7 @@
 				<a href="#" class="btn btn-success">~~ 상품조회</a>
 			</div>
 			<div class="col-xl">
-				<a href="#" class="btn btn-success">~~ 상품조회</a>
+				<a href="${pageContext.request.contextPath}/admin/myPage/insertGoodsForm" class="btn btn-success">상품등록</a>
 			</div>
 			
 			<div class="col-xl-2">

@@ -64,7 +64,7 @@ System.out.println("adfileName = "+adfileName);
 		subCategories.setSubCategoryNo(subCateNo);
 		registerGoods.setSubCategories(subCategories);
 		registerGoods.setMainCategories(mainCategories);
-		registerGoods.setThumnailImg(tfileName);
+		registerGoods.setThumbnailImg(tfileName);
 		registerGoods.setAdImg(adfileName);
 		
 		try {

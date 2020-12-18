@@ -40,7 +40,7 @@ public class RegisterGoods {
 	private String detail;
 	
 	@Column(nullable = false, length = 3000)
-	private String thumnailImg;
+	private String thumbnailImg;
 	
 	@Column(nullable = true, length = 3000)
 	private String adImg;
