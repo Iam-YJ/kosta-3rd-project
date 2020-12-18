@@ -31,11 +31,6 @@ public interface AdminService {
 	public int insertGoods(RegisterGoods registerGoods);
 	
 	/**
-	 * 공지사항 조회 
-	 */
-	public List<Notice> selectAll();
-	
-	/**
 	 * 공지사항 등록
 	 */
 	public int insertNotice(Notice notice);
@@ -51,19 +46,29 @@ public interface AdminService {
 	public int deleteNotice(Notice notice);
 	
 	/**
+	 * FAQ 조회
+	 * */
+	public List<FAQ> selectAllFAQ();
+	
+	/**
+	 * FAQ 페이징처리
+	 * */
+	Page<FAQ> selectAll(Pageable pageable);
+	
+	/**
 	 * FAQ등록
 	 */
-	public int insertFAQ(FAQ faq);
+	public void insertFAQ(FAQ faq);
 	
 	/**
 	 * FAQ수정
 	 */
-	public int updateFAQ(FAQ faq);
+	public void updateFAQ(FAQ faq);
 	
 	/**
 	 * FAQ삭제
 	 */
-	public int deleteFAQ(FAQ faq);
+	public void deleteFAQ(FAQ faq);
 	
 	//////////////////////////////////마이페이지
 	

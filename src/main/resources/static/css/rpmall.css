@@ -1,0 +1,42 @@
+@charset "UTF-8";
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+a, h1, h2, h3, h4, h5, h6, div, span{font-family: 'Jeju Gothic', serif;}
+
+
+
+.headerTop{	margin-top: 10px;}
+
+.headerTop a{
+	color: black;
+	text-decoration: none;
+	font-size: 20px;
+	padding: 20px;
+}
+
+.headerBottom{
+	margin-top:10px;
+	padding:5px;
+	background-color: #28a745;
+}
+
+.headerBottom .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #28a745;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.headerBottom .dropdown-content a{color: white;}
+
+.headerBottom .dropdown-content a:hover {background-color: #3e8e41;}
+
+.headerBottom .dropdown:hover .dropdown-content {display: block;}
+
+.headerBottom .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.goodsList a{
+	color: black;
+	text-decoration: none;
+}

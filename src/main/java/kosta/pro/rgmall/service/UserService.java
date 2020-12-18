@@ -8,10 +8,13 @@ import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.Review;
+import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.domain.WishList;
 
 public interface UserService {
+
+	
 	/**
 	 * 개인정보 수정 
 	 * */
@@ -140,4 +143,8 @@ public interface UserService {
 	 * */
 	public int insertPay(Cart cart);
 
+	/**
+	 * 로그인 API용 등급(일반만 가져옴)
+	 */
+	public UserGrade loginAPIGrade();
 }
