@@ -3,9 +3,14 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mainMapper">
-	<!-- 
-	<select id="testSelect" resultType="String">
-		select bno from board
-	</select>
-	 -->
+<!-- 
+	<resultMap type="registerGoods" id="selectAllGoodsMap">
+		<id column="regNo" property="reg_no"/>
+	
+	</resultMap>
+
+	 <select id="selectAllGoods" resultMap="selectAllGoodsMap">
+	 	select reg_no from register_goods
+	 </select>
+	  -->
 </mapper>

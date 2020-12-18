@@ -1,6 +1,7 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.Review;
+import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.domain.WishList;
 import kosta.pro.rgmall.repository.AdminRepository;
@@ -56,7 +58,7 @@ public class UserServiceImpl implements UserService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
-	
+
 	@Override
 	public int updateUserList(UserList userList) {
 		// TODO Auto-generated method stub
@@ -206,5 +208,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public UserGrade loginAPIGrade() {
+		UserGrade userGradeResult = userGradeRep.findById((long) 4).orElse(null);
+		return userGradeResult;
+	}
+
 
 }

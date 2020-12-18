@@ -1,7 +1,6 @@
 package kosta.pro.rgmall.domain;
-import java.util.ArrayList;
 
-import java.util.List;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,6 +25,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Component
 public class SubCategories {
 
 	@Id
@@ -34,6 +38,7 @@ public class SubCategories {
 	
 	@OneToOne
 	@JoinColumn(name = "mainCategoryNo")
+	@JsonIgnore
 	private MainCategories mainCategory;
 	
 	
