@@ -98,35 +98,35 @@ public class AdminController {
 	}// subCate
 
 	@PostMapping("myPage/insertGoods")
-	public ModelAndView insertGoods(RegisterGoods registerGoods, Long mainCateNo, Long subCateNo
-			, @RequestParam("tfile") MultipartFile tfile  ,@RequestParam("adfile") MultipartFile adfile ) {
-		
-		String path ="C:\\Edu\\Spring\\SpringWork\\RGMALL\\src\\main\\webapp\\WEB-INF\\adimg";
-		String tfileName =tfile.getOriginalFilename();
-		String adfileName =adfile.getOriginalFilename();
-		
-		System.out.println("tfileName = "+tfileName);
-		System.out.println("adfileName = "+adfileName);
-		
+	public ModelAndView insertGoods(RegisterGoods registerGoods, Long mainCateNo, Long subCateNo,
+			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
+
+		String path = "C:\\Edu\\Spring\\SpringWork\\RGMALL\\src\\main\\webapp\\WEB-INF\\adimg";
+		String tfileName = tfile.getOriginalFilename();
+		String adfileName = adfile.getOriginalFilename();
+
+		System.out.println("tfileName = " + tfileName);
+		System.out.println("adfileName = " + adfileName);
+
 		mainCategories.setMainCategoryNo(mainCateNo);
 		subCategories.setSubCategoryNo(subCateNo);
 		registerGoods.setSubCategories(subCategories);
 		registerGoods.setMainCategories(mainCategories);
 		registerGoods.setThumbnailImg(tfileName);
 		registerGoods.setAdImg(adfileName);
-		
+
 		try {
-			//파일을 저장
-			tfile.transferTo(new File(path+"/"+tfileName));
-			adfile.transferTo(new File(path+"/"+adfileName));
-		}catch (IOException e) {
+			// 파일을 저장
+			tfile.transferTo(new File(path + "/" + tfileName));
+			adfile.transferTo(new File(path + "/" + adfileName));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		adminService.insertGoods(registerGoods);
-		
-		return new ModelAndView("redirect:/admin/myPage/insertGoodsForm","registerGoods",registerGoods);
-		
+
+		return new ModelAndView("redirect:/admin/myPage/insertGoodsForm", "registerGoods", registerGoods);
+
 	}// insertGoods
 
 }// class
