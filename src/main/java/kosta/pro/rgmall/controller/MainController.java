@@ -105,6 +105,7 @@ public class MainController {
 		// sort);
 
 		ModelAndView mv = new ModelAndView("main/goodsList");
+		
 		return mv;
 	}
 	
