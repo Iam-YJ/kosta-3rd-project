@@ -1,11 +1,16 @@
 package kosta.pro.rgmall.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import kosta.pro.rgmall.domain.UserList;
+import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.service.MainService;
 import lombok.RequiredArgsConstructor;
 
@@ -28,8 +33,8 @@ public class MainController {
 //	        System.out.println("userNick : " + userNick);
 //	        System.out.println("userEmail : " + userEmail);
 
-		UserList userList = new UserList(userEmail);
-		mainService.userRegister(userList);
+		//UserList userList = new UserList(userEmail);
+		//mainService.userRegister(userList);
 
 		ModelAndView mv = new ModelAndView();
 
@@ -38,11 +43,17 @@ public class MainController {
 
 	@RequestMapping("/goodsList/{main}/{sub}/{sort}")
 	public ModelAndView goodsList(@PathVariable int main, @PathVariable int sub, @PathVariable int sort) {
-
-		// List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub,
-		// sort);
-
-		ModelAndView mv = new ModelAndView("main/goodsList");
+		Map<String, Object> goodsListMap = new HashMap<String, Object>();
+		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
+		List<MainCategories> mainCategories = mainService.selectAllMainCategories();
+		
+		goodsListMap.put("registerGoodsList", registerGoodsList);
+		goodsListMap.put("registerGoods", registerGoodsList.get(0));
+		goodsListMap.put("mainCategories", mainCategories);
+		goodsListMap.put("main", main);//main
+		goodsListMap.put("sub", main);//main
+		
+		ModelAndView mv = new ModelAndView("main/goodsList", "goodsListMap", goodsListMap);
 		return mv;
 	}
 

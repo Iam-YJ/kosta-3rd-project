@@ -6,7 +6,9 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kosta.pro.rgmall.dao.MainDAO;
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.UserList;
@@ -54,6 +56,9 @@ public class MainServiceImpl implements MainService {
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
 	
+	private final MainDAO mainDAO;
+	
+	
 	@Override
 	public Map<String, Object> mainView() {
 		// TODO Auto-generated method stub
@@ -90,11 +95,28 @@ public class MainServiceImpl implements MainService {
 		return 0;
 	}
 
+	/**
+	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
+	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
+	 */
 	@Override
 	public List<RegisterGoods> selectAllGoods(int mainCategoryNo, int subCategoryNo, int sortNo) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<RegisterGoods> list =  registerGoodsRep.findAll();
+		
+		return list;
 	}
+	
+	public List<MainCategories> selectAllMainCategories(){
+		
+		List<MainCategories> list = mainCategoriesRep.findAll();
+		return list;
+	}
+	
+//	public List<SubCategories> selectAllSubCategories(Long subCategoryNo){
+//		
+//		return null;
+//	}
 
 	@Override
 	public List<RegisterGoods> searchGoods(String keyword) {

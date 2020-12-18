@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.UserList;
@@ -66,6 +67,8 @@ public interface MainService {
 	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
 	public List<RegisterGoods> selectAllGoods(int mainCategoryNo, int subCategoryNo, int sortNo);
+	
+	public List<MainCategories> selectAllMainCategories();
 	
 	/**
 	 * 상품 검색(제목검색)

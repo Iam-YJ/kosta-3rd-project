@@ -1,7 +1,9 @@
 @charset "UTF-8";
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
-a, h1, h2, h3, h4, h5, h6{font-family: 'Jeju Gothic', serif;}
+a, h1, h2, h3, h4, h5, h6, div, span{font-family: 'Jeju Gothic', serif;}
+
+
 
 .headerTop{	margin-top: 10px;}
 
@@ -33,3 +35,8 @@ a, h1, h2, h3, h4, h5, h6{font-family: 'Jeju Gothic', serif;}
 .headerBottom .dropdown:hover .dropdown-content {display: block;}
 
 .headerBottom .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+.goodsList a{
+	color: black;
+	text-decoration: none;
+}
