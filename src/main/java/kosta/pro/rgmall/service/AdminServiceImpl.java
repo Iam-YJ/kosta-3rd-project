@@ -2,8 +2,9 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
-
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +74,12 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public List<Notice> selectAll(){
+		
+		return noticeRep.findAll();
+	}
+
 
 	@Override
 	public int insertNotice(Notice notice) {
@@ -82,13 +89,11 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int updateNotice(Notice notice) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int deleteNotice(Notice notice) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -211,5 +216,7 @@ public class AdminServiceImpl implements AdminService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
