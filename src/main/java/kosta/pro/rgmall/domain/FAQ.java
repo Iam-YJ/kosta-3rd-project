@@ -13,12 +13,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class FAQ {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "faq_no_seq")
@@ -29,4 +31,7 @@ public class FAQ {
 	@Column(nullable = false,length = 3000)
 	private String answer;
 
+	public FAQ(Long faqNo) {
+		this.faqNo = faqNo;
+	}
 }//class

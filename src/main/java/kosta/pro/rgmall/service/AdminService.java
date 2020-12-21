@@ -3,6 +3,8 @@ package kosta.pro.rgmall.service;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.GoodsAnswer;
@@ -44,19 +46,29 @@ public interface AdminService {
 	public int deleteNotice(Notice notice);
 	
 	/**
+	 * FAQ 조회
+	 * */
+	public List<FAQ> selectAllFAQ();
+	
+	/**
+	 * FAQ 페이징처리
+	 * */
+	Page<FAQ> selectAll(Pageable pageable);
+	
+	/**
 	 * FAQ등록
 	 */
-	public int insertFAQ(FAQ faq);
+	public void insertFAQ(FAQ faq);
 	
 	/**
 	 * FAQ수정
 	 */
-	public int updateFAQ(FAQ faq);
+	public void updateFAQ(FAQ faq);
 	
 	/**
 	 * FAQ삭제
 	 */
-	public int deleteFAQ(FAQ faq);
+	public void deleteFAQ(FAQ faq);
 	
 	//////////////////////////////////마이페이지
 	
@@ -170,4 +182,5 @@ public interface AdminService {
 	 * (전체조회, 등급별조회, 검색어-사용자이름 조회)
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
+
 }
