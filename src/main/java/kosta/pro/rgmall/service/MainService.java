@@ -104,7 +104,7 @@ public interface MainService {
 	
 	/**
 	 * FAQ
-	 */
+   	 */
 	public List<FAQ> selectAllFAQ();
 	
 	/**

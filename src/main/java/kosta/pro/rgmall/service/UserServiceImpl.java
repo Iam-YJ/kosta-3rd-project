@@ -193,14 +193,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int selectMyDonation(Long userNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return donationRep.findByUserListUserNo(userNo).getDonaPoint();
 	}
 
 	@Override
 	public List<Donation> selectAllDonation() {
-		// TODO Auto-generated method stub
-		return null;
+		return donationRep.findAll();
 	}
 
 	@Override
