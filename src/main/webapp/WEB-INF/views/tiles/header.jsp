@@ -25,7 +25,7 @@
 			<div class="col-xl-5">
 				<div style="text-align: left">
 					<a href="${pageContext.request.contextPath}/user/myPage">마이페이지</a>
-					<a href="${pageContext.request.contextPath}/main/cs/">고객센터</a>
+					<a href="${pageContext.request.contextPath}/admin/cs/list">고객센터</a>
 				</div>
 			</div>
 			<div class="col-xl-5">
