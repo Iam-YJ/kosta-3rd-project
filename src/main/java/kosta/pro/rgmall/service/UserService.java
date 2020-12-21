@@ -120,7 +120,12 @@ public interface UserService {
 	 * 포인트 조회하기
 	 * 등급 조회하기
 	 * */
-	public UserList selectPointandGrade(Long userNo);
+	public UserList selectPointandGrade(String userId);
+	
+	/**
+	 * 등급 전체 조회하기
+	 */
+	public List<UserGrade> selectAllUserGrade();
 	
 	/**
 	 * 포인트 기부하기

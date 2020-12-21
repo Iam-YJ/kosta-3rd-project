@@ -1,7 +1,6 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -180,9 +179,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserList selectPointandGrade(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserList selectPointandGrade(String userId) {
+		UserList userList = userListRep.selectPointandGrade(userId);
+		return userList;
+	}
+	
+	@Override
+	public List<UserGrade> selectAllUserGrade() {
+		List<UserGrade> userGrade = userGradeRep.findAll();
+		return userGrade;
+		
 	}
 
 	@Override
