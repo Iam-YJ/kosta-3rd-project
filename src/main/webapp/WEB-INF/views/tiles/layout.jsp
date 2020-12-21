@@ -21,9 +21,7 @@
 </head>
 <body>
 	<tiles:insertAttribute name="header"/>
-	<hr>
 	<tiles:insertAttribute name="content"/>
-	<hr>
 	<tiles:insertAttribute name="footer"/>
 </body>
 </html>

@@ -144,9 +144,17 @@ public class MainServiceImpl implements MainService {
 	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
 	@Override
-	public List<RegisterGoods> selectAllGoods(int mainCategoryNo, int subCategoryNo, int sortNo) {
+	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo) {
 
-		List<RegisterGoods> list =  registerGoodsRep.findAll();
+		List<RegisterGoods> list = null;
+			
+		if(mainCategoryNo == 0) {
+			list =  registerGoodsRep.findAll();
+		}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+			list = registerGoodsRep.findAllWithMain(mainCategoryNo);
+		}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+		}
 		
 		return list;
 	}
@@ -159,8 +167,10 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public RegisterGoods goodsDetail(Long regNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		RegisterGoods registerGoods = registerGoodsRep.findById(regNo).orElse(null);
+		
+		return registerGoods;
 	}
 
 	@Override
