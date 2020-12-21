@@ -7,6 +7,7 @@ import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
+import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
@@ -120,18 +121,23 @@ public interface UserService {
 	 * 포인트 조회하기
 	 * 등급 조회하기
 	 * */
-	public UserList selectPointandGrade(Long userNo);
+	public UserList selectPointandGrade(String userId);
+	
+	/**
+	 * 등급 전체 조회하기
+	 */
+	public List<UserGrade> selectAllUserGrade();
 	
 	/**
 	 * 포인트 기부하기
 	 * 도네이션 테이블의 기부 내역을 저장하고, userList 테이블에서 기부한만큼 포인트 차감
 	 * */
-	public int insertDonation(Donation donation);
+	public void insertDonation(Donation donation);
 	
 	/**
 	 * 누적기부 포인트 조회하기(내꺼보기)
 	 * */
-	public int selectMyDonation(Long userNo);
+	public Donation selectMyDonation(Long userNo);
 
 	/**
 	 * 누적기부 포인트 조회하기 (전체보기)
@@ -147,4 +153,17 @@ public interface UserService {
 	 * 로그인 API용 등급(일반만 가져옴)
 	 */
 	public UserGrade loginAPIGrade();
+	
+	/**
+	 *  유저가 기부내역이 있으면 업데이트로 포인트 수정
+	 * */
+	public void updateDonation(Long userNo, int dona);
+
+	/**
+	 * 찜목록 에서 썸네일 이미지 불러오기
+	 * */
+	public RegisterGoods selectGoodsThumbnail(Long regNo);
+
+
+
 }
