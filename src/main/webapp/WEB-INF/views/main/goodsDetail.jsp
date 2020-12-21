@@ -93,8 +93,8 @@ $(document).ready(function(){
 					</div>
 					
 					<div class="userBtnSection">
-						<a href="" class="btn btn-outline-success">찜</a>
-						<a href="" class="btn btn-outline-success">장바구니</a>
+						<a href="" id="wish" class="btn btn-outline-success">찜</a>
+						<a href="" id="cart" class="btn btn-outline-success">장바구니</a>
 						<a href="" class="btn btn-success">바로구매</a>
 					</div>
 				</div>
