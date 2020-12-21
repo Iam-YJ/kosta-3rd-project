@@ -81,7 +81,7 @@ public interface MainService {
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
 	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
-	public List<RegisterGoods> selectAllGoods(int mainCategoryNo, int subCategoryNo, int sortNo);
+	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo);
 	
 	/**
 	 * 상품 검색(제목검색)

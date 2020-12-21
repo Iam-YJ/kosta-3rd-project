@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div class="footer">
+
+</div>
 <h1>footer.jsp입니다...</h1>
 
 
