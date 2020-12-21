@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#find').click(function(){
+		location.href="${pageContext.request.contextPath}/main/userForgetIdPwd";
+	})
+	
+})
+</script>
 </head>
 <body>
 	<h1>main/login.jsp</h1>
@@ -22,7 +30,8 @@
 			<td><input type="password" name="passWord" size="31"></td>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="submit" value="로그인"></td>
+			<td colspan="2"><input type="submit" value="로그인"><input type="button" value="ID/Password 찾기" id="find"></td>
+			
 		</tr>
 	</table>
 </form>

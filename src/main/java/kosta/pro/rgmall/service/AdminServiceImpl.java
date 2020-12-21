@@ -175,20 +175,19 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int insertMainCategory(MainCategories mainCategories) {
-		// TODO Auto-generated method stub
-		return 0;
+		mainCategoriesRep.save(mainCategories);
+		return 1;
 	}
 
 	@Override
 	public int insertSubCategory(SubCategories subCategories) {
-		// TODO Auto-generated method stub
-		return 0;
+		subCategoriesRep.save(subCategories);
+		return 1;
 	}
 
 	@Override
 	public int updateMainCategory(MainCategories mainCategories) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override

@@ -126,19 +126,38 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public String findUserId(UserList userList) {
+		String result = null;
 		String name = userList.getName();
 		String phone = userList.getPhone();
 		String email = userList.getEmail();
 		UserList user = userListRep.findUserId(name, phone, email);
-		return user.getUserId();
+		if(user==null) {
+			result = "";
+		}else {
+			result = user.getUserId();
+		}
+		return result;
 	}
 
 	@Override
-	public int findUserPwd(UserList userList) {
-		// TODO Auto-generated method stub
+	public UserList findUserPwd(UserList userList) {
+		String userId = userList.getUserId();
+		String name = userList.getName();
+		String phone = userList.getPhone();
+		String email = userList.getEmail();
+		return userListRep.findUserPwd(userId, name, phone, email);
+	
+	}
+	
+	@Override
+	public int updatePassWord(UserList userList) {
+		String passWord = userList.getPassWord();
+		Long userNo = userList.getUserNo();
+		userListRep.updatePassWord(passWord, userNo);
 		return 0;
 	}
 
+	
 	/**
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
 	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
@@ -195,4 +214,5 @@ public class MainServiceImpl implements MainService {
 		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
 	}
 
+	
 }

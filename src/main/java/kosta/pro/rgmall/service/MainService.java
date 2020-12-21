@@ -75,7 +75,12 @@ public interface MainService {
 	 * @return 0 : 일치하는 정보가 없음
 	 * 		   1 : 비밀번호 변경 폼으로(아이디 정보를 가지고 이동-Controller에서)
 	 */
-	public int findUserPwd(UserList userList);
+	public UserList findUserPwd(UserList userList);
+	
+	/**
+	 * 비밀번호 찾기 후 비밀번호 변경하기
+	 * */
+	public int updatePassWord(UserList userList);
 	
 	/**
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
