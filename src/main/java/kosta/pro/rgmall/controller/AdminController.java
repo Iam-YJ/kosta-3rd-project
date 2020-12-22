@@ -31,18 +31,7 @@ public class AdminController {
 	private final MainService mainService;
 	private final MainCategories mainCategories;
 	private final SubCategories subCategories;
-	
-	/**
-	 * 전체검색
-	 */
-	@RequestMapping("/notice")
-	public void selectAllNotice(Model model) {
-		List<Notice> list = mainService.selectAllNotice();
-		
-		model.addAttribute("list", list);
-		
-	}
-	
+
 	
 	/**
 	 * 전체 검색
@@ -62,7 +51,30 @@ public class AdminController {
 		 */
 		return "main/cs/faq";
 	}
-
+	
+	/**
+	 * 공지사항 등록하기 폼
+	 */
+	@RequestMapping("/write")
+	public String writeNotice() {
+		
+		return "main/cs/writeNotice";
+	}
+	
+	/**
+	 *	공지사항 등록하기
+	 */
+	@RequestMapping("/insert")
+	public String insertNotice(Notice notice) {
+		//content에 스크립트 요소(태그)를 문자로 교체
+		String content = notice.getContent().replace("<", "&lt;");
+		notice.setContent(content);
+		
+		adminService.insertNotice(notice);
+		
+		return "redirect:/main/notice";
+	}
+	
 	/*
 	 * faq
 	 */

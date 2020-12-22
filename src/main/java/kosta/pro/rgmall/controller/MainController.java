@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
@@ -126,6 +128,17 @@ public class MainController {
 		return mv;
 	}
 	
+	
+	/**
+	 * 전체검색
+	 */
+	@RequestMapping("/notice")
+	public String selectAllNotice(Model model) {
+		List<Notice> list = mainService.selectAllNotice();
+		
+		model.addAttribute("list", list);
+		return "main/cs/notice";
+	}
 	
 
 }// class

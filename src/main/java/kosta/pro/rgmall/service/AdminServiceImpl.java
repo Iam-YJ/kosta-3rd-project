@@ -76,9 +76,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public int insertNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertNotice(Notice notice) {
+		Notice not = noticeRep.save(notice);
+		System.out.println("not = " + not);
+		if(not == null) {
+			throw new RuntimeException("내용이 존재하지 않습니다");
+		}
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public interface AdminService {
 	/**
 	 * 공지사항 등록
 	 */
-	public int insertNotice(Notice notice);
+	public void insertNotice(Notice notice);
 	
 	/**
 	 * 공지사항 수정
