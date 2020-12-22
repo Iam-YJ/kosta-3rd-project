@@ -3,9 +3,9 @@ package kosta.pro.rgmall.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,9 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.SubCategories;
-import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.service.AdminService;
 import kosta.pro.rgmall.service.MainService;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +52,71 @@ public class AdminController {
 		 */
 		return "main/cs/faq";
 	}
-
+	
+	/**
+	 * 공지사항 등록하기 폼
+	 */
+	@RequestMapping("/writeNotice")
+	public String writeNotice() {
+		
+		return "main/cs/writeNotice";
+	}
+	
+	/**
+	 *	공지사항 등록하기
+	 */
+	@RequestMapping("/insert")
+	public String insertNotice(Notice notice) {
+		//content에 스크립트 요소(태그)를 문자로 교체
+		String content = notice.getContent().replace("<", "&lt;");
+		notice.setContent(content);
+		
+		adminService.insertNotice(notice);
+		
+		return "redirect:/main/notice";
+	}
+	
+	/**
+	 * 공지사항 수정등록 폼
+	 */
+	@RequestMapping("/updateNoticeForm")
+	public ModelAndView updateNoticeForm(Long noticeNo) {
+		Notice notice = adminService.selectByNotice(noticeNo);
+		return new ModelAndView("main/cs/updateNoticeForm","notice", notice);
+	}
+	
+	/**
+	 * 공지사항 수정완료
+	 */
+	@RequestMapping("/updateNotice")
+	public String updateNotice(Notice notice) {
+		adminService.updateNotice(notice);
+		return "redirect:/admin/readNotice/"+ notice.getNoticeNo();
+	}
+	
+	/** 
+	 *  공지사항 상세보기
+	 * */
+	@RequestMapping("/readNotice/{noticeNo}")
+	public ModelAndView readNotice(@PathVariable Long noticeNo) {
+		
+		Notice notice= adminService.selectByNotice(noticeNo);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main/cs/readNotice"); // /WEB-INF/views/read.jsp
+		mv.addObject("notice", notice);
+		
+		return mv;
+	}
+	
+	/**
+	 * 삭제하기
+	 */
+	@RequestMapping("/deleteNotice")
+	public String deleteNotice(Long noticeNo) {
+		adminService.deleteNotice(noticeNo);
+		return "redirect:/main/notice";
+	}
+	
 	/*
 	 * faq 수정등록 폼
 	 */

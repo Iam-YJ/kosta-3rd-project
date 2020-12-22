@@ -76,19 +76,36 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public int insertNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertNotice(Notice notice) {
+		Notice not = noticeRep.save(notice);
+		System.out.println("not = " + not);
+		if(not == null) {
+			throw new RuntimeException("내용이 존재하지 않습니다");
+		}
 	}
+	
+	@Override
+	public Notice selectByNotice(Long noticeNo) {
+		return noticeRep.findById(noticeNo).orElse(null);
+	}
+	
+	@Override
+	public void updateNotice(Notice notice) {
+		Notice dbNotice = noticeRep.findById(notice.getNoticeNo()).orElse(null);
+		if(dbNotice==null) {
+			throw new RuntimeException("오류로 수정실패");
+		}
+		dbNotice.setTitle(notice.getTitle());
+		dbNotice.setContent(notice.getContent());
+	 }
 
 	@Override
-	public int updateNotice(Notice notice) {
-		return 0;
-	}
-
-	@Override
-	public int deleteNotice(Notice notice) {
-		return 0;
+	public void deleteNotice(Long noticeNo) {
+		Notice dbNotice = noticeRep.findById(noticeNo).orElse(null);
+		if(dbNotice == null) {
+			throw new RuntimeException("글번호 오류");
+		}
+		noticeRep.deleteById(noticeNo);
 	}
 
 	@Override

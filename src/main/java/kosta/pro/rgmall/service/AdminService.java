@@ -33,17 +33,24 @@ public interface AdminService {
 	/**
 	 * 공지사항 등록
 	 */
-	public int insertNotice(Notice notice);
+	public void insertNotice(Notice notice);
 	
 	/**
 	 * 공지사항 수정
 	 */
-	public int updateNotice(Notice notice);
+	public void updateNotice(Notice notice);
+	
+	/**
+	 * 공지사항 번호검색
+	 */
+	public Notice selectByNotice(Long noticeNo);
+
+
 
 	/**
 	 * 공지사항 삭제
 	 */
-	public int deleteNotice(Notice notice);
+	public void deleteNotice(Long noticeNo);
 	
 	/**
 	 * FAQ 조회
@@ -188,4 +195,8 @@ public interface AdminService {
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
 
+
+
+
+	
 }
