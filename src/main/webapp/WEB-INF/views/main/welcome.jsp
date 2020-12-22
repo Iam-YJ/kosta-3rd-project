@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>main/register.jsp</h1>
-
+<h1>welcome.jsp</h1>
 </body>
 </html>

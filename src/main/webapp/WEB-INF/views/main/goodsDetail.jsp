@@ -8,6 +8,25 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+	function wishbtn(regNo){
+		if(confirm("찜 목록에 추가 하시겠습니까?")){
+			location.href="${pageContext.request.contextPath}/user/wish?regNo="+regNo;
+			return true;
+		}else{
+			return false;
+		}
+	}//wishbtn
+	
+	function cartbtn(){
+		if(confirm("장바구니에 추가 하시겠습니까?")){
+			location.href="${pageContext.request.contextPath}/user/wish";
+			return true;
+		}else{
+			return false;
+		}
+	}//cartbtn
+
+
 $(document).ready(function(){
 	
 	$(document).on("change","#quantity",function(){
@@ -19,13 +38,9 @@ $(document).ready(function(){
 		
 	})//change_quantityInput
 	
+
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	//3자리마다 Comma넣어주는 함수
@@ -93,8 +108,8 @@ $(document).ready(function(){
 					</div>
 					
 					<div class="userBtnSection">
-						<a href="" class="btn btn-outline-success">찜</a>
-						<a href="" class="btn btn-outline-success">장바구니</a>
+						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${registerGoods.regNo});">찜</a>
+						<a href="#"  class="btn btn-outline-success" onclick="cartbtn();">장바구니</a>
 						<a href="" class="btn btn-success">바로구매</a>
 					</div>
 				</div>

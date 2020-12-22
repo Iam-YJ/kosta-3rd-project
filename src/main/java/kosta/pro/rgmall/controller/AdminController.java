@@ -3,6 +3,7 @@ package kosta.pro.rgmall.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -144,7 +145,6 @@ public class AdminController {
 
 		System.out.println("tfileName = " + tfileName);
 		System.out.println("adfileName = " + adfileName);
-
 		mainCategories.setMainCategoryNo(mainCateNo);
 		subCategories.setSubCategoryNo(subCateNo);
 		registerGoods.setSubCategories(subCategories);
@@ -176,4 +176,33 @@ public class AdminController {
 		return "admin/myPage/userCheck";
 	}
 
+	//카테고리 수정 폼 띄우기
+	@RequestMapping("/myPage/modiCategories")
+	public ModelAndView modiCategories() {
+		List<MainCategories> mainList = mainService.selectCategories();
+		return new ModelAndView("admin/myPage/modiCategories", "list", mainList);
+	}
+	
+	@RequestMapping("/myPage/insertMainCategory")
+	public ModelAndView  insertMainCategory(MainCategories mainCategories) {
+		 adminService.insertMainCategory(mainCategories);
+		 List<MainCategories>mainList = mainService.selectCategories();
+		 return new ModelAndView("admin/myPage/modiCategories", "list", mainList);
+	}//insertMainCategory
+	
+	@RequestMapping("/myPage/insertSubCategory")
+	public int insertSubCategory(SubCategories subCategories) {
+		subCategories.getMainCategory();
+		return adminService.insertSubCategory(subCategories);
+	}//insertSubCategory
+	
+	@RequestMapping("/myPage/updateMainCategory")
+	public int updateMainCategory(MainCategories mainCategories) {
+		return adminService.updateMainCategory(mainCategories);
+	}//updateMainCategory
+	
+	@RequestMapping("/myPage/updateSubCategory")
+	public int updateSubCategory(SubCategories subCategories) {
+		return adminService.updateSubCategory(subCategories);
+	}//updateSubCategory
 }// class
