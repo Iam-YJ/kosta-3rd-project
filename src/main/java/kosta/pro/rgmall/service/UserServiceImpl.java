@@ -61,8 +61,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUserList(UserList userList) {
-		// TODO Auto-generated method stub
-		return 0;
+		String passWord = userList.getPassWord();
+		String email = userList.getEmail();
+		String addr  = userList.getAddr();
+		String phone = userList.getPhone();
+		Long userNo = userList.getUserNo();
+		return userListRep.updateUserList(passWord,addr,phone, email,userNo);
 	}
 
 	@Override

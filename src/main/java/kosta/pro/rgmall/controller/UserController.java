@@ -4,15 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.RegisterGoods;
-
-import org.springframework.web.bind.annotation.PathVariable;
-
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.domain.WishList;
@@ -26,6 +27,27 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 	private final UserService userService;
 	private final MainService mainService;
+	
+	//개인정보 수정전 비밀번호 확인폼
+	@RequestMapping("/mypage/passWordCheck")
+	public String passWordCheck() {
+		return "user/myPage/passWordCheck";
+	}
+		
+	//개인정보수정폼
+	@RequestMapping("/mypage/updateUserListForm")
+	public String updateUserListForm() {
+		return "user/myPage/updateUserList";
+	}
+		
+	//개인정보수정
+	@RequestMapping("/mypage/updateUserList")
+	public String updateUserList(UserList userList,HttpSession session) {
+		Long userNo = (Long)session.getAttribute("userNo");
+		userList.setUserNo(userNo);
+		userService.updateUserList(userList);
+		return "user/myPage/main";
+	}
 	
 	@RequestMapping("myPage/donationForm")
 	public ModelAndView donationForm(Long userNo) {
@@ -63,6 +85,12 @@ public class UserController {
 		mv.addObject("userGradeList",userGradeList);
 		return mv;
 	}//main
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "main/index";
+	}
 	
 	@RequestMapping("wish")
 	public String wish(Long regNo) {

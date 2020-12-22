@@ -70,6 +70,11 @@ public interface AdminService {
 	 */
 	public void deleteFAQ(FAQ faq);
 	
+	/**
+	 * FAQ 번호 검색
+	 * */
+	FAQ selectByFaq(Long faqNo);
+	
 	//////////////////////////////////마이페이지
 	
 	/**

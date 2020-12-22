@@ -8,31 +8,65 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 $(document).ready(function(){
-	var checkResultId="";		
-	$("#regForm").submit(function(){			
-		if($("#regForm :input[name=id]").val().trim()==""){
-			alert("아이디를 입력하세요");				
-			return false;
-		}
-		if($("#regForm :input[name=passWord]").val().trim()==""){
-			alert("패스워드를 입력하세요");				
-			return false;
-		}
-		if($("#regForm :input[name=name]").val().trim()==""){
-			alert("이름을 입력하세요");				
-			return false;
-		}
-		if($("#regForm :input[name=addr]").val().trim()==""){
-			alert("주소를 입력하세요");				
-			return false;
-		}
-		if($("#regForm :input[name=phone]").val().trim()==""){
-			alert("전화번호를 입력하세요");				
-			return false;
-		}	
 	
-			
-	});//submit
+	$("#registerSubmit_btn").click(function(){
+		if( $("#name").val() == ""){
+			alert("이름을 입력해주세요");
+			$("#name").focus();
+			return false;
+		}
+		
+		if( $("#id").val() == ""){
+			alert("아이디를 입력해주세요");
+			$("#id").focus();
+			return false;
+		}
+		
+		if( $("#pwd").val() == ""){
+			alert("비밀번호를 입력해주세요");
+			$("#pwd").focus();
+			return false;
+		}
+		
+		if( $("#pwdChk").val() == ""){
+			alert("비밀번호 확인을 입력해주세요");
+			$("#pwdChk").focus();
+			return false;
+		}
+		
+		if( $("#addr").val() == ""){
+			alert("주소를 입력해주세요");
+			$("#addr").focus();
+			return false;
+		}
+		
+		if( $("#phone").val() == ""){
+			alert("전화번호를 입력해주세요");
+			$("#phone").focus();
+			return false;
+		}
+		
+		if( $("#email").val() == ""){
+			alert("E-mail을 입력해주세요");
+			$("#email").focus();
+			return false;
+		}
+		
+		if( $("#pwd").val() != $("#pwdChk").val()){
+			alert("비밀번호가 일치하지 않습니다. 확인해주세요");
+			return false;
+		}
+		
+		if($("#idCheckView").text() == "아이디사용불가"){
+			alert("사용 불가능한 아이디입니다.");
+			$("#id").focus();
+			return false;
+		}
+		
+		$("#regForm").submit();
+		
+		
+	})//registerSubmit_btn_click
 	
 	//아이디 체크...
 	$("#regForm :input[name=userId]").keyup(function(){
@@ -45,7 +79,7 @@ $(document).ready(function(){
 			},
 			success:function(result){						
 				
-				$("#idCheckView").html(result).css("background","red");
+				$("#idCheckView").html(result);
 				if($(this).val()==""){$("#idCheckView").html("")}
 				}
 					
@@ -69,19 +103,59 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<h1>main/registerForm.jsp</h1>
-<form action="${pageContext.request.contextPath}/main/register" id="regForm" method="post">
-이름 : <input type="text" name = "name"><br>
-아이디 : <input type="text" name = "userId"><span id="idCheckView"></span><br>
-비밀번호 : <input type="password" name = "passWord"><Br>
-비밀번호확인 : <input type="password" name = "passWordCheck"><span id="pwdCheckSpan"></span><br>
-주소 : <input type="text" name = "addr"><Br>
-전화번호 : <input type="text" name = "phone"><br>
-E-Mail : <input type="text" name = "email"><br>
-<input type="submit" value="Register Member">
-</form>
 
-
-
+<div class="registerForm_section">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-2"></div>
+			<div class="col-xl">
+				<h3>회원가입</h3>
+				<div class="register border">
+					<div class="register_top">
+						R.P.MALL 회원가입
+					</div>
+					<div class="register_bottom">
+						<form action="${pageContext.request.contextPath}/main/register" id="regForm" method="post">
+							<div class="form-group">
+								<label for="name">이름 : </label>
+								<input type="text" class="form-control" id="name" name = "name">
+							</div>
+							<div class="form-group">
+								<label for="id">아이디 : </label>
+								<input type="text" class="form-control" id="id" name = "userId"><span id="idCheckView"></span>
+							</div>
+							<div class="form-group">
+								<label for="pwd">비밀번호 : </label>
+								<input type="password" class="form-control" id="pwd" name = "passWord" style="color: black;">
+							</div>
+							<div class="form-group">
+								<label for="pwdChk">비밀번호확인 : </label>
+								<input type="password" class="form-control" id="pwdChk" name = "passWordCheck" style="color: black;" ><span id="pwdCheckSpan"></span>
+							</div>
+							<div class="form-group">
+								<label for="addr">주소 : </label>
+								<input type="text" class="form-control" id="addr" name = "addr">
+							</div>
+							<div class="form-group">
+								<label for="phone">전화번호 : </label>
+								<input type="text" class="form-control" id="phone" name = "phone">
+							</div>
+							<div class="form-group">
+								<label for="email">E-mail : </label>
+								<input type="text" class="form-control" id="email" name = "email">
+							</div>
+							<div class="form-group">
+								<br>
+								<input type="button" id="registerSubmit_btn" class="btn btn-success col-xl" value="회원가입">
+							</div>
+							
+						</form>
+					</div>
+				</div><!-- register -->
+			</div><!-- col -->
+			<div class="col-xl-2"></div>
+		</div><!-- row -->
+	</div><!-- container -->
+</div><!-- registerForm_section -->
 </body>
 </html>
