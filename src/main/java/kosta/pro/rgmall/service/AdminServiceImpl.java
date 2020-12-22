@@ -241,7 +241,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<UserList> searchAllUser(String grade, String keyword) {
-		return userListRep.findAll();
+		return userListRep.selectAllUser();
 	}
 
 

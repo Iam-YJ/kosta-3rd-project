@@ -170,10 +170,21 @@ public class AdminController {
 	 *  회원정보 검색
 	 * */
 	@RequestMapping("/myPage/main/userCheck")
-	public String userList() {
-		//List<UserList> userList = adminService.searchAllUser(grade, keyword);
+	public ModelAndView userList(String grade, String keyword) {
+		List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		System.out.println(userList);
 		
-		return "admin/myPage/userCheck";
+		return new ModelAndView("admin/myPage/userCheck", "userList", userList);
+	}
+	
+	/**
+	 *  회원 상세정보
+	 * */
+	@RequestMapping("/myPage/main/userRead/{userNo}")
+	public ModelAndView userRead(@PathVariable Long userNo,String grade, String keyword) {
+		List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		
+		return new ModelAndView("admin/")
 	}
 
 	//카테고리 수정 폼 띄우기
