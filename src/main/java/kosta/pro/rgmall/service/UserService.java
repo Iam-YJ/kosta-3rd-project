@@ -160,9 +160,11 @@ public interface UserService {
 	public void updateDonation(Long userNo, int dona);
 
 	/**
-	 * 찜목록 에서 썸네일 이미지 불러오기
+	 * 찜목록 에서 상품글 목록 불러오기
 	 * */
-	public RegisterGoods selectGoodsThumbnail(Long regNo);
+	public RegisterGoods selectGoods(Long regNo);
+
+	public WishList selectWishNo(Long regNo);
 
 
 

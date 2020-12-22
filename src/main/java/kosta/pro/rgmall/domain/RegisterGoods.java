@@ -80,6 +80,6 @@ public class RegisterGoods {
 	
 	@OneToMany(mappedBy = "registerGoods") 
 	private List<Review> reviewList = new ArrayList<Review>();
-	 
+	
 
 }//class

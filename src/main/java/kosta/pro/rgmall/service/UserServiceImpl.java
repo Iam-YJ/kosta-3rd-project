@@ -144,8 +144,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<WishList> selectWishList(Long userNo) {
 		List<WishList> list=wishListRep.findByUserListUserNo(userNo);
-		 if(list.size()==0)throw new RuntimeException("오류로인해 찜목록을 가져오지 못했습니다.");
+//		if(list.size()==0)throw new RuntimeException("오류로인해 찜목록을 가져오지 못했습니다.");
 		return list;
+	}
+	
+	@Override
+	public WishList selectWishNo(Long regNo) {
+		return wishListRep.findByRegisterGoodsRegNo(regNo);
 	}
 	
 
@@ -157,20 +162,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int deleteWishList(Long wishNo) {
-		// TODO Auto-generated method stub
+		wishListRep.deleteById(wishNo);
 		return 0;
 	}
 
 	@Override
 	public int insertCart(Cart cart) {
-		// TODO Auto-generated method stub
+		cartRep.save(cart);
 		return 0;
 	}
 
 	@Override
 	public List<Cart> selectCart(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartRep.findByUserListUserNo(userNo);
 	}
 
 	@Override
@@ -201,9 +205,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void insertDonation(Donation donation) {
 		Donation dona=donationRep.save(donation);
-		if(dona==null) {
-			throw new RuntimeException("기부가 실패했습니다.");
-		}
+//		if(dona==null) {
+//			throw new RuntimeException("기부가 실패했습니다.");
+//		}
 	}
 	
 	@Override
@@ -214,9 +218,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public Donation selectMyDonation(Long userNo) {
 		Donation dona =donationRep.findByUserListUserNo(userNo);
-		if(dona==null) {
-			throw new RuntimeException("기부가 실패했습니다.");
-		}
+//		if(dona==null) {
+//			throw new RuntimeException("기부가 실패했습니다.");
+//		}
 		return dona;
 	}
 
@@ -238,9 +242,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public RegisterGoods selectGoodsThumbnail(Long regNo) {
+	public RegisterGoods selectGoods(Long regNo) {
 		RegisterGoods registerGoods =registerGoodsRep.findByRegNo(regNo);
-		if(registerGoods==null) throw new RuntimeException("오류로 인해 상품이미지를 불러오지 못했습니다.");
+//		if(registerGoods==null) throw new RuntimeException("오류로 인해 상품이미지를 불러오지 못했습니다.");
 		return registerGoods;
 	}
 

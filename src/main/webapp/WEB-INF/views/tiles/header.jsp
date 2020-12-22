@@ -39,16 +39,20 @@ function logout(){
 						<c:when test="${sessionScope.userList == null}">
 							<a href="${pageContext.request.contextPath}/main/">로그인</a>
 							<a href="${pageContext.request.contextPath}/main/registerBefore">회원가입</a>	
+							<a href="${pageContext.request.contextPath}/main/">주문/배송조회</a>
+							<a href="${pageContext.request.contextPath}/main/">찜목록</a>
+							<a href="${pageContext.request.contextPath}/main/">장바구니</a>
 						</c:when>
 						<c:otherwise>
 							${sessionScope.userList.name}님 환영합니다.
 							<a href="${pageContext.request.contextPath}/user/logout" onclick="logout()">로그아웃</a>
+							<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
+							<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
+							<a href="${pageContext.request.contextPath}/user/cartList">장바구니</a>
 						</c:otherwise>
 					</c:choose>
 					
-					<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
-					<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
-					<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+					
 				</div>
 			</div>
 			<div class="col-xl-1">
