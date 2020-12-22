@@ -19,6 +19,7 @@ import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.service.MainService;
@@ -42,6 +43,7 @@ public class MainController {
 
 		return "main/login";
 	}
+
 	@RequestMapping("/payorder")
 	public String payorder() {
 		return "user/payorder";
@@ -206,6 +208,23 @@ public class MainController {
 		goodsQuestionMap.put("goodsQuestionList", goodsQuestionList);
 
 		ModelAndView mv = new ModelAndView("main/goodsDetail", "goodsQuestionMap", goodsQuestionMap);
+		return mv;
+	}
+
+	/**
+	 * 상품상세보기에서 후기 보는 탭
+	 */
+	@RequestMapping("/selectReview/{regNo}")
+	public ModelAndView selectReview(@PathVariable Long regNo) {
+		List<Review> review = mainService.selectReview(regNo);
+		ModelAndView mv = new ModelAndView();
+		if (review == null) {
+			mv.setViewName("main/review");
+			mv.addObject("review", "리뷰가 존재하지 않습니다.");
+		} else {
+			mv.addObject("review", review);
+			mv.setViewName("main/review");
+		}
 		return mv;
 	}
 

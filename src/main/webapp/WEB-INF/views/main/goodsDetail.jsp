@@ -174,7 +174,8 @@ $(function(){
 				  <a class="nav-link btn btn-outline-success" data-toggle="tab" href="#menu2">상품 문의</a>
 				</li>
 				<li class="nav-item col-xl">
-				  <a class="nav-link btn btn-outline-success" data-toggle="tab" href="#menu3">상품 후기</a>
+				  <a class="nav-link btn btn-outline-success" data-toggle="tab" 
+				  href="#menu3">상품 후기</a>
 				</li>
 			</ul>
 			

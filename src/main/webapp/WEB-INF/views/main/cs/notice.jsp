@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
 </head>
 <body>
 
@@ -16,12 +15,11 @@
 <c:forEach items="${list}" var="list">
 <div class="notice">
     <div class="noticeHeader">
-        <!--button type="button" class="showAll">답변 모두 여닫기</button-->
     </div>
     <ul class="noticeBody">
         <li class="article" id="a1">
         
-            <p class="q"><a href="#a1">${list.title}</a></p>           
+            <p class="q"><a href="${pageContext.request.contextPath}/admin/readNotice/${list.noticeNo}"> ${list.title}</a></p>           
               <p class="a">${list.content}</p>
         </li>
     </ul>
@@ -29,7 +27,7 @@
 </c:forEach>
 <div align=right>
 	<span style="font-size: 9pt;">&lt;<a
-		href="${pageContext.request.contextPath}/admin/write">공지사항 쓰기</a>&gt;
+		href="${pageContext.request.contextPath}/admin/writeNotice">공지사항 쓰기</a>&gt;
 	</span>
 </div>
 </body>

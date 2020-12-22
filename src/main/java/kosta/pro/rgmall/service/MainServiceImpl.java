@@ -13,6 +13,7 @@ import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.repository.AdminRepository;
@@ -195,6 +196,11 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
+	public List<Review> selectReview(Long regNo) {
+		return reviewRep.selectReivew(regNo);
+	}
+	
+	@Override
 	public List<Notice> selectAllNotice() {
 		return noticeRep.findAll();
 	}
@@ -268,6 +274,8 @@ public class MainServiceImpl implements MainService {
 		goodsQuestionRep.updateGoodsQuestion(goodsQuestion.getContent(),goodsQuestion.getQgoodsNo());
 		return 0;
 	}
+
+	
 
 	
 }
