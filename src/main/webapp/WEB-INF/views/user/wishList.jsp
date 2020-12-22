@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-img{width : 150px; height:150px;}
+img#thumbnail{width : 150px; height:150px;}
 </style>
 </head>
 <body>
@@ -19,8 +19,8 @@ img{width : 150px; height:150px;}
 			${map.value.name}<br>
 			${map.value.price}<br>
 			<a href="${pageContext.request.contextPath}/main/goodsDetail/${map.value.regNo}">
-			<img src="${pageContext.request.contextPath}/images/thumbnail/${map.value.thumbnailImg}">
-			</a>
+			<img id="thumbnail"src="${pageContext.request.contextPath}/images/thumbnail/${map.value.thumbnailImg}"></a>
+			바로구매/삭제
 			</fieldset>
 			</div></div></div></div></div>
 		</c:forEach>
