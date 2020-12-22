@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
@@ -169,6 +171,20 @@ public class MainController {
 
 		return mv;
 	}
+	
+	
+	/**
+	 * 공지사항 전체검색
+	 */
+	@RequestMapping("/notice")
+	public String selectAllNotice(Model model) {
+		List<Notice> list = mainService.selectAllNotice();
+		
+		model.addAttribute("list", list);
+		return "main/cs/notice";
+	}
+	
+
 
 	/**
 	 * 상품 상세조회를 하는 Controller

@@ -200,8 +200,7 @@ public class MainServiceImpl implements MainService {
 	
 	@Override
 	public List<Notice> selectAllNotice() {
-		// TODO Auto-generated method stub
-		return null;
+		return noticeRep.findAll();
 	}
 
 	@Override

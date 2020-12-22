@@ -26,8 +26,10 @@ public class Notice {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "notice_no_seq")
 	@SequenceGenerator(sequenceName = "notice_no_seq", name = "notice_no_seq", allocationSize = 1)
 	private Long noticeNo;
+	
 	@Column(nullable = false,length = 512)
 	private String title;
+	
 	@Column(nullable = false,length = 3000)
 	private String content;
 	@CreationTimestamp
