@@ -48,6 +48,7 @@ public class MainController {
 	public ModelAndView csFAQ() {
 		System.out.println("11");
 		List<FAQ> list = adminService.selectAllFAQ();
+		
 		/*
 		 * page처리 Pageable pageable = PageRequest.of(nowPage, 10, Direction.DESC,
 		 * "faqNo"); Page<FAQ> pageList = service.selectAll(pageable);

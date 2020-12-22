@@ -78,13 +78,34 @@ $(function(){
 </script>
 
 </head>
-
-
 <body>
+<div class="csFAQSection">
+	<div class="container-fluid">
+		<c:forEach items="${list}" var="list">
+			<div class="row csFAQ_Question border border-left-0 border-rigth-0">
+				<div class="col-xl-1">
+					<b>Q</b>
+				</div>
+				<div class="col-xl">
+					<a href="#" data-toggle="collapse" data-target="#demo${list.faqNo}">${list.question}</a>
+				</div>
+			</div>
+			<div class="row csFAQ_Answer collapse" id="demo${list.faqNo}">
+				<div class="col-xl-1">
+					<b>A</b>
+				</div>
+				<div class="col-xl">
+					<a href="#">${list.answer}</a>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+</div>
+
 	
 
+<%-- 
 
-<c:forEach items="${list}" var="list">
 
 <div class="faq">
     <div class="faqHeader">
@@ -94,20 +115,19 @@ $(function(){
     <ul class="faqBody">
         <li class="article" id="a1">
         
-            <p class="q"><a href="#a1">${list.question}</a></p>           
-              <p class="a"><a href="${pageContext.request.contextPath}/admin/read/${list.faqNo}">${list.answer}</a></p> 
+            <p class="q"></p>           
+              <p class="a"><a href="${pageContext.request.contextPath}/admin/read/${list.faqNo}"></a></p> 
     
         </li>
     </ul>
 </div>
 	
-</c:forEach>
 
 
 <hr>
 <div align=right>
 <span style="font-size:12pt;">&lt;<a href="${pageContext.request.contextPath}/admin/writeFAQ">FAQ 등록하기</a>&gt;</span></div>
-
+ --%>
 
 </body>
 </html>
