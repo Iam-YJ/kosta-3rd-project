@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +56,7 @@ public class AdminController {
 	/**
 	 * 공지사항 등록하기 폼
 	 */
-	@RequestMapping("/write")
+	@RequestMapping("/writeNotice")
 	public String writeNotice() {
 		
 		return "main/cs/writeNotice";
@@ -72,6 +73,47 @@ public class AdminController {
 		
 		adminService.insertNotice(notice);
 		
+		return "redirect:/main/notice";
+	}
+	
+	/**
+	 * 공지사항 수정등록 폼
+	 */
+	@RequestMapping("/updateNoticeForm")
+	public ModelAndView updateNoticeForm(Long noticeNo) {
+		Notice notice = adminService.selectByNotice(noticeNo);
+		return new ModelAndView("main/cs/updateNoticeForm","notice", notice);
+	}
+	
+	/**
+	 * 공지사항 수정완료
+	 */
+	@RequestMapping("/updateNotice")
+	public String updateNotice(Notice notice) {
+		adminService.updateNotice(notice);
+		return "redirect:/admin/readNotice/"+ notice.getNoticeNo();
+	}
+	
+	/** 
+	 *  공지사항 상세보기
+	 * */
+	@RequestMapping("/readNotice/{noticeNo}")
+	public ModelAndView readNotice(@PathVariable Long noticeNo) {
+		
+		Notice notice= adminService.selectByNotice(noticeNo);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main/cs/readNotice"); // /WEB-INF/views/read.jsp
+		mv.addObject("notice", notice);
+		
+		return mv;
+	}
+	
+	/**
+	 * 삭제하기
+	 */
+	@RequestMapping("/deleteNotice")
+	public String deleteNotice(Long noticeNo) {
+		adminService.deleteNotice(noticeNo);
 		return "redirect:/main/notice";
 	}
 	
