@@ -28,6 +28,14 @@ import lombok.ToString;
 @ToString
 public class RegisterGoods {
 	
+	
+	
+	public RegisterGoods(Long regNo) {
+		super();
+		this.regNo = regNo;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "REG_NO_SEQ")
 	@SequenceGenerator(sequenceName = "REG_NO_SEQ", name = "REG_NO_SEQ", allocationSize = 1)

@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import kosta.pro.rgmall.dao.MainDAO;
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.GoodsAnswer;
+import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
@@ -211,6 +213,60 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<SubCategories> selectSubCategories(Long mainCateNo) {
 		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
+	}
+	
+	@Override
+	public List<GoodsQuestion> selectGoodsQuestions(Long regNo) {
+		List<GoodsQuestion> goodsQuestion = goodsQuestionRep.selectGoodsQuestions(regNo);
+		
+		
+		return goodsQuestion;
+	}
+
+	@Override
+	public List<GoodsAnswer> selectGoodsAnswer(long qgoodsNo) {
+		List<GoodsAnswer> goodsAnswer = goodsAnswerRep.selectGoodsAnswer(qgoodsNo);
+		return goodsAnswer;
+	}
+
+	@Override
+	public int updateGoodsAnswer(GoodsAnswer goodsAnswer) {
+		System.out.println(goodsAnswer.getContent());
+		System.out.println(goodsAnswer.getGoodsQuestion().getQgoodsNo());
+		int result = goodsAnswerRep.updateGoodsAnswer(goodsAnswer.getContent(),goodsAnswer.getGoodsQuestion().getQgoodsNo());
+		return result;
+	}
+
+	@Override
+	public int deleteGoodsAnswer(long qgoodsNo) {
+		int result = goodsAnswerRep.deleteGoodsAnswer(qgoodsNo);
+		return result;
+	}
+
+	@Override
+	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
+		goodsAnswerRep.save(goodsAnswer);
+		
+	}
+
+	@Override
+	public void insertGoodsQuestion(GoodsQuestion goodsQuestion) {
+		goodsQuestionRep.save(goodsQuestion);
+		
+	}
+
+	@Override
+	public void deleteGoodsQuestion(Long regNo) {
+		goodsQuestionRep.deleteById(regNo);
+		
+	}
+
+	@Override
+	public int updateGoodsQuestion(GoodsQuestion goodsQuestion) {
+		System.out.println(goodsQuestion.getContent());
+		System.out.println(goodsQuestion.getQgoodsNo());
+		goodsQuestionRep.updateGoodsQuestion(goodsQuestion.getContent(),goodsQuestion.getQgoodsNo());
+		return 0;
 	}
 
 	

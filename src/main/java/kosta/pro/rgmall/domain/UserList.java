@@ -27,6 +27,15 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserList {
 	
+	
+	
+
+	public UserList(Long userNo) {
+		super();
+		this.userNo = userNo;
+	}
+
+
 
 	public UserList(String email) {
 		this.email = email;

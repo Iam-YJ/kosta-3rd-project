@@ -3,9 +3,9 @@ package kosta.pro.rgmall.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.GoodsAnswer;
+import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
@@ -122,6 +122,43 @@ public interface MainService {
 	 * */
 	public List<SubCategories> selectSubCategories(Long mainCateNo);
 
+	/**
+	 * 상품문의 조회
+	 */
+	public List<GoodsQuestion> selectGoodsQuestions(Long regNo);
+
+	/**
+	 * 상품 답변 조회
+	 */
+	public List<GoodsAnswer> selectGoodsAnswer(long qgoodsNo);
 	
+	/**
+	 * 상품 답변 수정 (only 관리자)
+	 */
+	public int updateGoodsAnswer(GoodsAnswer goodsAnswer);
 	
+	/**
+	 * 상품 답변 삭제 (only 관리자)
+	 */
+	public int deleteGoodsAnswer(long qgoodsNo);
+	
+	/**
+	 * 상품 답변 추가 (only 관리자)
+	 */
+	public void insertGoodsAnswer(GoodsAnswer goodsAnswer);
+	
+	/**
+	 * 상품 문의 추가(only 회원)
+	 */
+	public void insertGoodsQuestion(GoodsQuestion goodsQuestion);
+	
+	/**
+	 * 상품 문의 삭제(only 회원)
+	 */
+	public void deleteGoodsQuestion(Long regNo);
+	
+	/**
+	 * 상품 문의 수정(only 회원)
+	 */
+	public int updateGoodsQuestion(GoodsQuestion goodsQuestion);
 }
