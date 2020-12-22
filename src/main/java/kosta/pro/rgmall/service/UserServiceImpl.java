@@ -1,7 +1,6 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +10,7 @@ import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
+import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
@@ -61,8 +61,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateUserList(UserList userList) {
-		// TODO Auto-generated method stub
-		return 0;
+		String passWord = userList.getPassWord();
+		String email = userList.getEmail();
+		String addr  = userList.getAddr();
+		String phone = userList.getPhone();
+		Long userNo = userList.getUserNo();
+		return userListRep.updateUserList(passWord,addr,phone, email,userNo);
 	}
 
 	@Override
@@ -133,15 +137,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int insertWishList(WishList wishList) {
-		// TODO Auto-generated method stub
+		wishListRep.save(wishList);
 		return 0;
 	}
 
 	@Override
 	public List<WishList> selectWishList(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<WishList> list=wishListRep.findByUserListUserNo(userNo);
+		 if(list.size()==0)throw new RuntimeException("오류로인해 찜목록을 가져오지 못했습니다.");
+		return list;
 	}
+	
 
 	@Override
 	public int updateWishList(WishList wishList) {
@@ -180,27 +186,43 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserList selectPointandGrade(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public UserList selectPointandGrade(String userId) {
+		UserList userList = userListRep.selectPointandGrade(userId);
+		return userList;
+	}
+	
+	@Override
+	public List<UserGrade> selectAllUserGrade() {
+		List<UserGrade> userGrade = userGradeRep.findAll();
+		return userGrade;
+		
 	}
 
 	@Override
-	public int insertDonation(Donation donation) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertDonation(Donation donation) {
+		Donation dona=donationRep.save(donation);
+		if(dona==null) {
+			throw new RuntimeException("기부가 실패했습니다.");
+		}
 	}
-
+	
 	@Override
-	public int selectMyDonation(Long userNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateDonation(Long userNo, int dona ) {
+		donationRep.updateDonation(dona, userNo);
+	}
+	
+	@Override
+	public Donation selectMyDonation(Long userNo) {
+		Donation dona =donationRep.findByUserListUserNo(userNo);
+		if(dona==null) {
+			throw new RuntimeException("기부가 실패했습니다.");
+		}
+		return dona;
 	}
 
 	@Override
 	public List<Donation> selectAllDonation() {
-		// TODO Auto-generated method stub
-		return null;
+		return donationRep.findAll();
 	}
 
 	@Override
@@ -213,6 +235,13 @@ public class UserServiceImpl implements UserService {
 	public UserGrade loginAPIGrade() {
 		UserGrade userGradeResult = userGradeRep.findById((long) 4).orElse(null);
 		return userGradeResult;
+	}
+
+	@Override
+	public RegisterGoods selectGoodsThumbnail(Long regNo) {
+		RegisterGoods registerGoods =registerGoodsRep.findByRegNo(regNo);
+		if(registerGoods==null) throw new RuntimeException("오류로 인해 상품이미지를 불러오지 못했습니다.");
+		return registerGoods;
 	}
 
 

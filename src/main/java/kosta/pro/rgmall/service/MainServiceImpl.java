@@ -126,27 +126,54 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public String findUserId(UserList userList) {
+		String result = null;
 		String name = userList.getName();
 		String phone = userList.getPhone();
 		String email = userList.getEmail();
 		UserList user = userListRep.findUserId(name, phone, email);
-		return user.getUserId();
+		if(user==null) {
+			result = "";
+		}else {
+			result = user.getUserId();
+		}
+		return result;
 	}
 
 	@Override
-	public int findUserPwd(UserList userList) {
-		// TODO Auto-generated method stub
+	public UserList findUserPwd(UserList userList) {
+		String userId = userList.getUserId();
+		String name = userList.getName();
+		String phone = userList.getPhone();
+		String email = userList.getEmail();
+		return userListRep.findUserPwd(userId, name, phone, email);
+	
+	}
+	
+	@Override
+	public int updatePassWord(UserList userList) {
+		String passWord = userList.getPassWord();
+		Long userNo = userList.getUserNo();
+		userListRep.updatePassWord(passWord, userNo);
 		return 0;
 	}
 
+	
 	/**
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
 	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
 	@Override
-	public List<RegisterGoods> selectAllGoods(int mainCategoryNo, int subCategoryNo, int sortNo) {
+	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo) {
 
-		List<RegisterGoods> list =  registerGoodsRep.findAll();
+		List<RegisterGoods> list = null;
+			
+		if(mainCategoryNo == 0) {
+			list =  registerGoodsRep.findAll();
+		}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+			list = registerGoodsRep.findAllWithMain(mainCategoryNo);
+		}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+		}
 		
 		return list;
 	}
@@ -159,8 +186,10 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public RegisterGoods goodsDetail(Long regNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		RegisterGoods registerGoods = registerGoodsRep.findById(regNo).orElse(null);
+		
+		return registerGoods;
 	}
 
 	@Override
@@ -184,4 +213,5 @@ public class MainServiceImpl implements MainService {
 		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
 	}
 
+	
 }

@@ -9,10 +9,15 @@
 <style type="text/css">
 </style>
 <script>
-	$(document).ready(function(){
-		
-		
-	});//ready
+$(document).ready(function(){
+	
+	
+});//ready
+
+function logout(){
+	alert("로그아웃 되었습니다.");
+}
+
 </script>
 </head>
 <body>
@@ -30,11 +35,20 @@
 			</div>
 			<div class="col-xl-5">
 				<div style="text-align: right">
-					<a href="${pageContext.request.contextPath}/main/">로그인</a>
-					<a href="${pageContext.request.contextPath}/main/registerForm">회원가입</a>
+					<c:choose>
+						<c:when test="${sessionScope.userList == null}">
+							<a href="${pageContext.request.contextPath}/main/">로그인</a>
+							<a href="${pageContext.request.contextPath}/main/registerBefore">회원가입</a>	
+						</c:when>
+						<c:otherwise>
+							${sessionScope.userList.name}님 환영합니다.
+							<a href="${pageContext.request.contextPath}/user/logout" onclick="logout()">로그아웃</a>
+						</c:otherwise>
+					</c:choose>
+					
 					<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
-					<a href="#">찜목록</a>
-					<a href="#">장바구니</a>
+					<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
+					<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
 				</div>
 			</div>
 			<div class="col-xl-1">
@@ -68,10 +82,10 @@
 				<div class="dropdown">
 					<a href="${pageContext.request.contextPath}/main/goodsList/0/0/0" class="btn btn-success">전체상품조회</a>
 			    	<div class="dropdown-content">
-						<a class="dropdown-item btn btn-success" href="#">과일</a>
-						<a class="dropdown-item btn btn-success" href="#">채소</a>
-						<a class="dropdown-item btn btn-success" href="#">주곡/잡곡</a>
-						<a class="dropdown-item btn btn-success" href="#">견과류</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/1/0/0">과일</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/2/0/0">채소</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/3/0/0">주곡/잡곡</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/4/0/0">견과류</a>
 					</div>
 			  	</div><!-- dropdown -->
 			</div><!-- col -->
