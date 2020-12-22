@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#find').click(function(){
+		location.href="${pageContext.request.contextPath}/main/userForgetIdPwd";
+	})
+	
+})
+</script>
 </head>
 <body>
 
@@ -41,7 +49,7 @@
 												</div>
 												<div class="row">
 													<div class="col-xl-9">
-														<a href="#">forgot ID or PassWord</a>
+														<a href="${pageContext.request.contextPath}/main/userForgetIdPwd">forgot ID or PassWord</a>
 													</div>
 													<input type="submit" class="btn btn-success col-xl" value="로그인" style="margin-right: 15px">
 												</div>
@@ -146,5 +154,6 @@
 		</div><!-- row -->
 	</div>
 </div><!-- login_section -->
+
 </body>
 </html>

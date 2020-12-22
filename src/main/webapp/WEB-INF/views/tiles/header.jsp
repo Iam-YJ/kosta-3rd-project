@@ -47,8 +47,8 @@ function logout(){
 					</c:choose>
 					
 					<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
-					<a href="#">찜목록</a>
-					<a href="#">장바구니</a>
+					<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
+					<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
 				</div>
 			</div>
 			<div class="col-xl-1">

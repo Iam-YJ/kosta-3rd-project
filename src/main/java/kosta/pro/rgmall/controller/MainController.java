@@ -28,6 +28,10 @@ public class MainController {
 
 	private final MainService mainService;
 	private final UserService userService;
+	
+	
+	@RequestMapping("/{url}")
+	public void url() {}
 
 	@RequestMapping("/")
 	public String main() {
@@ -96,23 +100,54 @@ public class MainController {
 		
 		if (userList == null) {
 			result = "main/loginFail";
-			
 		} else {
 			session.setAttribute("userList", userList);
 			result = "main/index";
 		}
-		
 		return result;
 	}
 
-	@RequestMapping("/findUserId")
-	public String findUserId(UserList userList) {
-		if (mainService.findUserId(userList) == null) {
 
-		}
-		return null;
+	//아이디 비번찾기 폼
+	@RequestMapping("/userForgetIdPwd")
+	public void userForgetIdPwd() {
+	
 	}
-
+		
+	//아이디찾기
+	@RequestMapping("/findUserId")
+	public ModelAndView findUserId(UserList userList) {
+		ModelAndView mv = new ModelAndView();
+		if(mainService.findUserId(userList)=="") {
+			mv.setViewName("main/failUserSelect");
+		}else {
+			mv.addObject("userId",mainService.findUserId(userList));
+			mv.setViewName("main/sucUserSelId");
+		}
+		return mv;
+	}
+	
+	//비밀번호찾기
+	@RequestMapping("/findUserPwd")
+	public ModelAndView findUserPwd(UserList userList) {
+		ModelAndView mv = new ModelAndView();
+		if(mainService.findUserPwd(userList)==null) {
+			mv.setViewName("main/failUserSelect");
+		}else {
+			mv.addObject("userNo",mainService.findUserPwd(userList).getUserNo());
+			mv.setViewName("main/sucUserSelPwd");
+		}
+		return mv;
+	}
+	
+	//비밀번호변경
+	@RequestMapping("/updatepassWord/{user.userNo}")
+	public String updatepassWord(UserList userList, @PathVariable("user.userNo") Long userNo) {
+		userList.setUserNo(userNo);
+		mainService.updatePassWord(userList);
+		return "main/login";
+	}
+	
 	/**
 	 * 상품리스트를 조회를 하는 Controller
 	 */
