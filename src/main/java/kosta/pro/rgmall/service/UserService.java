@@ -64,7 +64,7 @@ public interface UserService {
 	/**
 	 * 구매후기 조회하기
 	 * */
-	public int selectReview(Long userNo);
+	public List<Review> selectReview(Long userNo);
 	
 	/**
 	 * 구매후기 수정하기

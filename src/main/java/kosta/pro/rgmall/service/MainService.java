@@ -9,6 +9,7 @@ import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 
@@ -101,6 +102,11 @@ public interface MainService {
 	 * 인수 : 글번호
 	 */
 	public RegisterGoods goodsDetail(Long regNo);
+	
+	/**
+	 * 상품 후기 보기
+	 * */
+	public List<Review> selectReview(Long regNo);
 	
 	/**
 	 * 공지사항

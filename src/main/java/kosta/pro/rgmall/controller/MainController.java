@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -13,8 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kosta.pro.rgmall.domain.GoodsAnswer;
+import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.service.MainService;
@@ -174,10 +176,42 @@ public class MainController {
 	@RequestMapping("/goodsDetail/{regNo}")
 	public ModelAndView goodsDetail(@PathVariable Long regNo) {
 
-		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
+		Map<String, Object> goodsQuestionMap = new HashMap<String, Object>();
+		List<GoodsAnswer> goodsAnswerList = null;
 
-		ModelAndView mv = new ModelAndView("main/goodsDetail", "registerGoods", registerGoods);
+		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
+	
+		/*
+		 * List<GoodsQuestion> goodsQuestionList =
+		 * mainService.selectGoodsQuestions(regNo); for (int i = 0; i <
+		 * goodsQuestionList.size(); i++) { goodsAnswerList =
+		 * mainService.selectGoodsAnswer((long) goodsQuestionList.get(i).getQgoodsNo());
+		 * }
+		 */
+		
+		//goodsQuestionMap.put("registerGoods", registerGoods);
+		//goodsQuestionMap.put("goodsQuestionList", goodsQuestionList);
+
+		ModelAndView mv = new ModelAndView("main/goodsDetail", "goodsQuestionMap", goodsQuestionMap);
 		return mv;
 	}
+	
+	/**
+	 * 상품상세보기에서 후기 보는 탭
+	 * */
+	@RequestMapping("/selectReview/{regNo}")
+	public ModelAndView selectReview(@PathVariable Long regNo) {
+		List<Review> review = mainService.selectReview(regNo);
+		ModelAndView mv = new ModelAndView();
+		if(review==null) {
+			mv.setViewName("main/review");
+			mv.addObject("review", "리뷰가 존재하지 않습니다.");
+		}else {
+			mv.addObject("review",review);
+			mv.setViewName("main/review");
+		}
+		return mv;
+	}
+	
 
 }// class

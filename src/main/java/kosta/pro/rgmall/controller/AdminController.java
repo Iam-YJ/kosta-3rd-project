@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
@@ -32,6 +35,22 @@ public class AdminController {
 	private final MainService mainService;
 	private final MainCategories mainCategories;
 	private final SubCategories subCategories;
+	
+	/**
+	 * 관리자 로그인
+	 * */
+	@RequestMapping("adminLogin")
+	public String adminLogin(String adminId, String password, HttpSession session) {
+		String  result = null;
+		Admin admin = adminService.adminLogin(adminId, password);
+		if(admin==null) {
+			result = "main/loginFail";
+		} else {
+			session.setAttribute("userList", admin);
+			result = "main/index";
+		}
+			return result;
+	}
 	
 	/**
 	 * 전체검색

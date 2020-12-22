@@ -11,6 +11,7 @@ import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.repository.AdminRepository;
@@ -193,6 +194,11 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
+	public List<Review> selectReview(Long regNo) {
+		return reviewRep.selectReivew(regNo);
+	}
+	
+	@Override
 	public List<Notice> selectAllNotice() {
 		// TODO Auto-generated method stub
 		return null;
@@ -213,6 +219,8 @@ public class MainServiceImpl implements MainService {
 	public List<SubCategories> selectSubCategories(Long mainCateNo) {
 		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
 	}
+
+	
 
 	
 }
