@@ -114,14 +114,21 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void updateFAQ(FAQ faq) {
+		
+		System.out.println("===============================");
+		System.out.println("faq =" + faq);
+		
+		System.out.println("===============================");
 		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		System.out.println("dbFaq"+dbFaq);
+//		
 		if(dbFaq ==null) {
 			throw new RuntimeException("FAQ번호 오류로 수정 실패");
 		}
-		
+//		
 		dbFaq.setQuestion(faq.getQuestion());
 		dbFaq.setAnswer(faq.getAnswer());
-		
+//		
 	}
 
 	@Override
@@ -132,6 +139,12 @@ public class AdminServiceImpl implements AdminService {
 		}
 		     
 		FAQRep.deleteById(faq.getFaqNo());
+	}
+	
+	@Override
+	public FAQ selectByFaq(Long faqNo) {
+		
+		return FAQRep.findById(faqNo).orElse(null);
 	}
 
 	@Override
@@ -231,8 +244,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<UserList> searchAllUser(String grade, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		return userListRep.findAll();
 	}
 
 

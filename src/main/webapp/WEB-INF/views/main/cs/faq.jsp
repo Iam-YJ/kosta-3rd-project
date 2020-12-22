@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <style>
 /* FAQ */
 .faq{border-bottom:0px solid #ddd;margin:1em 0;}
@@ -35,7 +35,7 @@
 
 
 <script>
-jQuery(function($){
+$(function(){
     // Frequently Asked Question
     var article = $('.faq>.faqBody>.article');
     article.addClass('hide');
@@ -65,7 +65,14 @@ jQuery(function($){
             article.find('.a').slideUp(100);
         }
     });
- 
+	
+    $("input[value=등록하기]").click(function(){
+        
+		   $("#writeFAQ").attr("action", "${pageContext.request.contextPath}/admin/writeForm");
+		   $("#writeFAQ").submit();
+	   
+})
+  
     
 });
 </script>
@@ -74,25 +81,32 @@ jQuery(function($){
 
 
 <body>
-	<h1>admin/myPage/main.jsp</h1>
+	
+
 
 <c:forEach items="${list}" var="list">
+
 <div class="faq">
     <div class="faqHeader">
         <!--button type="button" class="showAll">답변 모두 여닫기</button-->
+        
     </div>
     <ul class="faqBody">
         <li class="article" id="a1">
         
-            <p class="q"><a href="#a1">${list.answer}</a></p>           
-              <p class="a">${list.question}</p>
+            <p class="q"><a href="#a1">${list.question}</a></p>           
+              <p class="a"><a href="${pageContext.request.contextPath}/admin/read/${list.faqNo}">${list.answer}</a></p> 
+    
         </li>
     </ul>
 </div>
+	
 </c:forEach>
 
-<a href="${pageContext.request.contextPath}/views/admin/myPage/FAQRead.jsp">faq 관리</a>
 
+<hr>
+<div align=right>
+<span style="font-size:12pt;">&lt;<a href="${pageContext.request.contextPath}/admin/writeFAQ">FAQ 등록하기</a>&gt;</span></div>
 
 
 </body>

@@ -3,10 +3,10 @@ package kosta.pro.rgmall.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,13 +32,12 @@ public class AdminController {
 	private final MainService mainService;
 	private final MainCategories mainCategories;
 	private final SubCategories subCategories;
-
 	
 	/**
 	 * 전체 검색
 	 */
-	@RequestMapping("/list")
-	public String selectAllFAQ(Model model) {
+	@RequestMapping("/cs/list")
+	public String faqList(Model model) {
 		List<FAQ> list = adminService.selectAllFAQ();
 		/*
 		 * for(FAQ f : list) { System.out.println(f); }
@@ -77,27 +76,66 @@ public class AdminController {
 	}
 	
 	/*
-	 * faq
+	 * faq 수정등록 폼
 	 */
-
+	@RequestMapping("/updateForm")
+	public ModelAndView faqUpdateForm(Long faqNo) {
+		FAQ faq = adminService.selectByFaq(faqNo);
+		System.out.println(faq);
+		return new ModelAndView("main/cs/updateFAQForm","faq", faq);
+	}
 	/*
 	 * 수정완료하기
 	 */
 	@RequestMapping("/update")
-	public String update(FAQ faq) {
+	public String faqUpdate(FAQ faq) {
 		adminService.updateFAQ(faq);
 
-		return "redirect:/board/read/"; // controller에서 controller 로 찾아 가는데 기존에 가지고있는 것은 버리고
+		return "redirect:/admin/read/"+faq.getFaqNo();// controller에서 controller 로 찾아 가는데 기존에 가지고있는 것은 버리고
 	}
 
 	/*
 	 * 삭제하기
 	 */
 	@RequestMapping("/delete")
-	public String delete(FAQ faq) {
+	public String faqDelete(FAQ faq) {
 		adminService.deleteFAQ(faq);
 
-		return "redirect:/board/list";
+		return "redirect:/admin/cs/list";
+	}
+	
+	/* 
+	 *  FAQ 상세보기
+	 * */
+	@RequestMapping("/read/{faqNo}")
+	public ModelAndView read(@PathVariable Long faqNo) {
+		
+		FAQ faq = adminService.selectByFaq(faqNo);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main/cs/readFAQ"); // /WEB-INF/views/read.jsp
+		mv.addObject("faq", faq);
+		
+		return mv;
+	}
+	
+	/**
+	 *  FAQ 등록하기 폼
+	 * */
+	@RequestMapping("/writeFAQ")
+	public String write() {
+		return "main/cs/writeFAQ";
+	}
+	
+	/**
+	 *  FAQ 등록하기
+	 * */
+	@RequestMapping("/insertFAQ")
+	public String insert(String question, String answer) {
+		
+		FAQ faq = new FAQ(null,question,answer);
+		adminService.insertFAQ(faq);
+		
+		return "redirect:/admin/cs/list";
 	}
 
 	@RequestMapping("myPage/main")
@@ -150,6 +188,16 @@ public class AdminController {
 
 	}// insertGoods
 	
+	/**
+	 *  회원정보 검색
+	 * */
+	@RequestMapping("/myPage/main/userCheck")
+	public String userList() {
+		//List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		
+		return "admin/myPage/userCheck";
+	}
+
 	//카테고리 수정 폼 띄우기
 	@RequestMapping("/myPage/modiCategories")
 	public ModelAndView modiCategories() {
