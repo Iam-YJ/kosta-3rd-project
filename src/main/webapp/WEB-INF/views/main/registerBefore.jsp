@@ -166,23 +166,5 @@ $(document).ready(function(){
 		</div><!-- row -->
 	</div><!-- container -->
 </div><!-- register_section -->
-
-
-
-
-<h1>main/registerForm.jsp</h1>
-<form action="${pageContext.request.contextPath}/main/register" id="regForm" method="post">
-이름 : <input type="text" name = "name"><br>
-아이디 : <input type="text" name = "userId"><span id="idCheckView"></span><br>
-비밀번호 : <input type="password" name = "passWord"><Br>
-비밀번호확인 : <input type="password" name = "passWordCheck"><span id="pwdCheckSpan"></span><br>
-주소 : <input type="text" name = "addr"><Br>
-전화번호 : <input type="text" name = "phone"><br>
-E-Mail : <input type="text" name = "email"><br>
-<input type="submit" value="Register Member">
-</form>
-
-
-
 </body>
 </html>

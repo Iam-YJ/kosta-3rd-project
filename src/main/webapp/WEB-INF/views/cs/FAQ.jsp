@@ -74,7 +74,7 @@ jQuery(function($){
 
 
 <body>
-	<h1>admin/myPage/main.jsp</h1>
+	<h1>FAQ</h1>
 
 <c:forEach items="${list}" var="list">
 <div class="faq">

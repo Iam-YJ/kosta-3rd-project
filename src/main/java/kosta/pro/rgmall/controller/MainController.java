@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,26 @@ public class MainController {
 	private final MainService mainService;
 	private final UserService userService;
 	
+	//고객센터 - 메인페이지
+	@RequestMapping("/cs/main")
+	public ModelAndView csMain() {
+		
+		return new ModelAndView("cs/main");
+	}
+	
+	//고객센터 - FAQ
+	@RequestMapping("/cs/FAQ")
+	public ModelAndView csFAQ() {
+		
+		return new ModelAndView("cs/FAQ");
+	}
+	
+	//고객센터 - 공지사항
+	@RequestMapping("/cs/notice")
+	public ModelAndView csNotice() {
+		
+		return new ModelAndView("cs/notice");
+	}
 	
 	@RequestMapping("/{url}")
 	public void url() {}

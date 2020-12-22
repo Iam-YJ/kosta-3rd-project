@@ -28,11 +28,79 @@ public class UserController {
 	private final UserService userService;
 	private final MainService mainService;
 	
-	//개인정보 수정전 비밀번호 확인폼
-	@RequestMapping("/mypage/passWordCheck")
-	public String passWordCheck() {
-		return "user/myPage/passWordCheck";
+	//마이페이지 기본 폼 띄우기
+	@RequestMapping("/myPage")
+	public String myPageMain() {
+		return "user/myPageForm";
 	}
+	
+	//마이페이지 주문목록/배송 조회 폼
+	@RequestMapping("/myPage/userOrderList")	
+	public ModelAndView userOrderList() {
+		return new ModelAndView("myPage/userOrderList");
+	}
+	
+	//마이페이지 취소/환불내용 조회 폼
+	@RequestMapping("/myPage/userOrderCancelList")	
+	public ModelAndView userOrderCancelList() {
+		return new ModelAndView("myPage/userOrderCancelList");
+	}
+	
+	//마이페이지 상품문의내역 조회
+	@RequestMapping("/myPage/userGoodsQuestionList")	
+	public ModelAndView userGoodsQuestionList() {
+		return new ModelAndView("myPage/userGoodsQuestionList");
+	}
+	
+	//마이페이지 구매후기 내역 조회
+	@RequestMapping("/myPage/userGoodsReviewList")	
+	public ModelAndView userGoodsReviewList() {
+		return new ModelAndView("myPage/userGoodsReviewList");
+	}
+	
+	//마이페이지 찜 목록 조회
+	@RequestMapping("/myPage/userWishList")	
+	public ModelAndView userWishList() {
+		return new ModelAndView("myPage/userWishList");
+	}
+	
+	//마이페이지 장바구니 목록 조회
+	@RequestMapping("/myPage/userCartList")	
+	public ModelAndView userCartList() {
+		return new ModelAndView("myPage/userCartList");
+	}
+	
+	//개인정보확인/수정 - 개인정보 수정전 비밀번호 확인폼
+	@RequestMapping("/myPage/passWordCheck")
+	public ModelAndView userPassWordCheck() {
+		return new ModelAndView("myPage/passWordCheck");
+	}
+	
+	//포인트/등급 조회
+	@RequestMapping("/myPage/userPointGradeList")	
+	public ModelAndView userPointGradeList() {
+		return new ModelAndView("myPage/userPointGradeList");
+	}
+	
+	//포인트 기부
+	@RequestMapping("/myPage/userPointDonate")	
+	public ModelAndView userPointDonate(HttpSession session) {
+		
+		UserList userList = (UserList)session.getAttribute("userList");
+		
+		ModelAndView mv = new ModelAndView("myPage/donationForm");
+		//mv.addObject("donaPoint", userService.selectMyDonation((long) 3).getDonaPoint());
+		//mv.addObject("donaList", userService.selectAllDonation());
+		
+		return mv;
+	}
+	
+	
+	
+	
+	
+	
+
 		
 	//개인정보수정폼
 	@RequestMapping("/mypage/updateUserListForm")
@@ -50,12 +118,8 @@ public class UserController {
 	}
 	
 	@RequestMapping("myPage/donationForm")
-	public ModelAndView donationForm(Long userNo) {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/myPage/donationForm");
-		mv.addObject("donaPoint", userService.selectMyDonation((long) 3).getDonaPoint());
-		mv.addObject("donaList", userService.selectAllDonation());
-		return mv;
+	public ModelAndView donationForm() {
+		return null;
 	}//donationForm
 	
 	@RequestMapping("myPage/donation")
@@ -80,7 +144,7 @@ public class UserController {
 		UserList userList = userService.selectPointandGrade(userId); //임의 회원 정보 넣음
 		List<UserGrade> userGradeList = userService.selectAllUserGrade();
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/myPage/main");
+		mv.setViewName("myPage/main");
 		mv.addObject("userList", userList);
 		mv.addObject("userGradeList",userGradeList);
 		return mv;

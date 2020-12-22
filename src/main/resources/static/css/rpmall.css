@@ -10,7 +10,6 @@ input[type=password]{
 	font-family: 'default', serif;
 }
 
-
 .headerTop {
 	margin-top: 10px;
 }
@@ -180,6 +179,38 @@ input[type=password]{
 	font-size: 20px;
 }
 
+.myPageFrame{
+	margin: 30px;
+}
+
+.myPageFrame .myPageMenuSection a{
+	color : black;
+	font-size: 18px;
+	margin-left: 15px;
+	padding: 5px;
+}
+
+.myPageFrame .myPageContentSection{
+	padding: 25px;
+}
+
+.csFrame .csMenuSection a{
+	color : black;
+	font-size: 25px;
+	margin-left: 10px;
+	padding: 10px;
+}
+
+.csFrame .csMenuSection{
+	color : black;
+	font-size: 25px;
+	margin-left: 10px;
+	padding: 10px;
+}
+
+.csFrame .csContentSection{
+	padding: 25px;	
+}
 
 .footer{
 	margin-top: 20px;	

@@ -34,6 +34,119 @@ public class AdminController {
 	private final SubCategories subCategories;
 	
 	/**
+	 * 관리자 마이페이지 - 상품등록
+	 */
+	@RequestMapping("/myPage/insertGoodsForm")
+	public ModelAndView insertGoodsForm(Model model) {
+			model.addAttribute("list", mainService.selectCategories());
+		return new ModelAndView("myPage/adminInsertGoodsForm");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 판매상품목록 조회
+	 */
+	@RequestMapping("/myPage/goodsList")
+	public ModelAndView goodsList() {
+		return new ModelAndView("myPage/adminGoodsList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 신규 주문조회
+	 */
+	@RequestMapping("/myPage/newOrderList")
+	public ModelAndView newOrderList() {
+		return new ModelAndView("myPage/adminNewOrderList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 상품 배송조회
+	 */
+	@RequestMapping("/myPage/orderDeliveryList")
+	public ModelAndView orderDeliveryList() {
+		return new ModelAndView("myPage/adminOrderDeliveryList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 환불신청 상품조회
+	 */
+	@RequestMapping("/myPage/orderRefundList")
+	public ModelAndView orderRefundList() {
+		return new ModelAndView("myPage/adminOrderRefundList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 재고량 조회
+	 */
+	@RequestMapping("/myPage/goodsStockList")
+	public ModelAndView goodsStockList() {
+		return new ModelAndView("myPage/adminGoodsStockList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 광고상품 조회
+	 */
+	@RequestMapping("/myPage/goodsADList")
+	public ModelAndView goodsADList() {
+		return new ModelAndView("myPage/adminGoodsADList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 공지사항
+	 */
+	@RequestMapping("/myPage/noticeList")
+	public ModelAndView noticeList() {
+		return new ModelAndView("myPage/adminNoticeList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - FAQ
+	 */
+	@RequestMapping("/myPage/FAQList")
+	public ModelAndView FAQList() {
+		return new ModelAndView("myPage/adminFAQList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 상품문의 내역
+	 */
+	@RequestMapping("/myPage/goodsQuestionList")
+	public ModelAndView GoodsQuestionList() {
+		return new ModelAndView("myPage/adminGoodsQuestionList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 구매후기 내역
+	 */
+	@RequestMapping("/myPage/goodsReviewList")
+	public ModelAndView GoodsReviewList() {
+		return new ModelAndView("myPage/adminGoodsReviewList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 상품 카테고리
+	 */
+	@RequestMapping("/myPage/categoryList")
+	public ModelAndView categoryList() {
+		return new ModelAndView("myPage/adminCategoryList");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 매출조회
+	 */
+	@RequestMapping("/myPage/profit")
+	public ModelAndView profit() {
+		return new ModelAndView("myPage/adminProfit");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 회원조회
+	 */
+	@RequestMapping("/myPage/clientList")
+	public ModelAndView clientList() {
+		return new ModelAndView("myPage/adminClientList");
+	}
+	
+	/**
 	 * 전체검색
 	 */
 	@RequestMapping("/notice")
@@ -41,7 +154,6 @@ public class AdminController {
 		List<Notice> list = mainService.selectAllNotice();
 		
 		model.addAttribute("list", list);
-		
 	}
 	
 	
@@ -91,11 +203,6 @@ public class AdminController {
 	@RequestMapping("myPage/main")
 	public void adminMyPage() {
 	};
-
-	@RequestMapping("myPage/insertGoodsForm")
-	public void insertGoodsForm(Model model) {
-		model.addAttribute("list", mainService.selectCategories());
-	}// insertGoodsForm
 
 	@PostMapping(value = "/subcategories")
 	@ResponseBody

@@ -8,12 +8,7 @@
 <title>Insert title here</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$('#find').click(function(){
-		location.href="${pageContext.request.contextPath}/main/userForgetIdPwd";
-	})
-	
-})
+
 </script>
 </head>
 <body>
