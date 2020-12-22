@@ -39,75 +39,80 @@ public class MainController {
 	public String kakaoLogin(@PathVariable String userEmail, @PathVariable String userNick) {
 
 		System.out.println("userEmail : " + userEmail);
-		UserGrade userGrade = userService.loginAPIGrade(); //유저에서 등급 불러올 때만
-		
-		UserList userList = new UserList(999L, "test", "test", "test", "test", "test", userEmail, 0, "test",userGrade);
+		UserGrade userGrade = userService.loginAPIGrade(); // 유저에서 등급 불러올 때만
+
+		UserList userList = new UserList(999L, "test", "test", "test", "test", "test", userEmail, 0, "test", userGrade);
 		mainService.userRegisterKakao(userList);
 		return "main/registerFormKakao";
 	}
-	
-	
+
 	@RequestMapping(value = "/registerKakao")
 	public String kakaoLoginUpdate(UserList userLsit) {
 
-		//UserList userList = new UserList(userEmail);
-		//mainService.userRegister(userList);
+		// UserList userList = new UserList(userEmail);
+		// mainService.userRegister(userList);
 		mainService.updateUserKakao(userLsit);
 		return "main/index";
 	}
-	
+
 //////////////////////////////////////소은	
 	@RequestMapping("/registerReady")
 	public String registerReady() {
 		return "main/register";
 	}
 
+	@RequestMapping("/registerBefore")
+	public String registerBefore() {
+		return "main/registerBefore";
+	}
+
 	@RequestMapping("/registerForm")
 	public String registerForm() {
 		return "main/registerForm";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("/userIdCheck")
 	public String userIdCheck(String userId) {
-		//System.out.println(userId);
+		// System.out.println(userId);
 		return mainService.userIdCheck(userId);
 	}
-	
+
 	@RequestMapping("/register")
 	public String register(UserList userList) {
-		mainService.userRegister(userList); 
+		mainService.userRegister(userList);
 		return "main/index";
 	}
-	
+
 	@RequestMapping("/loginForm")
 	public String loginForm() {
 		return "main/login";
 	}
-	
+
 	@RequestMapping("/login")
-	public String login(String userId,String passWord,HttpServletRequest request) {
+	public String login(String userId, String passWord, HttpSession session) {
 		String result = null;
-		if(mainService.userLogin(userId, passWord)==null) {
+		UserList userList = mainService.userLogin(userId, passWord);
+		
+		if (userList == null) {
 			result = "main/loginFail";
-		}else {
-		UserList user = mainService.userLogin(userId, passWord);
-		HttpSession session =request.getSession() ;
-		session.setAttribute("user", user);
-		result =  "main/index";
+			
+		} else {
+			session.setAttribute("userList", userList);
+			result = "main/index";
 		}
+		
 		return result;
 	}
-	
+
 	@RequestMapping("/findUserId")
 	public String findUserId(UserList userList) {
-		if(mainService.findUserId(userList)==null) {
-			
+		if (mainService.findUserId(userList) == null) {
+
 		}
 		return null;
 	}
 
-	
 	/**
 	 * 상품리스트를 조회를 하는 Controller
 	 */
@@ -116,18 +121,18 @@ public class MainController {
 		Map<String, Object> goodsListMap = new HashMap<String, Object>();
 		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
 		List<MainCategories> mainCategories = mainService.selectCategories();
-		
+
 		goodsListMap.put("registerGoodsList", registerGoodsList);
 		goodsListMap.put("registerGoods", registerGoodsList.get(0));
 		goodsListMap.put("mainCategories", mainCategories);
-		goodsListMap.put("main", main);//main
-		goodsListMap.put("sub", sub);//sub
-		
+		goodsListMap.put("main", main);// main
+		goodsListMap.put("sub", sub);// sub
+
 		ModelAndView mv = new ModelAndView("main/goodsList", "goodsListMap", goodsListMap);
 
 		return mv;
 	}
-	
+
 	/**
 	 * 상품 상세조회를 하는 Controller
 	 */
@@ -135,13 +140,9 @@ public class MainController {
 	public ModelAndView goodsDetail(@PathVariable Long regNo) {
 
 		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
-		
-		
-		
+
 		ModelAndView mv = new ModelAndView("main/goodsDetail", "registerGoods", registerGoods);
 		return mv;
 	}
-	
-	
 
 }// class

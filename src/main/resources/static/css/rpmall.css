@@ -6,6 +6,11 @@ a, h1, h2, h3, h4, h5, h6, div, span {
 	font-family: 'Jeju Gothic', serif;
 }
 
+input[type=password]{
+	font-family: 'default', serif;
+}
+
+
 .headerTop {
 	margin-top: 10px;
 }
@@ -145,6 +150,36 @@ a, h1, h2, h3, h4, h5, h6, div, span {
 	padding: 5px 0px;
 	border-bottom: solid 1px gray;
 }
+
+.login_section, .register_section, .registerForm_section{
+	margin: 100px;
+}
+
+.login_section li, .login_section{
+	margin: 0px;
+	padding: 0px;
+}
+
+.login_section .userLogin{
+	padding-bottom: 15px;
+}
+
+.register_section .registerForm, .register_section .social_registerForm{
+	padding: 20px;	
+}
+
+.register .register_top{
+	padding : 15px 30px;
+	font-size: 30px;
+	background-color: #28a745;
+	color: white;
+}
+
+.register .register_bottom{
+	padding: 30px 30px 10px 30px;
+	font-size: 20px;
+}
+
 
 .footer{
 	margin-top: 20px;	
