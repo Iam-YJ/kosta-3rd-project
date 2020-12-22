@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kosta.pro.rgmall.domain.Cart;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.domain.WishList;
@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
+	private final MainService mainService;
 	
 	//개인정보 수정전 비밀번호 확인폼
 	@RequestMapping("/mypage/passWordCheck")
@@ -44,9 +45,8 @@ public class UserController {
 	//개인정보수정
 	@RequestMapping("/mypage/updateUserList")
 	public String updateUserList(UserList userList,HttpSession session) {
-		UserList userInfo=(UserList) session.getAttribute("userList");
-		Long userNo= userInfo.getUserNo();
-		userList.setUserNo(userNo);
+		UserList sessionUser = (UserList)session.getAttribute("userList");
+		userList.setUserNo(sessionUser.getUserNo());
 		userService.updateUserList(userList);
 		return "user/myPage/main";
 	}//updateUserList
@@ -172,8 +172,42 @@ public class UserController {
 		return 0;
 	}
 	
+	@RequestMapping("/myPage/writeReviewForm")
+	public String writeReviewForm() {
+		return "user/myPage/writeReview";
+	}
 	
+	@RequestMapping("/myPage/insertReview/{regNo}")
+	public String inserReview(Review review,@PathVariable Long regNo) {
+		userService.insertReview(review);
+		return "redirect:/user/myPage/myReview";
+	}
 	
+	@RequestMapping("/myPage/myReview")
+	public ModelAndView myReview(HttpSession session) {
+		UserList userList = (UserList)session.getAttribute("userList");
+		Long userNo = userList.getUserNo();
+		List<Review>review = userService.selectReview(userNo);
+		return new ModelAndView("user/myPage/myReview","review",review);
+	}
+	
+	@RequestMapping("/myPage/updateReviewForm")
+	public String updateReviewForm() {
+		return "user/myPage/updateReviewForm";
+	}
+	
+	@RequestMapping("/myPage/updateReview/{regNo}")
+	public String  updateReview(Review review, @PathVariable Long regNo) {
+		review.setRegisterGoods(mainService.goodsDetail(regNo));
+		userService.updateReview(review);
+		return null;
+	}
+	
+	@RequestMapping("/myPage/deleteReview/{reviewNo}")
+	public String deleteReview(@PathVariable Long reviewNo) {
+		userService.deleteReview(reviewNo);
+		return "";
+	}
 	
 }//class
 

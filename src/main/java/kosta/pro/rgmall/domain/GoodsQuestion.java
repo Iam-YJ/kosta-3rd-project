@@ -31,22 +31,38 @@ public class GoodsQuestion {
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "QGOODS_NO_SEQ")
 	@SequenceGenerator(sequenceName = "QGOODS_NO_SEQ", name = "QGOODS_NO_SEQ", allocationSize = 1)
 	private Long qgoodsNo;
-	
+
 	@Column(nullable = false, length = 3000)
 	private String content;
-	
+
 	@CreationTimestamp
 	private LocalDateTime regDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "userNo")
 	private UserList userList;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "regNo")
 	private RegisterGoods registerGoods;
-	
-	@OneToOne(mappedBy = "goodsQuestion",cascade = CascadeType.ALL)
+
+	@OneToOne(mappedBy = "goodsQuestion", cascade = CascadeType.ALL)
 	private GoodsAnswer goodsAnswer;
-	
+
+	public GoodsQuestion(Long qgoodsNo) {
+		this.qgoodsNo = qgoodsNo;
+	}
+
+	public GoodsQuestion(String content, UserList userList, RegisterGoods registerGoods) {
+		this.content = content;
+		this.userList = userList;
+		this.registerGoods = registerGoods;
+	}
+
+	public GoodsQuestion(Long qgoodsNo, String content) {
+		super();
+		this.qgoodsNo = qgoodsNo;
+		this.content = content;
+	}
+
 }

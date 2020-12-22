@@ -113,14 +113,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int insertReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		reviewRep.save(review);
+		return 1;
 	}
 
 	@Override
-	public int selectReview(Long userNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Review> selectReview(Long userNo) {
+		return reviewRep.selectReviewByUserNo(userNo);
 	}
 
 	@Override

@@ -3,7 +3,8 @@ package kosta.pro.rgmall.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
@@ -35,6 +38,37 @@ public class AdminController {
 	private final SubCategories subCategories;
 	
 	/**
+<<<<<<< HEAD
+	 * 관리자 로그인
+	 * */
+	@RequestMapping("adminLogin")
+	public String adminLogin(String adminId, String password, HttpSession session) {
+		String  result = null;
+		Admin admin = adminService.adminLogin(adminId, password);
+		if(admin==null) {
+			result = "main/loginFail";
+		} else {
+			session.setAttribute("userList", admin);
+			result = "main/index";
+		}
+			return result;
+	}
+	
+	/**
+	 * 전체검색
+	 */
+	@RequestMapping("/notice")
+	public void selectAllNotice(Model model) {
+		List<Notice> list = mainService.selectAllNotice();
+		
+		model.addAttribute("list", list);
+		
+	}
+	
+	
+	/**
+=======
+>>>>>>> branch 'master' of https://github.com/Iam-YJ/kosta-3rd-project.git
 	 * 전체 검색
 	 */
 	@RequestMapping("/cs/list")
@@ -52,7 +86,71 @@ public class AdminController {
 		 */
 		return "main/cs/faq";
 	}
-
+	
+	/**
+	 * 공지사항 등록하기 폼
+	 */
+	@RequestMapping("/writeNotice")
+	public String writeNotice() {
+		
+		return "main/cs/writeNotice";
+	}
+	
+	/**
+	 *	공지사항 등록하기
+	 */
+	@RequestMapping("/insert")
+	public String insertNotice(Notice notice) {
+		//content에 스크립트 요소(태그)를 문자로 교체
+		String content = notice.getContent().replace("<", "&lt;");
+		notice.setContent(content);
+		
+		adminService.insertNotice(notice);
+		
+		return "redirect:/main/notice";
+	}
+	
+	/**
+	 * 공지사항 수정등록 폼
+	 */
+	@RequestMapping("/updateNoticeForm")
+	public ModelAndView updateNoticeForm(Long noticeNo) {
+		Notice notice = adminService.selectByNotice(noticeNo);
+		return new ModelAndView("main/cs/updateNoticeForm","notice", notice);
+	}
+	
+	/**
+	 * 공지사항 수정완료
+	 */
+	@RequestMapping("/updateNotice")
+	public String updateNotice(Notice notice) {
+		adminService.updateNotice(notice);
+		return "redirect:/admin/readNotice/"+ notice.getNoticeNo();
+	}
+	
+	/** 
+	 *  공지사항 상세보기
+	 * */
+	@RequestMapping("/readNotice/{noticeNo}")
+	public ModelAndView readNotice(@PathVariable Long noticeNo) {
+		
+		Notice notice= adminService.selectByNotice(noticeNo);
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("main/cs/readNotice"); // /WEB-INF/views/read.jsp
+		mv.addObject("notice", notice);
+		
+		return mv;
+	}
+	
+	/**
+	 * 삭제하기
+	 */
+	@RequestMapping("/deleteNotice")
+	public String deleteNotice(Long noticeNo) {
+		adminService.deleteNotice(noticeNo);
+		return "redirect:/main/notice";
+	}
+	
 	/*
 	 * faq 수정등록 폼
 	 */
@@ -170,10 +268,21 @@ public class AdminController {
 	 *  회원정보 검색
 	 * */
 	@RequestMapping("/myPage/main/userCheck")
-	public String userList() {
-		//List<UserList> userList = adminService.searchAllUser(grade, keyword);
+	public ModelAndView userList(String grade, String keyword) {
+		List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		System.out.println(userList);
 		
-		return "admin/myPage/userCheck";
+		return new ModelAndView("admin/myPage/userCheck", "userList", userList);
+	}
+	
+	/**
+	 *  회원 상세정보
+	 * */
+	@RequestMapping("/myPage/main/userRead/{userNo}")
+	public ModelAndView userRead(@PathVariable Long userNo,String grade, String keyword) {
+		List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		
+		return new ModelAndView("admin/");
 	}
 
 	//카테고리 수정 폼 띄우기

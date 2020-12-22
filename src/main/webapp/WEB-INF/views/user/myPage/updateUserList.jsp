@@ -51,9 +51,9 @@ $(document).ready(function(){
 <form action="${pageContext.request.contextPath}/user/myPage/updateUserList" id="regForm" method="post">
 비밀번호 : <input type="password" name = "passWord"><Br>
 비밀번호확인 : <input type="password" name = "passWordCheck"><span id="pwdCheckSpan"></span><br>
-주소 : <input type="text" name = "addr" placeholder="${user.addr}"><Br>
-전화번호 : <input type="text" name = "phone" placeholder="${user.phone}"><br>
-E-Mail : <input type="text" name = "email" placeholder="${user.email}"><br>
+주소 : <input type="text" name = "addr" value="${userList.addr}"><Br>
+전화번호 : <input type="text" name = "phone" value="${userList.phone}"><br>
+E-Mail : <input type="text" name = "email" value="${userList.email}"><br>
 <input type="submit" value="수정하기">
 </form>
 

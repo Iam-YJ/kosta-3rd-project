@@ -38,5 +38,13 @@ public class GoodsAnswer {
 	@ManyToOne
 	@JoinColumn(name = "qgoodsNo")
 	private GoodsQuestion goodsQuestion;
+
+	public GoodsAnswer(String content, GoodsQuestion goodsQuestion) {
+		super();
+		this.content = content;
+		this.goodsQuestion = goodsQuestion;
+	}
+	
+	
 	
 }
