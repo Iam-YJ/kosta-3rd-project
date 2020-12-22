@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import kosta.pro.rgmall.domain.UserList;
 
@@ -17,6 +18,9 @@ public interface UserListRepository extends JpaRepository<UserList, Long> {
 	
 	@Query("select u from UserList u where u.name=?1 and u.phone=?2 and u.email=?3")
 	UserList findUserId(String name, String phone, String email);
+	
+	@Query("select u from UserList u where u.userId=?1")
+	UserList selectPointandGrade(String userId);
 	
 	/**
 	 * 카카오API 로그인시 나머지 정보 업데이트 위함

@@ -24,7 +24,7 @@
 			</div>
 			<div class="col-xl-5">
 				<div style="text-align: left">
-					<a href="${pageContext.request.contextPath}/user/myPage">마이페이지</a>
+					<a href="${pageContext.request.contextPath}/admin/myPage/main/userCheck">마이페이지</a>
 					<a href="${pageContext.request.contextPath}/admin/cs/list">고객센터</a>
 				</div>
 			</div>
@@ -68,10 +68,10 @@
 				<div class="dropdown">
 					<a href="${pageContext.request.contextPath}/main/goodsList/0/0/0" class="btn btn-success">전체상품조회</a>
 			    	<div class="dropdown-content">
-						<a class="dropdown-item btn btn-success" href="#">과일</a>
-						<a class="dropdown-item btn btn-success" href="#">채소</a>
-						<a class="dropdown-item btn btn-success" href="#">주곡/잡곡</a>
-						<a class="dropdown-item btn btn-success" href="#">견과류</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/1/0/0">과일</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/2/0/0">채소</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/3/0/0">주곡/잡곡</a>
+						<a class="dropdown-item btn btn-success" href="${pageContext.request.contextPath}/main/goodsList/4/0/0">견과류</a>
 					</div>
 			  	</div><!-- dropdown -->
 			</div><!-- col -->

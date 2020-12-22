@@ -1,42 +1,151 @@
 @charset "UTF-8";
+
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 
-a, h1, h2, h3, h4, h5, h6, div, span{font-family: 'Jeju Gothic', serif;}
+a, h1, h2, h3, h4, h5, h6, div, span {
+	font-family: 'Jeju Gothic', serif;
+}
 
+.headerTop {
+	margin-top: 10px;
+}
 
-
-.headerTop{	margin-top: 10px;}
-
-.headerTop a{
+.headerTop a {
 	color: black;
 	text-decoration: none;
 	font-size: 20px;
 	padding: 20px;
 }
 
-.headerBottom{
-	margin-top:10px;
-	padding:5px;
+.headerBottom {
+	margin-top: 10px;
+	margin-bottom:10px;
+	padding: 5px;
 	background-color: #28a745;
 }
 
 .headerBottom .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #28a745;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+	display: none;
+	position: absolute;
+	background-color: #28a745;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	z-index: 1;
 }
-.headerBottom .dropdown-content a{color: white;}
 
-.headerBottom .dropdown-content a:hover {background-color: #3e8e41;}
+.headerBottom .dropdown-content a {
+	color: white;
+}
 
-.headerBottom .dropdown:hover .dropdown-content {display: block;}
+.headerBottom .dropdown-content a:hover {
+	background-color: #3e8e41;
+}
 
-.headerBottom .dropdown:hover .dropbtn {background-color: #3e8e41;}
+.headerBottom .dropdown:hover .dropdown-content {
+	display: block;
+}
 
-.goodsList a{
+.headerBottom .dropdown:hover .dropbtn {
+	background-color: #3e8e41;
+}
+
+.goodsList a {
 	color: black;
 	text-decoration: none;
+}
+
+.goodsList .goodsListImgSection, .goodsList .goodsListExplainSection {
+	text-align: center;
+}
+
+.goodsDetail .goodsDetailCategory {
+	margin: 15px 0px;
+}
+
+.goodsList .goodsListImgSection img {
+	max-width: 100%;
+	max-height: 250px;
+	height: auto;
+}
+
+.goodsDetail .goodsDetailTop .thumbNailSection {
+	text-align: center;
+}
+
+.goodsDetail .goodsDetailTop .thumbNailSection img {
+	max-width: 90%;
+	height: auto;
+}
+
+.goodsDetail .goodsDetailTop .expainSetion {
+	text-align: left;
+	font-size: 17px;
+}
+
+.goodsDetail .goodsDetailTop .expainSetion .columeName {
+	color: gray;
+}
+
+.goodsDetail .goodsDetailTop .expainSetion .columeValue {
+	color: black;
+}
+
+.goodsDetail .goodsDetailTop .totalPrice {
+	text-align: right;
+}
+
+.goodsDetail .goodsDetailTop .userBtnSection {
+	margin-top : 5px;
+	text-align: right;
+}
+
+.goodsDetail .goodsDetailTop .userBtnSection a{
+	width: 150px
+}
+
+.goodsDetail .goodsDetailBottom{
+	margin-top: 20px;
+	
+}
+
+.goodsDetail .goodsDetailBottom li, .goodsDetail .goodsDetailBottom ul{
+	padding: 0px;
+}
+
+.goodsDetailInfo .left1{
+	background-color: lightgray;
+	text-align: center;
+	font-size: 17px;
+	padding: 5px 0px;
+	border-top: solid 1px gray;
+	border-bottom: solid 1px gray;
+	
+}
+
+.goodsDetailInfo .right1{
+	text-align: left;
+	font-size: 17px;
+	padding: 5px 0px;
+	border-top: solid 1px gray;
+	border-bottom: solid 1px gray;
+}
+
+.goodsDetailInfo .left2{
+	background-color: lightgray;
+	text-align: center;
+	font-size: 17px;
+	padding: 5px 0px;
+	border-bottom: solid 1px gray;
+	
+}
+
+.goodsDetailInfo .right2{
+	text-align: left;
+	font-size: 17px;
+	padding: 5px 0px;
+	border-bottom: solid 1px gray;
+}
+
+.footer{
+	margin-top: 20px;	
 }

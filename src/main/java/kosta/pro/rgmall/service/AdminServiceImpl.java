@@ -2,18 +2,23 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kosta.pro.rgmall.domain.Cart;
-import kosta.pro.rgmall.domain.Donation;
+import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
+import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
+import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
-import kosta.pro.rgmall.domain.UserGrade;
+import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
-import kosta.pro.rgmall.domain.WishList;
 import kosta.pro.rgmall.repository.AdminRepository;
 import kosta.pro.rgmall.repository.CartRepository;
 import kosta.pro.rgmall.repository.DonationRepository;
@@ -37,7 +42,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class AdminServiceImpl implements AdminService {
 
 	private final AdminRepository adminRep;
 	private final CartRepository cartRep;
@@ -57,168 +62,187 @@ public class UserServiceImpl implements UserService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
-
+	
 	@Override
-	public int updateUserList(UserList userList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Orders> selectOrders(Long userNo) {
+	public Admin adminLogin(String adminId, String adminPwd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int insertRefund(Refund refund) {
-		// TODO Auto-generated method stub
+	public int insertGoods(RegisterGoods registerGoods) {
+		registerGoodsRep.save(registerGoods);
 		return 0;
-	}
-
-	@Override
-	public List<Refund> selectRefund(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int insertGoodsQuestion(GoodsQuestion goodsQuestion) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<GoodsQuestion> selectGoodsQuestion(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateGoodsQuestion(GoodsQuestion goodsQuestion) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteGoodsQuestion(Long qgoodsNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int selectReview(Long userNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int updateReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteReview(Long reviewNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertWishList(WishList wishList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<WishList> selectWishList(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateWishList(WishList wishList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteWishList(Long wishNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int insertCart(Cart cart) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Cart> selectCart(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public int updateCart(Cart cart) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteCart(Long userNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public UserList selectPointandGrade(String userId) {
-		UserList userList = userListRep.selectPointandGrade(userId);
-		return userList;
 	}
 	
 	@Override
-	public List<UserGrade> selectAllUserGrade() {
-		List<UserGrade> userGrade = userGradeRep.findAll();
-		return userGrade;
+	public int insertNotice(Notice notice) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateNotice(Notice notice) {
+		return 0;
+	}
+
+	@Override
+	public int deleteNotice(Notice notice) {
+		return 0;
+	}
+
+	@Override
+	public List<FAQ> selectAllFAQ() {
+		return FAQRep.findAll();
+	}
+	
+	@Override
+	public Page<FAQ> selectAll(Pageable pageable) {
+		return FAQRep.findAll(pageable);
+	}
+	
+	@Override
+	public void insertFAQ(FAQ faq) {
+		if(FAQRep.save(faq)== null) {
+			throw new RuntimeException("내용이 존재하지 않습니다");
+		}
+		FAQRep.save(faq);
+	}
+
+	@Override
+	public void updateFAQ(FAQ faq) {
 		
+		System.out.println("===============================");
+		System.out.println("faq =" + faq);
+		
+		System.out.println("===============================");
+		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		System.out.println("dbFaq"+dbFaq);
+//		
+		if(dbFaq ==null) {
+			throw new RuntimeException("FAQ번호 오류로 수정 실패");
+		}
+//		
+		dbFaq.setQuestion(faq.getQuestion());
+		dbFaq.setAnswer(faq.getAnswer());
+//		
 	}
 
 	@Override
-	public int insertDonation(Donation donation) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteFAQ(FAQ faq) {
+		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		if(dbFaq ==null) {
+			throw new RuntimeException("FAQ번호 오류로 삭제 실패");
+		}
+		     
+		FAQRep.deleteById(faq.getFaqNo());
+	}
+	
+	@Override
+	public FAQ selectByFaq(Long faqNo) {
+		
+		return FAQRep.findById(faqNo).orElse(null);
 	}
 
 	@Override
-	public int selectMyDonation(Long userNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Donation> selectAllDonation() {
+	public List<RegisterGoods> selectGoods(int State) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int insertPay(Cart cart) {
+	public int updateGoods(RegisterGoods registerGoods) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public UserGrade loginAPIGrade() {
-		UserGrade userGradeResult = userGradeRep.findById((long) 4).orElse(null);
-		return userGradeResult;
+	public int deleteAdGoods(Long regNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Orders> selectNewOrders(int parameter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateDelState(Long orderNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Refund> selectRefundGoods() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int refundGoods(Long RefundNo, int refundState) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertMainCategory(MainCategories mainCategories) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int insertSubCategory(SubCategories subCategories) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateMainCategory(MainCategories mainCategories) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int updateSubCategory(SubCategories subCategories) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<GoodsQuestion> selectGoodsQuestion() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int insertGoodsAnswer(GoodsAnswer goodsAnswer) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int deleteGoodsAnswer(Long agoodsNo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Review> selectReview() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int checkProfit(String startDate, String endDate) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<UserList> searchAllUser(String grade, String keyword) {
+		return userListRep.findAll();
 	}
 
 

@@ -108,9 +108,11 @@ public class MainController {
 	}
 
 	
-	
+	/**
+	 * 상품리스트를 조회를 하는 Controller
+	 */
 	@RequestMapping("/goodsList/{main}/{sub}/{sort}")
-	public ModelAndView goodsList(@PathVariable int main, @PathVariable int sub, @PathVariable int sort) {
+	public ModelAndView goodsList(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort) {
 		Map<String, Object> goodsListMap = new HashMap<String, Object>();
 		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
 		List<MainCategories> mainCategories = mainService.selectCategories();
@@ -119,10 +121,24 @@ public class MainController {
 		goodsListMap.put("registerGoods", registerGoodsList.get(0));
 		goodsListMap.put("mainCategories", mainCategories);
 		goodsListMap.put("main", main);//main
-		goodsListMap.put("sub", main);//main
+		goodsListMap.put("sub", sub);//sub
 		
 		ModelAndView mv = new ModelAndView("main/goodsList", "goodsListMap", goodsListMap);
 
+		return mv;
+	}
+	
+	/**
+	 * 상품 상세조회를 하는 Controller
+	 */
+	@RequestMapping("/goodsDetail/{regNo}")
+	public ModelAndView goodsDetail(@PathVariable Long regNo) {
+
+		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
+		
+		
+		
+		ModelAndView mv = new ModelAndView("main/goodsDetail", "registerGoods", registerGoods);
 		return mv;
 	}
 	
