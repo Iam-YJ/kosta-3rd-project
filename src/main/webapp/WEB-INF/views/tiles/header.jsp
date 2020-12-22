@@ -54,7 +54,7 @@ function loginAlert(){
 							<a href="${pageContext.request.contextPath}/user/logout" onclick="logout()">로그아웃</a>
 							<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
 							<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
-							<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+							<a href="${pageContext.request.contextPath}/user/cartList">장바구니</a>
 						</c:otherwise>
 					</c:choose>
 					

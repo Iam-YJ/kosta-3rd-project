@@ -4,18 +4,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.GoodsAnswer;
+import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
+import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
+import kosta.pro.rgmall.service.AdminService;
 import kosta.pro.rgmall.service.MainService;
 import kosta.pro.rgmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,35 +35,51 @@ public class MainController {
 
 	private final MainService mainService;
 	private final UserService userService;
-	
-	//고객센터 - 메인페이지
+	private final AdminService adminService;
+
+	// 고객센터 - 메인페이지
 	@RequestMapping("/cs/main")
 	public ModelAndView csMain() {
-		
 		return new ModelAndView("cs/main");
 	}
-	
-	//고객센터 - FAQ
+
+	// 고객센터 - FAQ
 	@RequestMapping("/cs/FAQ")
 	public ModelAndView csFAQ() {
-		
-		return new ModelAndView("cs/FAQ");
+		System.out.println("11");
+		List<FAQ> list = adminService.selectAllFAQ();
+		/*
+		 * page처리 Pageable pageable = PageRequest.of(nowPage, 10, Direction.DESC,
+		 * "faqNo"); Page<FAQ> pageList = service.selectAll(pageable);
+		 * 
+		 * //pageList.getNumber() model.addAttribute("pageList" , pageList);
+		 */
+
+		return new ModelAndView("cs/FAQ", "list", list);
 	}
-	
-	//고객센터 - 공지사항
+
+	// 고객센터 - 공지사항
 	@RequestMapping("/cs/notice")
 	public ModelAndView csNotice() {
-		
-		return new ModelAndView("cs/notice");
+
+		List<Notice> list = mainService.selectAllNotice();
+
+		return new ModelAndView("cs/notice", "list", list);
 	}
-	
+
 	@RequestMapping("/{url}")
-	public void url() {}
+	public void url() {
+	}
 
 	@RequestMapping("/")
 	public String main() {
 
 		return "main/login";
+	}
+
+	@RequestMapping("/payorder")
+	public String payorder() {
+		return "user/payorder";
 	}
 
 	@RequestMapping(value = "/kakaoLogin/{userNick}/{userEmail}")
@@ -116,7 +140,7 @@ public class MainController {
 	public String login(String userId, String passWord, HttpSession session) {
 		String result = null;
 		UserList userList = mainService.userLogin(userId, passWord);
-		
+
 		if (userList == null) {
 			result = "main/loginFail";
 		} else {
@@ -126,47 +150,46 @@ public class MainController {
 		return result;
 	}
 
-
-	//아이디 비번찾기 폼
+	// 아이디 비번찾기 폼
 	@RequestMapping("/userForgetIdPwd")
 	public void userForgetIdPwd() {
-	
+
 	}
-		
-	//아이디찾기
+
+	// 아이디찾기
 	@RequestMapping("/findUserId")
 	public ModelAndView findUserId(UserList userList) {
 		ModelAndView mv = new ModelAndView();
-		if(mainService.findUserId(userList)=="") {
+		if (mainService.findUserId(userList) == "") {
 			mv.setViewName("main/failUserSelect");
-		}else {
-			mv.addObject("userId",mainService.findUserId(userList));
+		} else {
+			mv.addObject("userId", mainService.findUserId(userList));
 			mv.setViewName("main/sucUserSelId");
 		}
 		return mv;
 	}
-	
-	//비밀번호찾기
+
+	// 비밀번호찾기
 	@RequestMapping("/findUserPwd")
 	public ModelAndView findUserPwd(UserList userList) {
 		ModelAndView mv = new ModelAndView();
-		if(mainService.findUserPwd(userList)==null) {
+		if (mainService.findUserPwd(userList) == null) {
 			mv.setViewName("main/failUserSelect");
-		}else {
-			mv.addObject("userNo",mainService.findUserPwd(userList).getUserNo());
+		} else {
+			mv.addObject("userNo", mainService.findUserPwd(userList).getUserNo());
 			mv.setViewName("main/sucUserSelPwd");
 		}
 		return mv;
 	}
-	
-	//비밀번호변경
+
+	// 비밀번호변경
 	@RequestMapping("/updatepassWord/{user.userNo}")
 	public String updatepassWord(UserList userList, @PathVariable("user.userNo") Long userNo) {
 		userList.setUserNo(userNo);
 		mainService.updatePassWord(userList);
 		return "main/login";
 	}
-	
+
 	/**
 	 * 상품리스트를 조회를 하는 Controller
 	 */
@@ -193,10 +216,102 @@ public class MainController {
 	@RequestMapping("/goodsDetail/{regNo}")
 	public ModelAndView goodsDetail(@PathVariable Long regNo) {
 
+		Map<String, Object> goodsQuestionMap = new HashMap<String, Object>();
+		List<GoodsAnswer> goodsAnswerList = null;
+
 		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
 
-		ModelAndView mv = new ModelAndView("main/goodsDetail", "registerGoods", registerGoods);
+		List<GoodsQuestion> goodsQuestionList = mainService.selectGoodsQuestions(regNo);
+		for (int i = 0; i < goodsQuestionList.size(); i++) {
+			goodsAnswerList = mainService.selectGoodsAnswer((long) goodsQuestionList.get(i).getQgoodsNo());
+		}
+
+		goodsQuestionMap.put("registerGoods", registerGoods);
+		goodsQuestionMap.put("goodsQuestionList", goodsQuestionList);
+
+		ModelAndView mv = new ModelAndView("main/goodsDetail", "goodsQuestionMap", goodsQuestionMap);
 		return mv;
+	}
+
+	/**
+	 * 상품상세보기에서 후기 보는 탭
+	 */
+	@RequestMapping("/selectReview/{regNo}")
+	public ModelAndView selectReview(@PathVariable Long regNo) {
+		List<Review> review = mainService.selectReview(regNo);
+		ModelAndView mv = new ModelAndView();
+		if (review == null) {
+			mv.setViewName("main/review");
+			mv.addObject("review", "리뷰가 존재하지 않습니다.");
+		} else {
+			mv.addObject("review", review);
+			mv.setViewName("main/review");
+		}
+		return mv;
+	}
+
+	/**
+	 * 상품문의 A에 대한 기능(only 관리자)
+	 */
+	@RequestMapping("/goodsDetail/{qgoodsNo}/goodsAnswer/{state}") // 나중에 세션 인수로 받아야할듯?
+	public String UpdateGoodsAnswer(@PathVariable Long qgoodsNo, @PathVariable String state,
+			HttpServletRequest request) {
+
+		if (state.equals("update")) {
+			String content = request.getParameter("content");
+
+			GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
+			GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
+
+			mainService.updateGoodsAnswer(goodsAnswer);
+
+		} else if (state.equals("delete")) {
+			mainService.deleteGoodsAnswer(qgoodsNo);
+		} else if (state.equals("insert")) {
+
+			String content = request.getParameter("content");
+
+			GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
+			GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
+
+			mainService.insertGoodsAnswer(goodsAnswer);
+
+		}
+
+		return "redirect:/main/goodsList/0/0/0";
+	}
+
+	/**
+	 * 상품문의 Q에 대한 기능(유저)
+	 */
+	@RequestMapping("/goodsDetail/{regNo}/goodsQuestion/{state}") // 나중에 세션 인수로 받아야할듯?
+	public String UpdateGoodsQuestion(@PathVariable Long regNo, @PathVariable String state,
+			HttpServletRequest request) {
+
+		if (state.equals("update")) {
+
+			String content = request.getParameter("content");
+
+			GoodsQuestion goodsQuestion = new GoodsQuestion(regNo, content);
+
+			mainService.updateGoodsQuestion(goodsQuestion);
+
+		} else if (state.equals("delete")) {
+			mainService.deleteGoodsQuestion(regNo);
+		} else if (state.equals("insert")) {
+
+			String content = request.getParameter("content");
+
+			UserList userList = new UserList(93L);
+			RegisterGoods registerGoods = new RegisterGoods(regNo);
+
+			GoodsQuestion goodsQuestion = new GoodsQuestion(content, userList, registerGoods);
+
+			mainService.insertGoodsQuestion(goodsQuestion);
+
+		}
+
+		return "redirect:/main/goodsList/0/0/0";
 	}
 
 }// class

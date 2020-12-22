@@ -2,12 +2,12 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
@@ -65,8 +65,7 @@ public class AdminServiceImpl implements AdminService {
 	
 	@Override
 	public Admin adminLogin(String adminId, String adminPwd) {
-		// TODO Auto-generated method stub
-		return null;
+		return adminRep.adminLogin(adminId, adminPwd);
 	}
 
 	@Override
@@ -76,19 +75,36 @@ public class AdminServiceImpl implements AdminService {
 	}
 	
 	@Override
-	public int insertNotice(Notice notice) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertNotice(Notice notice) {
+		Notice not = noticeRep.save(notice);
+		System.out.println("not = " + not);
+		if(not == null) {
+			throw new RuntimeException("내용이 존재하지 않습니다");
+		}
 	}
+	
+	@Override
+	public Notice selectByNotice(Long noticeNo) {
+		return noticeRep.findById(noticeNo).orElse(null);
+	}
+	
+	@Override
+	public void updateNotice(Notice notice) {
+		Notice dbNotice = noticeRep.findById(notice.getNoticeNo()).orElse(null);
+		if(dbNotice==null) {
+			throw new RuntimeException("오류로 수정실패");
+		}
+		dbNotice.setTitle(notice.getTitle());
+		dbNotice.setContent(notice.getContent());
+	 }
 
 	@Override
-	public int updateNotice(Notice notice) {
-		return 0;
-	}
-
-	@Override
-	public int deleteNotice(Notice notice) {
-		return 0;
+	public void deleteNotice(Long noticeNo) {
+		Notice dbNotice = noticeRep.findById(noticeNo).orElse(null);
+		if(dbNotice == null) {
+			throw new RuntimeException("글번호 오류");
+		}
+		noticeRep.deleteById(noticeNo);
 	}
 
 	@Override
@@ -111,14 +127,21 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void updateFAQ(FAQ faq) {
+		
+		System.out.println("===============================");
+		System.out.println("faq =" + faq);
+		
+		System.out.println("===============================");
 		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		System.out.println("dbFaq"+dbFaq);
+//		
 		if(dbFaq ==null) {
 			throw new RuntimeException("FAQ번호 오류로 수정 실패");
 		}
-		
+//		
 		dbFaq.setQuestion(faq.getQuestion());
 		dbFaq.setAnswer(faq.getAnswer());
-		
+//		
 	}
 
 	@Override
@@ -129,6 +152,12 @@ public class AdminServiceImpl implements AdminService {
 		}
 		     
 		FAQRep.deleteById(faq.getFaqNo());
+	}
+	
+	@Override
+	public FAQ selectByFaq(Long faqNo) {
+		
+		return FAQRep.findById(faqNo).orElse(null);
 	}
 
 	@Override
@@ -187,13 +216,16 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int updateMainCategory(MainCategories mainCategories) {
-		return 1;
+		String mainCategoryName = mainCategories.getMainCategoryName();
+		Long mainCategoryNo = mainCategories.getMainCategoryNo();
+		return mainCategoriesRep.updateMainCategory(mainCategoryName, mainCategoryNo);
 	}
 
 	@Override
 	public int updateSubCategory(SubCategories subCategories) {
-		// TODO Auto-generated method stub
-		return 0;
+		String subCategoryName = subCategories.getSubCategoryName();
+		Long subCategoryNo = subCategories.getSubCategoryNo();
+		return subCategoriesRep.updateMainCategory(subCategoryName, subCategoryNo);
 	}
 
 	@Override
@@ -228,8 +260,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<UserList> searchAllUser(String grade, String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		return userListRep.selectAllUser();
 	}
 
 
