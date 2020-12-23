@@ -9,8 +9,8 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$(document).on("click", "[value='확인']", function(){
-		var passWord = ${passWord};
-		console.log(passWord);
+		var passWord = '${userList.passWord}';
+		
 		console.log($("input[name=passWord]").val());
 		if(passWord==$("input[name=passWord]").val()) {
 			location.href="${pageCotext.request.contextPath}/user/mypage/updateUserListForm"

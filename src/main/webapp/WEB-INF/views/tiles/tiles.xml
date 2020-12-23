@@ -10,13 +10,33 @@
                 <put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
         </definition>
  
-        <definition name="*/*" extends="base">
-                <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
+        <definition name="main/*" extends="base">
+          	<put-attribute name="content" value="/WEB-INF/views/main/{1}.jsp" />
         </definition>
         
-          <definition name="*/*/*" extends="base">
-                <put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+        <definition name="admin/*" extends="base">
+			<put-attribute name="content" value="/WEB-INF/views/admin/{1}.jsp" />
         </definition>
+        
+        <definition name="user/*" extends="base">
+        	<put-attribute name="content" value="/WEB-INF/views/user/{1}.jsp" />
+        </definition>
+        
+    	<definition name="main/*/*" extends="base">
+			<put-attribute name="content" value="/WEB-INF/views/main/{1}/{2}.jsp" />
+        </definition>
+        
+        <definition name="admin/*/*" extends="base">
+			<put-attribute name="content" value="/WEB-INF/views/admin/{1}/{2}.jsp" />
+        </definition>
+        
+        <definition name="user/*/*" extends="base">
+			<put-attribute name="content" value="/WEB-INF/views/user/{1}/{2}.jsp" />
+        </definition>
+        
+        
+        
+        
 
  
 </tiles-definitions>

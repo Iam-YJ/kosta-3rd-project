@@ -8,12 +8,7 @@
 <title>Insert title here</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-	$('#find').click(function(){
-		location.href="${pageContext.request.contextPath}/main/userForgetIdPwd";
-	})
-	
-})
+
 </script>
 </head>
 <body>
@@ -58,14 +53,14 @@ $(document).ready(function(){
 									</div>
 									<div id="menu1" class="tab-pane fade"><br>
 										<div class="userLogin">
-											<form action="${pageContext.request.contextPath}/admin/login" method="post" id="adminLoginForm">
+											<form action="${pageContext.request.contextPath}/admin/adminLogin" method="post" id="adminLoginForm">
 												<div class="form-group">
 													Admin_ID:
-													<input type="text" class="form-control" name="userId">
+													<input type="text" class="form-control" name="adminId">
 												</div>
 												<div class="form-group">
 													Admin_PASSWORD:
-													<input type="password" class="form-control" name="passWord">
+													<input type="password" class="form-control" name="password">
 												</div>
 												<div class="row">
 													<div class="col-xl-9"></div>

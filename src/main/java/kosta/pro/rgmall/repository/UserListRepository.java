@@ -44,5 +44,8 @@ public interface UserListRepository extends JpaRepository<UserList, Long> {
 	@Query("update UserList u set u.passWord=?1,  u.addr=?2,  u.phone=?3,  u.email=?4 where u.userNo = ?5")
 	@Modifying
 	int updateUserList(String passWord, String addr, String phone, String email, Long userNo);
-
+	
+	@Query("select  u from UserList u order by u.usergrade.gradeNo desc")
+	List<UserList> selectAllUser();
+	
 }// class

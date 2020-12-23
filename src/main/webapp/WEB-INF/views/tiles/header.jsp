@@ -18,6 +18,10 @@ function logout(){
 	alert("로그아웃 되었습니다.");
 }
 
+function loginAlert(){
+	alert("회원만 가능한 서비스 입니다. 로그인화면으로 이동합니다.");
+}
+
 </script>
 </head>
 <body>
@@ -29,8 +33,10 @@ function logout(){
 			</div>
 			<div class="col-xl-5">
 				<div style="text-align: left">
-					<a href="${pageContext.request.contextPath}/admin/myPage/main/userCheck">마이페이지</a>
-					<a href="${pageContext.request.contextPath}/admin/cs/list">고객센터</a>
+					<a href="${pageContext.request.contextPath}/main/csForm">고객센터</a>
+					<c:if test="${sessionScope.userList != null}">
+						<a href="${pageContext.request.contextPath}/user/myPage">마이페이지</a>
+					</c:if>
 				</div>
 			</div>
 			<div class="col-xl-5">
@@ -38,17 +44,21 @@ function logout(){
 					<c:choose>
 						<c:when test="${sessionScope.userList == null}">
 							<a href="${pageContext.request.contextPath}/main/">로그인</a>
-							<a href="${pageContext.request.contextPath}/main/registerBefore">회원가입</a>	
+							<a href="${pageContext.request.contextPath}/main/registerBefore">회원가입</a>
+							<a href="${pageContext.request.contextPath}/main/" onclick="loginAlert()">주문/배송조회</a>
+							<a href="${pageContext.request.contextPath}/main/" onclick="loginAlert()">찜목록</a>
+							<a href="${pageContext.request.contextPath}/main/" onclick="loginAlert()">장바구니</a>	
 						</c:when>
 						<c:otherwise>
 							${sessionScope.userList.name}님 환영합니다.
 							<a href="${pageContext.request.contextPath}/user/logout" onclick="logout()">로그아웃</a>
+							<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
+							<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
+							<a href="${pageContext.request.contextPath}/user/cartList">장바구니</a>
 						</c:otherwise>
 					</c:choose>
 					
-					<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
-					<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
-					<a href="${pageContext.request.contextPath}/user/cart">장바구니</a>
+					
 				</div>
 			</div>
 			<div class="col-xl-1">

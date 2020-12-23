@@ -9,5 +9,7 @@ import kosta.pro.rgmall.domain.WishList;
 
 public interface WishListRepository extends JpaRepository<WishList, Long> {
 	 List<WishList> findByUserListUserNo(Long userNo);
+	 
+	 WishList findByRegisterGoodsRegNo(Long RegNo);
 
 }//class

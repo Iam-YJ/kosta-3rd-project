@@ -2,10 +2,10 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
