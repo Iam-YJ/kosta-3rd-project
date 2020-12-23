@@ -194,6 +194,11 @@ public interface AdminService {
 	 * (전체조회, 등급별조회, 검색어-사용자이름 조회)
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
+	
+	/**
+	 * 광고 조회
+	 */
+	public List<RegisterGoods> selectByAd();
 
 
 

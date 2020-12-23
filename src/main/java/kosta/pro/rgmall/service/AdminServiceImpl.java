@@ -261,5 +261,11 @@ public class AdminServiceImpl implements AdminService {
 		return userListRep.findAll();
 	}
 
+	@Override
+	public List<RegisterGoods> selectByAd() {
+		
+		return null;
+	}
+
 
 }

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,7 +51,15 @@ public class AdminController {
 		 */
 		return "main/cs/faq";
 	}
-	
+	/**
+	 *  광고 조회
+	 */
+	@RequestMapping("/selectByAd")
+	public String selectByAd(Model model) {
+		List<RegisterGoods> list = adminService.selectByAd();
+		model.addAttribute("list", list);
+		return "admin/ad";
+	}
 	/**
 	 * 공지사항 등록하기 폼
 	 */
