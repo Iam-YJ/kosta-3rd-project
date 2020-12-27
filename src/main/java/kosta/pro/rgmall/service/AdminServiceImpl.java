@@ -178,10 +178,22 @@ public class AdminServiceImpl implements AdminService {
 		return 0;
 	}
 
+	/**
+	 * 주문조회(신규/지난 주문조회) + 신규 주문조회(배송준비중만 보임)
+	 * parameter의 0(지난주문조회)/1(신규주문조회)구분
+	 * 이 항목의 경우 페이징 써야할수도 있음
+	 */
 	@Override
-	public List<Orders> selectNewOrders(int parameter) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Orders> selectOrders(int parameter) {
+		List<Orders> orderList = null;
+		
+		if(parameter == 0) {
+			orderList = null;
+		}else if(parameter == 1) {
+			orderList = ordersRep.selectNewOrders();
+		}
+		
+		return orderList;
 	}
 
 	@Override

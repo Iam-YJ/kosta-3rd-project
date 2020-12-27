@@ -1,4 +1,5 @@
 package kosta.pro.rgmall.domain;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.servlet.annotation.MultipartConfig;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,13 +32,9 @@ import lombok.ToString;
 @ToString
 public class RegisterGoods {
 	
-	
-	
 	public RegisterGoods(Long regNo) {
-		super();
 		this.regNo = regNo;
 	}
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "REG_NO_SEQ")
@@ -76,6 +76,9 @@ public class RegisterGoods {
 	
 	@Column(nullable = false, length = 1)
 	private int ad;
+	
+	@CreationTimestamp
+	private LocalDateTime regDate;
 	
 	@OneToOne
 	@JoinColumn(name = "mainCategoryNo")
