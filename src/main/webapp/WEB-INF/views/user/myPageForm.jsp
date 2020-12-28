@@ -178,7 +178,7 @@ function adminClientList(){
 								<a href="#" onclick="userPointDonate()">포인트 기부</a>
 							</div>
 						</c:when>
-						<c:otherwise>
+						<c:when test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
 						 	<div class="row col-xl" style="margin-top: 15px">
 								<h4><b>상품관련</b></h4>
 							</div>
@@ -234,7 +234,7 @@ function adminClientList(){
 								<a href="#" onclick="adminClientList()">회원조회</a>
 							</div>
 						 	
-						</c:otherwise>
+						</c:when>
 					</c:choose>
 				</div>
 			</div>
