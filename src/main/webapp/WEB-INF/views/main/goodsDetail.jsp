@@ -42,11 +42,23 @@
 		}
 	}//wishbtn
 	
-	function cartbtn(regNo,quantitiy){
+	function cartbtn(regNo){
 		var qua=document.getElementById("quantity").value
 		//console.log(document.getElementById("quantity").value)
 		 if(confirm("장바구니에 추가 하시겠습니까?")){
 			location.href="${pageContext.request.contextPath}/user/insertcart?regNo="+regNo+"&qua="+qua;
+			return true;
+		}else{
+			return false;
+		} 
+	}//cartbtn
+	
+	function instantBuybtn(regNo){
+		var qua=document.getElementById("quantity").value
+		//console.log(document.getElementById("quantity").value)
+		 if(confirm("상품을 구매하시겠습니까?")){
+			location.href=
+				"${pageContext.request.contextPath}/user/instantBuy/${goodsQuestionMap.registerGoods.regNo}?quantity="+qua;
 			return true;
 		}else{
 			return false;
@@ -169,14 +181,9 @@ $(function(){
 					</div>
 					
 					<div class="userBtnSection">
-<<<<<<< HEAD
-						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${registerGoods.regNo});">찜</a>
-						<a href="#"  class="btn btn-outline-success" onclick="cartbtn(${registerGoods.regNo});">장바구니</a>
-=======
-						<a href="" class="btn btn-outline-success">찜</a>
-						<a href="" class="btn btn-outline-success">장바구니</a>
->>>>>>> branch 'master' of https://github.com/Iam-YJ/kosta-3rd-project.git
-						<a href="" class="btn btn-success">바로구매</a>
+						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${goodsQuestionMap.registerGoods.regNo});">찜</a>
+						<a href="#"  class="btn btn-outline-success" onclick="cartbtn(${goodsQuestionMap.registerGoods.regNo});">장바구니</a>
+						<a href="#" class="btn btn-success" onclick="instantBuybtn(${goodsQuestionMap.registerGoods.regNo})">바로구매</a>
 					</div>
 				</div>
 			</div><!-- row -->
@@ -367,8 +374,21 @@ $(function(){
 				</c:otherwise>
 				</c:choose>
 				</div>
+				<!-- 상품후기 -->
 				<div id="menu3" class="tab-pane fade"><br>
 					<h3 style="color: red">상품후기 연결예정</h3>
+					<c:choose>
+						<c:when test="${empty goodsQuestionMap.review}">
+				  		상품후기가 없습니다.
+				  	</c:when>
+				 	<c:otherwise>
+						<c:forEach items="${goodsQuestionMap.review}" var="review">
+					 		ID : ${review.userList.userId}<Br>
+							리뷰내용 : ${review.content}<br>
+							작성날짜 : ${review.regDate}<br>
+						</c:forEach>
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			

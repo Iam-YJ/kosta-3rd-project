@@ -81,20 +81,27 @@ $(function(){
 <body>
 <div class="csFAQSection">
 	<div class="container-fluid">
+		<c:if test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
+			<div class="row">
+				<div class="col-xl text-right" style="margin: 10px;">
+					<input type="button" value="FAQ등록" class="btn btn-success text-right">
+				</div>
+			</div>
+		</c:if>
 		<c:forEach items="${list}" var="list">
 			<div class="row csFAQ_Question border border-left-0 border-rigth-0">
-				<div class="col-xl-1">
-					<b>Q</b>
+				<div class="col-xl-1 align-self-center" style="text-align: center;">
+					<h5><b>Q</b></h5>
 				</div>
-				<div class="col-xl">
+				<div class="col-xl" style="padding: 5px;">
 					<a href="#" data-toggle="collapse" data-target="#demo${list.faqNo}">${list.question}</a>
 				</div>
 			</div>
 			<div class="row csFAQ_Answer collapse" id="demo${list.faqNo}">
-				<div class="col-xl-1">
-					<b>A</b>
+				<div class="col-xl-1 align-self-center" style="text-align: center;">
+					<h5><b>A</b></h5>
 				</div>
-				<div class="col-xl">
+				<div class="col-xl" style="padding: 5px;">
 					<a href="#">${list.answer}</a>
 				</div>
 			</div>

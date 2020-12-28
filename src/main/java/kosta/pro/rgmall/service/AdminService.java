@@ -107,10 +107,10 @@ public interface AdminService {
 	
 	/**
 	 * 주문조회(신규/지난 주문조회) + 신규 주문조회(배송준비중만 보임)
-	 * parameter의 유/무로 주문조회, 신규주문조회 구분
+	 * parameter의 0(지난주문조회)/1(신규주문조회)구분
 	 * 이 항목의 경우 페이징 써야할수도 있음
 	 */
-	public List<Orders> selectNewOrders(int parameter);
+	public List<Orders> selectOrders(int parameter);
 	
 	/**
 	 * 상품출고

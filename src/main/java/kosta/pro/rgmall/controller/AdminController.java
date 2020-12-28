@@ -20,6 +20,7 @@ import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
+import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
@@ -59,7 +60,10 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/newOrderList")
 	public ModelAndView newOrderList() {
-		return new ModelAndView("myPage/adminNewOrderList");
+		
+		List<Orders> orderList = adminService.selectOrders(1);
+		
+		return new ModelAndView("myPage/adminNewOrderList","orderList",orderList);
 	}
 
 	/**

@@ -23,7 +23,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Donation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO,generator = "dona_no_seq")
