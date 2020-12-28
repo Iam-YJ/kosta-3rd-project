@@ -183,7 +183,11 @@ $(function(){
 					<div class="userBtnSection">
 						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${goodsQuestionMap.registerGoods.regNo});">찜</a>
 						<a href="#"  class="btn btn-outline-success" onclick="cartbtn(${goodsQuestionMap.registerGoods.regNo});">장바구니</a>
+<<<<<<< HEAD
+						<a href="" class="btn btn-success">바로구매</a>
+=======
 						<a href="#" class="btn btn-success" onclick="instantBuybtn(${goodsQuestionMap.registerGoods.regNo})">바로구매</a>
+>>>>>>> branch 'master' of https://github.com/Iam-YJ/kosta-3rd-project.git
 					</div>
 				</div>
 			</div><!-- row -->
@@ -374,8 +378,21 @@ $(function(){
 				</c:otherwise>
 				</c:choose>
 				</div>
+				<!-- 상품후기 -->
 				<div id="menu3" class="tab-pane fade"><br>
 					<h3 style="color: red">상품후기 연결예정</h3>
+					<c:choose>
+						<c:when test="${empty goodsQuestionMap.review}">
+				  		상품후기가 없습니다.
+				  	</c:when>
+				 	<c:otherwise>
+						<c:forEach items="${goodsQuestionMap.review}" var="review">
+					 		ID : ${review.userList.userId}<Br>
+							리뷰내용 : ${review.content}<br>
+							작성날짜 : ${review.regDate}<br>
+						</c:forEach>
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			
