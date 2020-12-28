@@ -84,7 +84,7 @@ public class MainServiceImpl implements MainService {
 	 */
 	@Override
 	public int userRegisterKakao(UserList userList) { //이거는 수정해야함(userGrade 테이블 수정해야함)
-		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		UserList userListResult = userListRep.save(userList);
 		if (userListResult == null) {
@@ -99,7 +99,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public int userRegister(UserList userList) {
-		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		userListRep.save(userList);
 
