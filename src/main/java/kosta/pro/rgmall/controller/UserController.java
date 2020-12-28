@@ -254,13 +254,20 @@ public class UserController {
 		return 0;
 	}
 	
-	@RequestMapping("/myPage/writeReviewForm")
-	public String writeReviewForm() {
-		return "user/myPage/writeReview";
+	//상품후기 등록(상품구매 후)
+	@RequestMapping("/myPage/writeReviewForm/{regNo}")
+	public ModelAndView writeReviewForm(@PathVariable Long regNo) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/myPage/writeReview");
+		mv.addObject("regNo", regNo);
+		return mv;
 	}
 	
 	@RequestMapping("/myPage/insertReview/{regNo}")
-	public String inserReview(Review review,@PathVariable Long regNo) {
+	public String inserReview(Review review,@PathVariable Long regNo,HttpSession session) {
+		UserList userList =(UserList) session.getAttribute("userList");
+		review.setUserList(userList);
+		review.setRegisterGoods(mainService.goodsDetail(regNo));;
 		userService.insertReview(review);
 		return "redirect:/user/myPage/myReview";
 	}
@@ -273,22 +280,25 @@ public class UserController {
 		return new ModelAndView("user/myPage/myReview","review",review);
 	}
 	
-	@RequestMapping("/myPage/updateReviewForm")
-	public String updateReviewForm() {
-		return "user/myPage/updateReviewForm";
+	@RequestMapping("/myPage/updateReviewForm/{reviewNo}")
+	public ModelAndView updateReviewForm(@PathVariable Long reviewNo) {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/myPage/updateReviewForm");
+		mv.addObject("reviewNo", reviewNo);
+		return mv;
 	}
 	
-	@RequestMapping("/myPage/updateReview/{regNo}")
-	public String  updateReview(Review review, @PathVariable Long regNo) {
-		review.setRegisterGoods(mainService.goodsDetail(regNo));
+	@RequestMapping("/myPage/updateReview/{reviewNo}")
+	public String  updateReview(Review review, @PathVariable Long reviewNo) {
+		review.setReviewNo(reviewNo);
 		userService.updateReview(review);
-		return null;
+		return "redirect:/user/myPage/myReview";
 	}
 	
 	@RequestMapping("/myPage/deleteReview/{reviewNo}")
 	public String deleteReview(@PathVariable Long reviewNo) {
 		userService.deleteReview(reviewNo);
-		return "";
+		return "redirect:/user/myPage/myReview";
 	}
 	
 	/**

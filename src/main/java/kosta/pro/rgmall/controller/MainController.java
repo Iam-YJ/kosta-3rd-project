@@ -229,27 +229,14 @@ public class MainController {
 
 		goodsQuestionMap.put("registerGoods", registerGoods);
 		goodsQuestionMap.put("goodsQuestionList", goodsQuestionList);
-
+		
+		List<Review> review = mainService.selectReview(regNo);
+		goodsQuestionMap.put("review",review);
+		
 		ModelAndView mv = new ModelAndView("main/goodsDetail", "goodsQuestionMap", goodsQuestionMap);
 		return mv;
 	}
 
-	/**
-	 * 상품상세보기에서 후기 보는 탭
-	 */
-	@RequestMapping("/selectReview/{regNo}")
-	public ModelAndView selectReview(@PathVariable Long regNo) {
-		List<Review> review = mainService.selectReview(regNo);
-		ModelAndView mv = new ModelAndView();
-		if (review == null) {
-			mv.setViewName("main/review");
-			mv.addObject("review", "리뷰가 존재하지 않습니다.");
-		} else {
-			mv.addObject("review", review);
-			mv.setViewName("main/review");
-		}
-		return mv;
-	}
 
 	/**
 	 * 상품문의 A에 대한 기능(only 관리자)

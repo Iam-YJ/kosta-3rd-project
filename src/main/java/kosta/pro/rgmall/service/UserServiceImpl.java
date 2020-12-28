@@ -130,14 +130,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		String content = review.getContent();
+		Long reviewNo = review.getReviewNo();
+		return reviewRep.updateReview(content, reviewNo);
 	}
 
 	@Override
 	public int deleteReview(Long reviewNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewRep.deleteReview(reviewNo);
 	}
 
 	@Override
