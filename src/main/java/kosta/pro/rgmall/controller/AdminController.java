@@ -62,9 +62,19 @@ public class AdminController {
 	public ModelAndView newOrderList() {
 		
 		List<Orders> orderList = adminService.selectOrders(1);
-		
 		return new ModelAndView("myPage/adminNewOrderList","orderList",orderList);
 	}
+	
+	/**
+	 * 관리자 마이페이지 - 신규 주문조회 - 상품출고
+	 */
+	@RequestMapping("/myPage/newOrderList/goodsRelease/{orderNo}")
+	public ModelAndView goodsRelease(@PathVariable Long orderNo) {
+		
+		adminService.updateDelState(orderNo);
+		return new ModelAndView("redirect:/user/myPage");
+	}
+	
 
 	/**
 	 * 관리자 마이페이지 - 상품 배송조회

@@ -276,7 +276,6 @@ public class UserServiceImpl implements UserService {
 		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
 		Cart dbCart = cartRep.findById(cartNo).orElse(null);
 		Pay dbPay = payRep.findById(payNo).orElse(null);
-				
 		//1.Orders DB저장
 		Orders order = new Orders(null, shippingAddr, unitTotalPrice, null, "배송준비중", realPay, dbUserList, dbPay);
 		ordersRep.save(order);

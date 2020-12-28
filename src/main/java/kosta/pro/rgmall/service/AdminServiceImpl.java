@@ -196,9 +196,19 @@ public class AdminServiceImpl implements AdminService {
 		return orderList;
 	}
 
+	
+	/**
+	 * 상품출고
+	 * Orders 테이블의 Del_state가 배송중으로 변경
+	 */
 	@Override
 	public int updateDelState(Long orderNo) {
-		// TODO Auto-generated method stub
+		Orders orders = ordersRep.findById(orderNo).orElse(null);
+		if(orders == null) {
+			throw new RuntimeException("주문정보를 확인할 수 없습니다.");
+		}
+		orders.setDelState("배송중");
+		
 		return 0;
 	}
 

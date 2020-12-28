@@ -45,8 +45,6 @@ public interface AdminService {
 	 */
 	public Notice selectByNotice(Long noticeNo);
 
-
-
 	/**
 	 * 공지사항 삭제
 	 */

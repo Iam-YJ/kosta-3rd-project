@@ -19,6 +19,9 @@
 				</div>
 			</div><!-- userOrderListTitle -->
 			<div class="OrderListInfo">
+				<c:if test="${empty orderList}">
+					신규주문이 없습니다.
+				</c:if>
 				<c:forEach items="${orderList}" var="orders">
 					<div class="Orders border rounded" style="margin-bottom: 20px; padding-bottom: 10px">
 					 	<div class="row" style="padding: 10px">
@@ -45,13 +48,20 @@
 						 				<div class="col-xl-7" style="margin: auto;">
 						 					<div class="row">
 						 						<div class="col-xl" style="padding: 5px">
-						 								${orderLine.registerGoods.title}
+						 							${orderLine.registerGoods.title}
+						 						</div>
+						 					</div>
+						 					<div class="row">
+						 						<div class="col-xl-6" style="padding: 5px">
+						 							받는사람 : ${orders.userList.name}
+						 						</div>
+						 						<div class="col-xl-6" style="padding: 5px">
+						 								연락처 : ${orders.userList.phone}
 						 						</div>
 						 					</div>
 						 					<div class="row">
 						 						<div class="col-xl" style="padding: 5px">
-						 						<fmt:formatNumber value="${orderLine.totalPrice}" var="CommaPrice"/>
-													${CommaPrice} 원
+						 								주소 : ${orders.addr}
 						 						</div>
 						 					</div>
 						 				</div>
@@ -62,7 +72,7 @@
 					 	</c:forEach><!-- orderLine -->
 					 	<div class="row">
 					 		<div class="col-xl" style="text-align: right">
-					 			<a href="" class="btn btn-success">상품출고//위에 내용 바꿔야함 ..</a>
+					 			<a href="${pageContext.request.contextPath}/admin/myPage/newOrderList/goodsRelease/${orders.orderNo}" class="btn btn-success">상품출고</a>
 					 		</div>
 					 		<div class="col-xl-1"></div>
 					 	</div><!-- btn  -->
