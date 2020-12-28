@@ -1,10 +1,16 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.PathVariable;
 
 import kosta.pro.rgmall.domain.Cart;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.GoodsQuestion;
+import kosta.pro.rgmall.domain.OrderLine;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
@@ -166,6 +172,11 @@ public interface UserService {
 
 	public WishList selectWishNo(Long regNo);
 
-
+	
+	/**
+	 * 상품결제하기
+	 */
+	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
+			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo);
 
 }

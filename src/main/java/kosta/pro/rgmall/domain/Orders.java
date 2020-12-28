@@ -1,7 +1,6 @@
 package kosta.pro.rgmall.domain;
 
 import java.time.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,4 +61,20 @@ public class Orders {
 	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
 	private List<OrderLine> list = new ArrayList<OrderLine>();
 
+	
+	public Orders(Long orderNo, String addr, int totalPrice, LocalDateTime orderdate, String delState, int realpay,
+			UserList userList, Pay pay) {
+		this.orderNo = orderNo;
+		this.addr = addr;
+		this.totalPrice = totalPrice;
+		this.orderdate = orderdate;
+		this.delState = delState;
+		this.realpay = realpay;
+		this.userList = userList;
+		this.pay = pay;
+	}
+
+	
+	
+	
 }// class

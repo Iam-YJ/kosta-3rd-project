@@ -10,8 +10,8 @@
 </HEAD>
 <BODY>
  
-<form name="writeForm" method="post" action="${pageContext.request.contextPath}/user/myPage/insertReview">
-<input type="hidden" name="reviewNo" value="${registerGoods.regNo}">
+<form name="writeForm" method="post" action="${pageContext.request.contextPath}/user/myPage/insertReview/${regNo}">
+
 <table align="center" cellpadding="5" cellspacing="2" width="600" border="1" >
 
     <tr>

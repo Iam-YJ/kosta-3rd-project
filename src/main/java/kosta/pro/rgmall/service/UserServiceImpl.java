@@ -2,13 +2,18 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
+import javax.persistence.criteria.Order;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kosta.pro.rgmall.domain.Cart;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.GoodsQuestion;
+import kosta.pro.rgmall.domain.OrderLine;
 import kosta.pro.rgmall.domain.Orders;
+import kosta.pro.rgmall.domain.Pay;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
@@ -71,8 +76,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<Orders> selectOrders(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Orders> orderList = ordersRep.selectOrdersByUserNo(userNo);
+		return orderList;
 	}
 
 	@Override
@@ -124,14 +130,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		String content = review.getContent();
+		Long reviewNo = review.getReviewNo();
+		return reviewRep.updateReview(content, reviewNo);
 	}
 
 	@Override
 	public int deleteReview(Long reviewNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewRep.deleteReview(reviewNo);
 	}
 
 	@Override
@@ -167,7 +173,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int insertCart(Cart cart) {
-		cartRep.save(cart);
+		//카트가 중복이면 저장 X
+		Cart dbCart = cartRep.findCartByUserAndRegisterGoods
+				(cart.getUserList().getUserNo(), cart.getRegisterGoods().getRegNo());
+
+		if(dbCart == null) {
+			cartRep.save(cart);
+		}
 		return 0;
 	}
 
@@ -248,10 +260,47 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public RegisterGoods selectGoods(Long regNo) {
-		RegisterGoods registerGoods =registerGoodsRep.findByRegNo(regNo);
+		RegisterGoods registerGoods = registerGoodsRep.findByRegNo(regNo);
 //		if(registerGoods==null) throw new RuntimeException("오류로 인해 상품이미지를 불러오지 못했습니다.");
 		return registerGoods;
 	}
-
-
+	
+	/**
+	 * 상품결제하기
+	 * 1. Orders DB저장
+	 * 2. Orderline DB저장
+	 * 3. 재고감소
+	 * 4. 카트제거
+	 * 5. 유저 포인트 추가+감소
+	 * 6. 등급 비교 후 감가.
+	 */
+	@Override
+	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
+			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo) throws RuntimeException {
+		//각종 정보 불러오기(User, RegisterGoods, Cart, Pay);
+		UserList dbUserList = userListRep.findById(userNo).orElse(null);
+		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
+		Cart dbCart = cartRep.findById(cartNo).orElse(null);
+		Pay dbPay = payRep.findById(payNo).orElse(null);
+				
+		//1.Orders DB저장
+		Orders order = new Orders(null, shippingAddr, unitTotalPrice, null, "배송준비중", realPay, dbUserList, dbPay);
+		ordersRep.save(order);
+		
+		//2. Orderline DB저장
+		OrderLine orderLine = new OrderLine(null, quantity, unitPrice, unitTotalPrice, order, dbRegisterGoods);
+		orderLineRep.save(orderLine);
+		//3. 재고감소
+		dbRegisterGoods.setStock(dbRegisterGoods.getStock()-quantity);
+		//4. 카트제거
+		cartRep.delete(dbCart);
+		//5. 유저 포인트 감소(배송완료 후 포인트 추가)
+		//if(dbUserList.getUsergrade())<--사용해야함
+		
+		dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
+		
+		//6. 등급 비교 후 감가.
+		
+		return 0;
+	}
 }

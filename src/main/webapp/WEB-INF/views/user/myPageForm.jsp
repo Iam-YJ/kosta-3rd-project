@@ -8,7 +8,14 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 $(document).ready(function(){
-	/* $("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/main") */
+	
+	if(${sessionScope.userList.authority eq 'ROLE_USER'}){
+		$("#myPageContentSection").empty();
+		$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/userOrderList");
+	}else if(${sessionScope.userList.authority eq 'ROLE_ADMIN'}){
+		$("#myPageContentSection").empty();
+		$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/newOrderList");
+	}
 	
 })//ready
 function userOrderList(){
@@ -178,7 +185,7 @@ function adminClientList(){
 								<a href="#" onclick="userPointDonate()">포인트 기부</a>
 							</div>
 						</c:when>
-						<c:otherwise>
+						<c:when test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
 						 	<div class="row col-xl" style="margin-top: 15px">
 								<h4><b>상품관련</b></h4>
 							</div>
@@ -233,8 +240,7 @@ function adminClientList(){
 							<div class="row col-xl" style="margin-bottom: 15px">
 								<a href="#" onclick="adminClientList()">회원조회</a>
 							</div>
-						 	
-						</c:otherwise>
+						</c:when>
 					</c:choose>
 				</div>
 			</div>

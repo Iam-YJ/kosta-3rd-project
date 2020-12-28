@@ -25,7 +25,6 @@
 	
 	$(function(){
 		$(document).on("change","#quantity",function(){
-			
 			 var $spanEle = $(this).parent().parent().next().find("span");
 			//alert("spanEle : " + $spanEle.html())
 			 $.ajax({
@@ -38,7 +37,7 @@
 				  }, //서버에게 보낼 parameter정보
 			  success: function(result){
 				  var re =AddComma(result);
-				  $spanEle.html( re);
+				  $spanEle.html(re);
 			  },
 			  error : function(err){
 				  console.log(err+ " 예외발생....");

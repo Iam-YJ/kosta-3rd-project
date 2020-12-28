@@ -7,7 +7,7 @@
 $(function(){
 	   $("input[value=수정하기]").click(function(){
 		   //document.requestForm.action="${pageContext.request.contextPath}/board/updateForm";
-		   $("#updateFAQ").attr("action", "${pageContext.request.contextPath}/user/myPage/updateReview");
+		   $("#updateFAQ").attr("action", "${pageContext.request.contextPath}/user/myPage/updateReview/${reviewNo}");
 		   $("#updateFAQ").submit();
 	   })
 })

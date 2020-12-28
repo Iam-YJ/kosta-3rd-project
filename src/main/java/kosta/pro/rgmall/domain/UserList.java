@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,22 +27,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserList {
-	
-	
-	
 
 	public UserList(Long userNo) {
-		super();
 		this.userNo = userNo;
 	}
-
-
-
+	
 	public UserList(String email) {
 		this.email = email;
 	}
-	
-	
 
 	public UserList(Long userNo, String name, String userId, String passWord, String addr, String phone, String email,
 			int points, String authority, UserGrade userGrade) {
@@ -56,9 +49,7 @@ public class UserList {
 		this.points = points;
 		this.authority = authority;
 		this.usergrade = userGrade;
-
 	}
-
 
 
 	@Id
@@ -69,7 +60,7 @@ public class UserList {
 	@Column(nullable = false, length = 30)
 	private String name;
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, unique = true)
 	private String userId;
 	
 	@Column(nullable = false, length = 50)
