@@ -112,6 +112,7 @@ public class UserController {
 		return "user/myPage/main";
 	}//updateUserList
 	
+	//기부폼
 	@RequestMapping("myPage/donationForm")
 	public ModelAndView donationForm(HttpSession session) {
 		UserList userInfo=(UserList) session.getAttribute("userList");
@@ -123,6 +124,7 @@ public class UserController {
 		return mv;
 	}//donationForm
 	
+	//기부하기
 	@RequestMapping("myPage/donation")
 	public String donation(int dona, HttpSession session) {
 		UserList userInfo=(UserList) session.getAttribute("userList");
@@ -132,7 +134,6 @@ public class UserController {
 		Donation donation =new Donation();
 		donation.setDonaPoint(dona);
 		donation.setUserList(userList);
-		
 		if(userService.selectMyDonation(userNo).getUserList().getUserNo()==userNo) {
 			userService.updateDonation(userNo, dona);
 		}else {
@@ -159,8 +160,10 @@ public class UserController {
 		return "main/index";
 	}//logout
 	
+	//찜목록추가
 	@RequestMapping("insertwish")
 	public String wish(Long regNo, HttpSession session) {
+		System.out.println("33333333333333333333"+regNo);
 		UserList userInfo=(UserList) session.getAttribute("userList");
 		Long userNo= userInfo.getUserNo();
 		 List<WishList> list =userService.selectWishList(userNo);
@@ -178,14 +181,16 @@ public class UserController {
 		return "redirect:/main/goodsDetail/"+regNo;
 	}//wish
 	
+	//찜목록 조회
 	@RequestMapping("wishList")
 	public ModelAndView wishList(HttpSession session) {
 		UserList userInfo=(UserList) session.getAttribute("userList");
 		Long userNo= userInfo.getUserNo();
 		List<WishList> list=userService.selectWishList(userNo);
-		return new ModelAndView("/user/wishList","list",list);
+		return new ModelAndView("user/wishList","list",list);
 	}//wishList
 	
+	//찜목록 삭제
 	@RequestMapping("/deleteWishList")
 	public String deleteWishList(Long regNo,HttpSession session) {
 		WishList whishList=userService.selectWishNo(regNo);
@@ -193,11 +198,24 @@ public class UserController {
 		return "redirect:/user/wishList" ;
 	}//deleteWishList
 	
-
+	//장바구니 추가
 	@RequestMapping("/insertcart")
 	public String cart(HttpSession session,int qua, Long regNo) {
 		UserList userInfo=(UserList) session.getAttribute("userList");
 		Long userNo= userInfo.getUserNo();
+		
+		List<Cart> list =userService.selectCart(userNo);
+		for(Cart c : list) {
+			if(c.getRegisterGoods().getRegNo()==regNo) {
+				userService.updateCart(regNo);
+				if(qua==0) {
+					return "redirect:/user/wishList" ;
+				}else {
+					return "redirect:/main/goodsDetail/"+regNo ;
+				}
+			}
+		}
+		
 		Cart cart = new Cart();
 		UserList userList= new UserList();
 		userList.setUserNo(userNo);
@@ -205,11 +223,18 @@ public class UserController {
 		registerGoods.setRegNo(regNo);
 		cart.setRegisterGoods(registerGoods);
 		cart.setUserList(userList);
-		cart.setQuantity(qua);
-		userService.insertCart(cart);
-		return "redirect:/main/goodsDetail/"+regNo ;
+		if(qua==0) {
+			cart.setQuantity(1);
+			userService.insertCart(cart);
+			return "redirect:/user/wishList" ;
+		}else {
+			cart.setQuantity(qua);
+			userService.insertCart(cart);
+			return "redirect:/main/goodsDetail/"+regNo ;
+		}
 	}//cart
 	
+	//장바구니 조회
 	@RequestMapping("/cartList")
 	public ModelAndView cartList(HttpSession session) {
 		UserList userInfo=(UserList) session.getAttribute("userList");
@@ -221,6 +246,7 @@ public class UserController {
 		return new ModelAndView("user/cart","list",list);
 	}//cartList
 	
+	//장바구니 변경
 	@RequestMapping("/cartInfoChange")
 	@ResponseBody
 	public int cartInfoChange(String unitQuantitiy, String unitPrice) {
@@ -228,9 +254,18 @@ public class UserController {
 		System.out.println(unitPrice+"===========unitPrice===========");
 		System.out.println(Integer.parseInt(unitQuantitiy)+"======Integer.parseInt(unitQuantitiy)================");
 		System.out.println(Integer.parseInt(unitPrice)+"==========Integer.parseInt(unitPrice)============");
-		//Integer.parseInt(unitQuantitiy)*Integer.parseInt(unitPrice);
+		return Integer.parseInt(unitQuantitiy)*Integer.parseInt(unitPrice);
 		
-		return 0;
+		//return 0;
+	}//cartInfoChange
+	
+	//장바구니 삭제
+	@RequestMapping("/deleteCartList")
+	public String deleteCartList(Long regNo, HttpSession session) {
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		userService.deleteCart(userNo, regNo);
+		return"redirect:/user/cartList";
 	}
 	
 	@RequestMapping("/myPage/writeReviewForm")

@@ -169,13 +169,8 @@ $(function(){
 					</div>
 					
 					<div class="userBtnSection">
-<<<<<<< HEAD
-						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${registerGoods.regNo});">찜</a>
-						<a href="#"  class="btn btn-outline-success" onclick="cartbtn(${registerGoods.regNo});">장바구니</a>
-=======
-						<a href="" class="btn btn-outline-success">찜</a>
-						<a href="" class="btn btn-outline-success">장바구니</a>
->>>>>>> branch 'master' of https://github.com/Iam-YJ/kosta-3rd-project.git
+						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${goodsQuestionMap.registerGoods.regNo});">찜</a>
+						<a href="#"  class="btn btn-outline-success" onclick="cartbtn(${goodsQuestionMap.registerGoods.regNo});">장바구니</a>
 						<a href="" class="btn btn-success">바로구매</a>
 					</div>
 				</div>
