@@ -17,7 +17,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Admin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO,generator = "admin_no_seq")
