@@ -20,4 +20,10 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	List<RegisterGoods> findAllWithMainAndSub(Long mainCategoryNo, Long subCategoryNo);
 	
 	RegisterGoods findByRegNo(Long regNo);
+
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.ad=1")
+	List<RegisterGoods> findAD();
+
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.stock>=0 order by registerGoods.stock")
+	List<RegisterGoods> findStock();
 }//class

@@ -87,7 +87,8 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/goodsStockList")
 	public ModelAndView goodsStockList() {
-		return new ModelAndView("myPage/adminGoodsStockList");
+		List<RegisterGoods> list = adminService.selectGoods(2);
+		return new ModelAndView("myPage/adminGoodsStockList","list", list);
 	}
 
 	/**
@@ -95,8 +96,20 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/goodsADList")
 	public ModelAndView goodsADList() {
-		return new ModelAndView("myPage/adminGoodsADList");
+		
+		List<RegisterGoods> list = adminService.selectGoods(1);
+		return new ModelAndView("myPage/adminGoodsADList", "list", list);
 	}
+	
+	/**
+	 * 관리자 마이페이지 - 광고상품 삭제
+	 */
+	@RequestMapping("/myPage/goodsADList")
+	public String goodsADListDelete() {
+		return null;
+	}
+	
+	
 
 	/**
 	 * 관리자 마이페이지 - 공지사항
@@ -154,16 +167,6 @@ public class AdminController {
 		return new ModelAndView("myPage/adminClientList");
 	}
 
-	/**
-	 *  광고 조회
-	 */
-	@RequestMapping("/selectByAd")
-	public String selectByAd(Model model) {
-		List<RegisterGoods> list = adminService.selectByAd();
-		model.addAttribute("list", list);
-		return "admin/ad";
-	}
-	
 	/**
 	 * 관리자 로그인
 	 */

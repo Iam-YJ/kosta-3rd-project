@@ -91,7 +91,7 @@ public interface AdminService {
 	 * state = 1, 광고조회를 위한 state
 	 * state = 2, 재고조회를 위한 state
 	 */
-	public List<RegisterGoods> selectGoods(int State);
+	public List<RegisterGoods> selectGoods(int state);
 	
 	/**
 	 * 판매상품 조회 관리(수정)
