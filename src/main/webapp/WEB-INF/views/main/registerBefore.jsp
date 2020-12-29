@@ -80,8 +80,8 @@ $(document).ready(function(){
 					<div class="row">
 						<div class="col-xl" style="text-align: center;">
 							<h5>
-								L.P.Mall에 오신 것을 환영합니다<br>
-								지금 회원 가입 하신 후 L.P.Mall에서 신선한<br>
+								R.P.Mall에 오신 것을 환영합니다<br>
+								지금 회원 가입 하신 후 R.P.Mall에서 신선한<br>
 								농산물 서비스를 만나보세요!<br>
 							</h5>						
 						</div>

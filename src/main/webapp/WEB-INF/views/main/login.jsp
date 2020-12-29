@@ -94,7 +94,7 @@
 											<script type='text/javascript'>
 											$(function() {
 												
-												$("#userNobb").attr("href", "${pageContext.request.contextPath}/main/kakaoLogin/"+userNick+"/"+userEmail);
+												$("#userNobb").attr("href", "${pageContext.request.contextPath}/main/kakaoLogin/"+userEmail);
 											});
 												Kakao.init('7d207d89f9ff532fadc2f0761efa5f7f'); //아까 카카오개발자홈페이지에서 발급받은 자바스크립트 키를 입력함
 							
@@ -125,7 +125,7 @@
 													
 																
 															//	window.location.replace("${pageContext.request.contextPath}/main/kakaoLogin");
-															window.location.replace("${pageContext.request.contextPath}/main/kakaoLogin/"+userNick+"/"+userEmail);
+															window.location.replace("${pageContext.request.contextPath}/main/kakaoLogin/"+userEmail);
 							
 															}
 														})
@@ -133,7 +133,7 @@
 													fail : function(error) {
 														alert(JSON.stringify(error));
 													}
-												})
+												});
 							
 											</script>
 											<div class="clearfix add_bottom_0"></div>

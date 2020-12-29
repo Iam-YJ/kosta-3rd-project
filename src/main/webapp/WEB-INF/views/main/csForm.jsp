@@ -48,7 +48,8 @@
 					  console.log(err+"예외발생");
 				  }
 			  });//ajax
-		});
+
+	
 	})
 </script>
 </head>

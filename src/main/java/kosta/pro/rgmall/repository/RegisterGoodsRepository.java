@@ -54,4 +54,9 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.title like concat('%',:keyword,'%')")
 	List<RegisterGoods> searchGoods(@Param("keyword") String keyword);
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.ad=1")
+	List<RegisterGoods> findAD();
+
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.stock>=0 order by registerGoods.stock")
+	List<RegisterGoods> findStock();
 }//class

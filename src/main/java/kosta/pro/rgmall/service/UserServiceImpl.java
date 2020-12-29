@@ -189,14 +189,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateCart(Cart cart) {
-		// TODO Auto-generated method stub
+	public int updateCart(Long regNo) {
+		cartRep.updateCart(regNo);
+		return 0;
+	}
+	
+	@Override
+	public int updateCart2(int qua,Long regNo) {
+		cartRep.updateCart2(qua,regNo);
 		return 0;
 	}
 
 	@Override
-	public int deleteCart(Long userNo) {
-		// TODO Auto-generated method stub
+	public int deleteCart(Long userNo,Long regNo) {
+		List<Cart> list=selectCart(userNo);
+		for(Cart c : list) {
+			System.out.println(c);
+			if(c.getRegisterGoods().getRegNo()==regNo) {
+				cartRep.delete(c);
+			}
+		}
 		return 0;
 	}
 
@@ -248,7 +260,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserGrade loginAPIGrade() {
-		UserGrade userGradeResult = userGradeRep.findById((long) 4).orElse(null);
+		UserGrade userGradeResult = userGradeRep.findById((long) 1).orElse(null);
 		return userGradeResult;
 	}
 

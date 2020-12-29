@@ -1,0 +1,184 @@
+--Notice
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용1', sysdate, '공지사항-테스트-제목1');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용2', sysdate, '공지사항-테스트-제목2');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용3', sysdate, '공지사항-테스트-제목3');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용4', sysdate, '공지사항-테스트-제목4');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용5', sysdate, '공지사항-테스트-제목5');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용6', sysdate, '공지사항-테스트-제목6');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용7', sysdate, '공지사항-테스트-제목7');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용8', sysdate, '공지사항-테스트-제목8');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용9', sysdate, '공지사항-테스트-제목9');
+insert into notice (notice_no, content, regdate, title)  VALUES(NOTICE_NO_SEQ.nextval, '공지사항-테스트-내용10', sysdate, '공지사항-테스트-제목10');
+
+--FAQ
+select * from faq;
+
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'신선상품의 상태가 좋지 않아요.',
+'로얄감자몰에서는 항상 고객여러분께 신선한 상품을 제공하고자 노력하고 있습니다.
+구입하신 상품 중 품질에 이상이 있는 상품을 구입하신 고객님께서는
+환불 서비스를 이용해 신청 주십시오.
+확인 후 즉시 환불해 드리겠습니다');
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'제품 가격이 왜 저렴하나요?',
+'산지 생산자와의 직거래를 통해 중간 유통단계를 획기적으로 줄여,
+고객님께 합리적인 가격으로 질 좋은 상품을 제공하고 있습니다.
+앞으로도 좋은 가격의 질 좋은 상품을 제공하겠습니다.');
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'제품이 파손돼서(깨져서) 왔어요.',
+'고객님께 믿음을 드릴 수 있는 안전한 배송을 위하여,
+제품의 포장상태 등을 체크하여 배송 드리고 있습니다.
+구입하신 제품 중 파손 상품 발생시 환불 서비스를 통해 신고하여 주시면
+즉시 환불 처리해 드리겠습니다.');
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'상품 결제를 했는데 추가로 구매할 수 있나요?',
+'상품 결제 완료 후 추가 구매는 현재 불가능합니다.
+추가 주문을 원하시는 경우, "결제완료" 상품의 주문번호를 클릭하여
+주문상품을 "취소" 하시고 다시 주문 부탁드립니다.');
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'상품을 받았는데 누락된 상품이 있어요.',
+'구매하신 상품 중 품절 및 포장 담당자의 실수로 인하여
+누락 상품 발생 시 환불 서비스를 받으 실 수 있습니다.
+품절 상품 발생 시 고객님게 별도의 문자 연락을 드리며,
+상품 누락 발생시 환불서비스를 신청해주세요');
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'환불 규정은 어떻게 되나요?',
+'상품 불량, 고객 변심으로 인한 환불은 원칙적으로 7일 이내에 가능합니다.
+- 신선 식품은 상품 수령일로부터 다음날까지
+- 일반 가공식품/생활용품은 7일 이내');
+INSERT INTO FAQ (faq_no, question ,answer) VALUES(FAQ_NO_SEQ.NEXTVAL,
+'배송 기사님이 불친절해요.',
+'배송 중 미흡한 점을 느끼셨다면 정중히 사과드립니다.
+고객님께 믿음을 드릴 수 있는 안전한 배송을 제공 드리기 위하여,
+별도의 매장 배송 전담 서비스를 제공하고 있습니다.
+매장 배송 서비스의 불편사항을 요청 주시면 
+즉시 개선해 드리겠습니다.'
+);
+
+-- ADMIN 
+insert into admin (admin_no, admin_id, authority, name, password) values(ADMIN_NO_SEQ.nextval, 'admin', 'ROLE_ADMIN', '관리자', 'admin');
+
+-- USERGRADE
+INSERT INTO user_grade (grade_no,grade, low_price, high_price, point_rate) VALUES(GRADE_NO_SEQ.NEXTVAL,'일반',0 ,2000000 ,0.2);
+INSERT INTO user_grade (grade_no,grade, low_price, high_price, point_rate) VALUES(GRADE_NO_SEQ.NEXTVAL,'우수',2000000 ,5000000 ,0.5);
+INSERT INTO user_grade (grade_no,grade, low_price, high_price, point_rate) VALUES(GRADE_NO_SEQ.NEXTVAL,'로얄',5000000,9999999999,0.8);
+
+-- UserList
+insert into user_list (user_no, addr, authority, email, name, pass_word, phone, points, reg_date, update_date, user_id, grade_no) 
+values(user_no_seq.nextval, '테스트-주소', 'ROLE_USER', '테스트-EMAIL', '테스트', '1234', '010-1111-2222', 0, sysdate, sysdate, 'test', 1);
+
+
+-- mainCate
+INSERT INTO MAIN_CATEGORIES VALUES (MAIN_CATEGORY_NO_SEQ.NEXTVAL,'과일');
+INSERT INTO MAIN_CATEGORIES VALUES (MAIN_CATEGORY_NO_SEQ.NEXTVAL,'채소');
+INSERT INTO MAIN_CATEGORIES VALUES (MAIN_CATEGORY_NO_SEQ.NEXTVAL,'주곡/잡곡');
+INSERT INTO MAIN_CATEGORIES VALUES (MAIN_CATEGORY_NO_SEQ.NEXTVAL,'견과류');
+-- subCategory
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'사과/배', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'감귤/밀감', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'수박/멜론/참외/토마토', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'딸기/키위/블루베리', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'포도/자두/복숭아', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'감/곶감', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'바나나/파인애플', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'오렌지/자몽/레몬', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'망고/열대과일', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'체리/석류', 1);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'기타 과일', 1);
+
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'고구마/감자', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'콩나물/숙주나물', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'양파/마늘/파/생강', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'오이/가지/호박/옥수수', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'상추/깻잎/쌈채소', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'고추/피망/파프리카', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'시금치/부추/나물', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'양배추/양상추/브로콜리', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'샐러드/어린잎채소', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'당근/우엉/연근/마', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'버섯', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'배추/무/김장채소', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'인삼/더덕/약선재료', 2);
+INSERT INTO SUB_CATEGORIES VALUES (SUB_CATEGORY_NO_SEQ.NEXTVAL,'기타 채소', 2);
+
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'백미',3);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'찹살/현미',3);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'흑미',3);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'혼합곡',3);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'콩/팥/보리/귀리',3);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'수수/조/깨/잡곡',3);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'기타잡곡',3);
+
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'아몬드',4);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'호두',4);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'땅콩',4);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'밤/은행/잣',4);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'호박씨/해바라기씨',4);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'대추',4);
+INSERT INTO SUB_CATEGORIES VALUES(SUB_CATEGORY_NO_SEQ.NEXTVAL,'기타견과',4);
+
+-- registergoods
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',1000, 5, 100, 'thumbnail.png','과일-사과/배',1,1, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',2000, 10, 90, 'thumbnail.png','과일-감귤/밀감',1,2, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',3000, 15, 80, 'thumbnail.png','과일-수박/멜론/참외/토마토',1,3, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',4000, 20, 70, 'thumbnail.png','과일-딸기/키위/블루베리',1,4, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',5000, 25, 60, 'thumbnail.png','과일-포도/자두/복숭아',1,5, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',6000, 30, 50, 'thumbnail.png','과일-감/곶감',1,6, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',7000, 35, 40, 'thumbnail.png','과일-바나나/파인애플',1,7, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',8000, 40, 30, 'thumbnail.png','과일-오렌지/자몽/레몬',1,8, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',9000, 45, 20, 'thumbnail.png','과일-망고/열대과일',1,9, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',10000, 50, 10, 'thumbnail.png','과일-체리/석류',1,10, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',11000, 55, 0, 'thumbnail.png','과일-기타 과일',1,11, sysdate);
+
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',500, 55, 5, 'thumbnail.png','채소-고구마/감자',2,12, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',1000, 50, 10, 'thumbnail.png','채소-콩나물/숙주나물',2,13, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',1500, 45, 15, 'thumbnail.png','채소-양파/마늘/파/생강',2,14, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',2000, 40, 20, 'thumbnail.png','채소-오이/가지/호박/옥수수',2,15, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',2500, 35, 25, 'thumbnail.png','채소-상추/깻잎/쌈채소',2,16, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',3000, 30, 30, 'thumbnail.png','채소-고추/피망/파프리카',2,17, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',3500, 25, 35, 'thumbnail.png','채소-시금치/부추/나물',2,18, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',4000, 20, 40, 'thumbnail.png','채소-양배추/양상추/브로콜리',2,19, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',4500, 15, 45, 'thumbnail.png','채소-샐러드/어린잎채소',2,20, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',5000, 10, 50, 'thumbnail.png','채소-당근/우엉/연근/마',2,21, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',5500, 5, 55, 'thumbnail.png','채소-버섯',2,22, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',6000, 0, 60, 'thumbnail.png','채소-배추/무/김장채소',2,23, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',6500, 5, 65, 'thumbnail.png','채소-인삼/더덕/약선재료',2,24, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',7000, 10, 70, 'thumbnail.png','채소-기타채소',2,25, sysdate);
+
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',1500, 15, 15, 'thumbnail.png','주곡/잡곡-백미',3,26, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',3000, 30, 30, 'thumbnail.png','주곡/잡곡-찹살/현미',3,27, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',4500, 45, 45, 'thumbnail.png','주곡/잡곡-흑미',3,28, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',6000, 60, 60, 'thumbnail.png','주곡/잡곡-혼합곡',3,29, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',7500, 75, 75, 'thumbnail.png','주곡/잡곡-콩/팥/보리/귀리',3,30, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',9000, 90, 90, 'thumbnail.png','주곡/잡곡-수수/조/깨/잡곡',3,31, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',10500, 105, 105, 'thumbnail.png','주곡/잡곡-기타잡곡',3,32, sysdate);
+
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',1000, 130, 10, 'thumbnail.png','견과류-아몬드',4,33, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',3000, 110, 30, 'thumbnail.png','견과류-호두',4,34, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',5000, 90, 50, 'thumbnail.png','견과류-땅콩',4,35, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',7000, 70, 70, 'thumbnail.png','견과류-밤/은행/잣',4,36, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',9000, 50, 90, 'thumbnail.png','견과류-호박씨/해바라기씨',4,37, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 0, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',11000, 30, 110, 'thumbnail.png','견과류-대추',4,38, sysdate);
+insert into register_goods (reg_no, ad, ad_img, area, detail, method, name, options, price, sellcount, stock, thumbnail_img, title, main_category_no, sub_category_no, reg_date) values(reg_no_seq.nextval, 1, 'banner.png', 'test_area', 'test_detail', 'test_method','test_name','test_options',13000, 10, 130, 'thumbnail.png','견과류-기타견과',4,39, sysdate);
+
+--payMethod
+INSERT into pay (pay_no, method) VALUES(PAY_NO_SEQ.nextval, '계좌이체');
+INSERT into pay (pay_no, method) VALUES(PAY_NO_SEQ.nextval, '신용/체크카드');
+INSERT into pay (pay_no, method) VALUES(PAY_NO_SEQ.nextval, '휴대폰');
+INSERT into pay (pay_no, method) VALUES(PAY_NO_SEQ.nextval, '무통장입금');
+
+commit;
+
+select * from order_Line;
+select * from orders;
+select * from orders where user_no = 1 ORDER BY orderdate desc;
+
+delete cart;
+delete orders;
+
+select * from cart;
+select * from user_list;
+
+select * from user_grade;
+select * from user_list;
+
