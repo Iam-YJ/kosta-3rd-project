@@ -274,7 +274,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int checkProfit(String startDate, String endDate) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -287,6 +286,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<RegisterGoods> selectByAd() {
 
 		return null;
+	}
+	
+	@Override
+	public UserList searchById(String userId) {
+		return userListRep.findByIdUser(userId);
 	}
 
 }

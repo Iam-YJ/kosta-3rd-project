@@ -10,7 +10,7 @@
 <script type="text/javascript"></script>
 <body>
 <h1>index.jsp</h1>
-${user}
+${userList}
 
 </body>
 </html>
