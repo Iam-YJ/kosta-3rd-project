@@ -36,8 +36,6 @@ public class UserGrade {
 	@Column(nullable = false)
 	private double pointRate;
 	
-	
-	
 }//class
 
 

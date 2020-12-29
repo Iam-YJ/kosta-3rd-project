@@ -148,10 +148,11 @@ public class AdminController {
 
 	/**
 	 * 관리자 마이페이지 - 회원조회
-	 */
+	*/ 
 	@RequestMapping("/myPage/clientList")
-	public ModelAndView clientList() {
-		return new ModelAndView("myPage/adminClientList");
+	public ModelAndView clientList(String grade, String keyword) {
+		List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		return new ModelAndView("myPage/adminClientList", "userList", userList);
 	}
 
 	/**
@@ -307,6 +308,27 @@ public class AdminController {
 
 		return "redirect:/admin/cs/list";
 	}
+	
+	/**
+	 * 회원정보 검색
+	 
+	@RequestMapping("/myPage/UserList")
+	public ModelAndView userList(String grade, String keyword) {
+		List<UserList> userList = adminService.searchAllUser(grade, keyword);
+		System.out.println(userList);
+
+		return new ModelAndView("myPage/adminClientList", "userList", userList);
+	}*/
+
+	/**
+	 * 회원 상세정보
+	*/ 
+	@RequestMapping("/myPage/userRead/{userId}")
+	public ModelAndView userRead(@PathVariable String userId) {
+		System.out.println(userId);
+		UserList userList = adminService.searchById(userId);
+		return new ModelAndView("myPage/adminClientRead", "userList", userList);
+	}
 
 	@RequestMapping("myPage/main")
 	public void adminMyPage() {
@@ -353,26 +375,7 @@ public class AdminController {
 
 	}// insertGoods
 
-	/**
-	 * 회원정보 검색
-	 */
-	@RequestMapping("/myPage/main/userCheck")
-	public ModelAndView userList(String grade, String keyword) {
-		List<UserList> userList = adminService.searchAllUser(grade, keyword);
-		System.out.println(userList);
-
-		return new ModelAndView("admin/myPage/userCheck", "userList", userList);
-	}
-
-	/**
-	 * 회원 상세정보
-	 */
-	@RequestMapping("/myPage/main/userRead/{userNo}")
-	public ModelAndView userRead(@PathVariable Long userNo, String grade, String keyword) {
-		List<UserList> userList = adminService.searchAllUser(grade, keyword);
-
-		return new ModelAndView("admin/");
-	}
+	
 
 	// 카테고리 수정 폼 띄우기 //카테고리 수정
 	@RequestMapping("/myPage/modiCategories")

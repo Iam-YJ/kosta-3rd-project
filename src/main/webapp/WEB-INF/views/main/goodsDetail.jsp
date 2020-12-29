@@ -374,8 +374,21 @@ $(function(){
 				</c:otherwise>
 				</c:choose>
 				</div>
+				<!-- 상품후기 -->
 				<div id="menu3" class="tab-pane fade"><br>
 					<h3 style="color: red">상품후기 연결예정</h3>
+					<c:choose>
+						<c:when test="${empty goodsQuestionMap.review}">
+				  		상품후기가 없습니다.
+				  	</c:when>
+				 	<c:otherwise>
+						<c:forEach items="${goodsQuestionMap.review}" var="review">
+					 		ID : ${review.userList.userId}<Br>
+							리뷰내용 : ${review.content}<br>
+							작성날짜 : ${review.regDate}<br>
+						</c:forEach>
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			

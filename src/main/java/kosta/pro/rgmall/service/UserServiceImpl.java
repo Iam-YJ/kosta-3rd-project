@@ -130,14 +130,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int updateReview(Review review) {
-		// TODO Auto-generated method stub
-		return 0;
+		String content = review.getContent();
+		Long reviewNo = review.getReviewNo();
+		return reviewRep.updateReview(content, reviewNo);
 	}
 
 	@Override
 	public int deleteReview(Long reviewNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		return reviewRep.deleteReview(reviewNo);
 	}
 
 	@Override
@@ -189,14 +189,26 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public int updateCart(Cart cart) {
-		// TODO Auto-generated method stub
+	public int updateCart(Long regNo) {
+		cartRep.updateCart(regNo);
+		return 0;
+	}
+	
+	@Override
+	public int updateCart2(int qua,Long regNo) {
+		cartRep.updateCart2(qua,regNo);
 		return 0;
 	}
 
 	@Override
-	public int deleteCart(Long userNo) {
-		// TODO Auto-generated method stub
+	public int deleteCart(Long userNo,Long regNo) {
+		List<Cart> list=selectCart(userNo);
+		for(Cart c : list) {
+			System.out.println(c);
+			if(c.getRegisterGoods().getRegNo()==regNo) {
+				cartRep.delete(c);
+			}
+		}
 		return 0;
 	}
 

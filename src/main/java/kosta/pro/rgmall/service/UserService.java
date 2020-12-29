@@ -116,12 +116,12 @@ public interface UserService {
 	/**
 	 * 장바구니 수정하기
 	 * */
-	public int updateCart(Cart cart);
+	public int updateCart(Long regNo);
 	
 	/**
 	 * 장바구니 삭제하기
 	 * */
-	public int deleteCart(Long userNo);
+	public int deleteCart(Long userNo,Long regNo);
 	
 	/**
 	 * 포인트 조회하기
@@ -178,5 +178,7 @@ public interface UserService {
 	 */
 	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
 			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo);
+
+	int updateCart2(int qua, Long regNo);
 
 }
