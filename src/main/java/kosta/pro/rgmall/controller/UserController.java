@@ -1,5 +1,6 @@
 package kosta.pro.rgmall.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -269,11 +270,16 @@ public class UserController {
 	//장바구니 변경
 	@RequestMapping("/cartInfoChange")
 	@ResponseBody
-	public int cartInfoChange(String unitQuantitiy, String unitPrice) {
-		System.out.println(unitQuantitiy+"============unitQuantitiy==========");
-		System.out.println(unitPrice+"===========unitPrice===========");
-		System.out.println(Integer.parseInt(unitQuantitiy)+"======Integer.parseInt(unitQuantitiy)================");
-		System.out.println(Integer.parseInt(unitPrice)+"==========Integer.parseInt(unitPrice)============");
+	public int cartInfoChange(String unitQuantitiy, String unitPrice,HttpSession session,Long regNo) {
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		List<Cart> list=userService.selectCart(userNo);
+		for(Cart c : list) {
+			if(c.getRegisterGoods().getRegNo()==regNo) {
+				userService.updateCart2((Integer.parseInt(unitQuantitiy)-c.getQuantity()),regNo);
+			}
+		}
+		
 		return Integer.parseInt(unitQuantitiy)*Integer.parseInt(unitPrice);
 		
 		//return 0;
@@ -354,6 +360,27 @@ public class UserController {
 		buyMap.put("cart", cart);
 		
 		return new ModelAndView("user/order","buyMap",buyMap);
+	}
+	
+	@RequestMapping("/buyCartGoods")
+	public ModelAndView buyCartGoods(HttpSession session) {
+		UserList userList = (UserList)session.getAttribute("userList");
+		Long userNo = userList.getUserNo();
+		List<Cart> list=userService.selectCart(userNo);
+		Map<Long, Object> buyMap = new HashMap<Long, Object>();
+		int price =0;
+		for(Cart c : list) {
+			buyMap.put(c.getCartNo(), c);
+			
+			price +=c.getQuantity() * c.getRegisterGoods().getPrice();
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("user/order");
+		mv.addObject("buyMap", buyMap);
+		mv.addObject("totalPrice" , price);
+		
+		return mv;
 	}
 	
 	/**

@@ -183,11 +183,7 @@ $(function(){
 					<div class="userBtnSection">
 						<a href="#" class="btn btn-outline-success" onclick="wishbtn(${goodsQuestionMap.registerGoods.regNo});">찜</a>
 						<a href="#"  class="btn btn-outline-success" onclick="cartbtn(${goodsQuestionMap.registerGoods.regNo});">장바구니</a>
-<<<<<<< HEAD
-						<a href="" class="btn btn-success">바로구매</a>
-=======
 						<a href="#" class="btn btn-success" onclick="instantBuybtn(${goodsQuestionMap.registerGoods.regNo})">바로구매</a>
->>>>>>> branch 'master' of https://github.com/Iam-YJ/kosta-3rd-project.git
 					</div>
 				</div>
 			</div><!-- row -->

@@ -193,6 +193,12 @@ public class UserServiceImpl implements UserService {
 		cartRep.updateCart(regNo);
 		return 0;
 	}
+	
+	@Override
+	public int updateCart2(int qua,Long regNo) {
+		cartRep.updateCart2(qua,regNo);
+		return 0;
+	}
 
 	@Override
 	public int deleteCart(Long userNo,Long regNo) {
