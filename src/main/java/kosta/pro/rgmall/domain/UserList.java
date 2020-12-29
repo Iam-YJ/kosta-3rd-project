@@ -84,7 +84,7 @@ public class UserList {
 	@UpdateTimestamp
 	private LocalDateTime updateDate;
 
-	@Column(nullable = false, length = 9)
+	@Column(nullable = false, length = 9, columnDefinition = "varchar2(9 char) default 'ROLE_USER'")
 	private String authority;
 	
 	@OneToOne//(cascade = CascadeType.ALL)

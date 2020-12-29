@@ -84,7 +84,7 @@ public class MainServiceImpl implements MainService {
 	 */
 	@Override
 	public int userRegisterKakao(UserList userList) { //이거는 수정해야함(userGrade 테이블 수정해야함)
-		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		UserList userListResult = userListRep.save(userList);
 		if (userListResult == null) {
@@ -99,7 +99,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public int userRegister(UserList userList) {
-		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		userListRep.save(userList);
 
@@ -167,24 +167,46 @@ public class MainServiceImpl implements MainService {
 	 */
 	@Override
 	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo) {
-
 		List<RegisterGoods> list = null;
-			
-		if(mainCategoryNo == 0) {
-			list =  registerGoodsRep.findAll();
-		}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-			list = registerGoodsRep.findAllWithMain(mainCategoryNo);
-		}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+		if(sortNo == 0) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAll();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMain(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+			}
+		}else if(sortNo == 1) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAllOrderByRegDate();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMainOrderByRegDate(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByRegDate(mainCategoryNo, subCategoryNo);
+			}
+		}else if (sortNo == 2) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAllOrderBySell();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMainOrderBySell(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderBySell(mainCategoryNo, subCategoryNo);
+			}
+		}else if(sortNo == 3) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAllOrderByPrice();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMainOrderByPrice(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo);
+			}
 		}
-		
 		return list;
 	}
 	
 	@Override
 	public List<RegisterGoods> searchGoods(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		return registerGoodsRep.searchGoods(keyword);
 	}
 
 	@Override
@@ -275,7 +297,13 @@ public class MainServiceImpl implements MainService {
 		return 0;
 	}
 
-	
+	/**
+	 * FAQ 검색
+	 */
+	public List<FAQ> findFAQByWord(String word) {
+		List<FAQ> faq = FAQRep.findFAQByWord(word);
+		return faq;
+	}
 
 	
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -198,6 +199,7 @@ public class MainController {
 	public ModelAndView goodsList(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort) {
 		Map<String, Object> goodsListMap = new HashMap<String, Object>();
 		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
+		System.out.println(sort);
 		List<MainCategories> mainCategories = mainService.selectCategories();
 
 		goodsListMap.put("registerGoodsList", registerGoodsList);
@@ -211,6 +213,26 @@ public class MainController {
 		return mv;
 	}
 
+	/**
+	 * 상품리스트를 정렬 하는 Controller
+	 */
+	@RequestMapping("/goodsListOrder/{main}/{sub}/{sort}")
+	@ResponseBody
+	public List<RegisterGoods> goodsListOrder(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort) {
+		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
+		return registerGoodsList;
+	}
+	
+	/**
+	 * 상품 keyword검색하는 Controller
+	 * */
+	@ResponseBody
+	@RequestMapping(value = "/goodsListKeyword", method = RequestMethod.POST)
+	public List<RegisterGoods> goodsListKeyword(String keyword) {
+		List<RegisterGoods> registerGoodsList = mainService.searchGoods(keyword);
+		return registerGoodsList;
+	}
+	
 	/**
 	 * 상품 상세조회를 하는 Controller
 	 */
@@ -300,6 +322,16 @@ public class MainController {
 		}
 
 		return "redirect:/main/goodsList/0/0/0";
+	}
+	
+	/**
+	 * FAQ에서 검색
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/csForm", method = RequestMethod.POST)
+	public List<FAQ> searchCS(String word) {
+		List<FAQ> faq = mainService.findFAQByWord(word);
+		return faq;
 	}
 
 }// class

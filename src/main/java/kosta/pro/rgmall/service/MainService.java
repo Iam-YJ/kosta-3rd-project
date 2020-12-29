@@ -167,4 +167,9 @@ public interface MainService {
 	 * 상품 문의 수정(only 회원)
 	 */
 	public int updateGoodsQuestion(GoodsQuestion goodsQuestion);
+	
+	/**
+	 * faq검색하기
+	 * */
+	public List<FAQ> findFAQByWord(String word);
 }
