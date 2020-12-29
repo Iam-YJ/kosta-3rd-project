@@ -139,7 +139,7 @@ public interface AdminService {
 			환불상태 변경 - 메세지도 입력
 		}
 	 */
-	public int refundGoods(Long RefundNo, int refundState);
+	public int refundGoods(Long RefundNo, String refundReply, int refundState);
 
 	/**
 	 * 메인 카테고리 항목 추가

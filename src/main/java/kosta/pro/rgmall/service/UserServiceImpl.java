@@ -74,6 +74,20 @@ public class UserServiceImpl implements UserService {
 		return userListRep.updateUserList(passWord,addr,phone, email,userNo);
 	}
 
+	
+	/**
+	 * OrderNo에 해당하는 Order객체 찾기
+	 */
+	public Orders findOrdersById(Long orderNo) {
+		
+		Orders orders = ordersRep.findById(orderNo).orElse(null);
+				
+		return orders;
+	}
+	
+	/**
+	 * userNo Order찾기
+	 */
 	@Override
 	public List<Orders> selectOrders(Long userNo) {
 
@@ -81,16 +95,46 @@ public class UserServiceImpl implements UserService {
 		return orderList;
 	}
 
+	/**
+	 * 주문취소
+	 */
 	@Override
-	public int insertRefund(Refund refund) {
-		// TODO Auto-generated method stub
+	public int deleteOrders(Long orderNo) {
+		ordersRep.deleteById(orderNo);
+		
 		return 0;
 	}
+	
+	/**
+	 *  환불신청
+	 */
+	@Override
+	public int insertRefund(Long orderNo, UserList userList, String refundReason) {
+		//order넘버가 없으면 저장
+		Refund dbRefund = refundRep.selectRefundByOrderNo(orderNo);
+		Orders orders = ordersRep.findById(orderNo).orElse(null);
+		int result = 0;
+		
+		if(dbRefund == null) {
+			Refund refund = new Refund(null, refundReason, null, "환불처리대기", " ", userList, orders);
+			refundRep.save(refund);
+			result = 0;
+		}else {
+			result = 1;
+		}
+		
+		return result;
+	}
 
+	/**
+	 * userNo를 이용한 모든 환불내역 조회
+	 * */
 	@Override
 	public List<Refund> selectRefund(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Refund> refundList = refundRep.selectRefundByUserNo(userNo);
+			
+		return refundList;
 	}
 
 	@Override

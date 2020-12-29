@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import kosta.pro.rgmall.domain.Cart;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.Orders;
+import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
@@ -36,8 +38,14 @@ public class UserController {
 	
 	//마이페이지 기본 폼 띄우기
 	@RequestMapping("/myPage")
-	public String myPageMain() {
-		return "user/myPageForm";
+	public ModelAndView myPageMain(HttpServletRequest request) {
+		String state = request.getParameter("state");
+		ModelAndView mv = new ModelAndView("user/myPageForm");
+		if(state != null) {
+			mv.addObject("state", state);
+		}
+		
+		return mv;
 	}
 	
 	//마이페이지 주문목록/배송 조회 폼
@@ -50,10 +58,42 @@ public class UserController {
 		return new ModelAndView("myPage/userOrderList","orderList",orderList);
 	}
 	
+	//마이페이지 주문목록/배송 조회 - 주문취소
+	@RequestMapping("/myPage/userOrderList/orderCancel/{orderNo}")	
+	public ModelAndView orderCancel(@PathVariable Long orderNo) {
+		userService.deleteOrders(orderNo);
+		
+		return new ModelAndView("redirect:/user/myPage");
+	}
+	
+	//마이페이지 주문목록/배송 조회 - 환불신청폼
+		@RequestMapping("/myPage/userOrderList/refundForm/{orderNo}")	
+		public ModelAndView refundForm(@PathVariable Long orderNo) {
+			
+			Orders orders = userService.findOrdersById(orderNo);
+			
+			
+			return new ModelAndView("ETC/refundForm","orders",orders);
+		}
+	
+	//마이페이지 주문목록/배송 조회 - 환불신청
+	@ResponseBody
+	@RequestMapping("/myPage/userOrderList/requestRefund/{orderNo}")	
+	public int requestRefund(HttpSession session, @PathVariable Long orderNo, String refundReason) {
+		int result = 0;
+		UserList userList = (UserList)session.getAttribute("userList");
+		result = userService.insertRefund(orderNo, userList, refundReason);
+		
+		return result;
+	}
+	
 	//마이페이지 취소/환불내용 조회 폼
 	@RequestMapping("/myPage/userOrderCancelList")	
-	public ModelAndView userOrderCancelList() {
-		return new ModelAndView("myPage/userOrderCancelList");
+	public ModelAndView userOrderCancelList(HttpSession session) {
+		UserList userList = (UserList)session.getAttribute("userList");
+		List<Refund> refundList = userService.selectRefund(userList.getUserNo());
+		
+		return new ModelAndView("myPage/userOrderCancelList","refundList",refundList);
 	}
 	
 	//마이페이지 상품문의내역 조회

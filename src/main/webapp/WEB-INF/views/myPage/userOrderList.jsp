@@ -65,15 +65,7 @@
 						 								<a href="" class="col-xl btn btn-outline-success" style="margin: 5px">주문취소</a>	
 						 							</div>
 												</c:when>
-												<c:when test="${orders.delState eq '배송중'}">
-													<div class="row">
-						 								<a href="" class="col-xl btn btn-outline-success" style="margin: 5px">환불신청</a>	
-						 							</div>
-												</c:when>
 												<c:when test="${orders.delState eq '배송완료'}">
-													<div class="row">
-						 								<a href="" class="col-xl btn btn-outline-success" style="margin: 5px">환불신청</a>	
-						 							</div>
 						 							<div class="row">
 						 								<a href="" class="col-xl btn btn-outline-success" style="margin: 5px">구매평쓰기</a>	
 						 							</div>
@@ -86,7 +78,21 @@
 						 	</div>
 					 	</c:forEach><!-- orderLine -->
 					 	<div class="row">
-					 	
+					 		<div class="col-xl-1"></div>
+					 			<c:choose>
+					 				<c:when test="${orders.delState eq '배송완료'}">
+						 				<div class="col-xl" style="text-align: right">
+			 								<a href="${pageContext.request.contextPath}/user/myPage/userOrderList/refundForm/${orders.orderNo}" class="col-xl btn btn-outline-success" style="margin: 1px; width: 140px"
+			 								onclick="window.open(this.href, '_blanck','width=500,height=500'); return false;">환불신청</a>	
+			 							</div>
+					 				</c:when>
+					 				<c:otherwise>
+					 					<div class="col-xl" style="text-align: right">
+		 									<a href="${pageContext.request.contextPath}/user/myPage/userOrderList/orderCancel/${orders.orderNo}" class="col-xl btn btn-outline-success" style="margin: 1px; width: 140px">주문취소</a>	
+		 								</div>
+					 				</c:otherwise>
+					 			</c:choose>
+	 						<div class="col-xl-1"></div>
 					 	</div><!-- btn  -->
 					</div><!-- orders -->
 					

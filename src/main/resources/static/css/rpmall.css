@@ -264,22 +264,23 @@ input[type=password]{
 	margin: 15px;
 }
 
-.payCardSection .titleSection{
+.payCardSection .titleSection, .refundFormSection .titleSection{
 	font-size: 30px;
 	text-align: center;
 	margin: 5px;
 }
 
-.payCardSection .payInfoSection .TH{
+.payCardSection .payInfoSection .TH, .refundFormSection .refundInfoSection .TH{
 	background-color: #f0f6e8;
 	padding: 15px; 0px;
 }
 
-.payCardSection .payInfoSection .TD{
+.payCardSection .payInfoSection .TD, .refundFormSection .refundInfoSection .TD{
 	margin: auto;
 }
 
-.userOrderListSetcion .OrderListTitle, .newOrderListSetcion .OrderListTitle{
+.userOrderListSetcion .OrderListTitle, .newOrderListSetcion .OrderListTitle,
+.userOrderCancelListSetcion .OrderCancelListTitle, .adminRefundListSetcion .refundListTitle{
 	font-size: 20px;
 	margin-bottom: 10px; 
 }

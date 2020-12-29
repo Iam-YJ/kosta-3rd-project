@@ -38,7 +38,7 @@ public class Refund {
 	@Column(nullable = false, length = 30, columnDefinition = "varchar2(30) default '환불처리대기'")
 	private String refundState;
 	
-	@Column(nullable = false, length = 512)
+	@Column(nullable = true, length = 512)
 	private String refundReply;
 	
 	@OneToOne

@@ -28,14 +28,24 @@ public interface UserService {
 	public int updateUserList(UserList userList);
 	
 	/**
+	 * OrderNo에 해당하는 Order객체 찾기
+	 */
+	public Orders findOrdersById(Long orderNo);
+	
+	/**
 	 * 주문목록/배송조회
 	 * */
 	public List<Orders> selectOrders(Long userNo);
 	
 	/**
+	 * 주문취소
+	 */
+	public int deleteOrders(Long orderNo);
+	
+	/**
 	 * 환불 신청하기
 	 * */
-	public int insertRefund(Refund refund);
+	public int insertRefund(Long orderNo, UserList userList, String refundReason);
 	
 	/**
 	 * 환불 내역조회
@@ -178,5 +188,7 @@ public interface UserService {
 	 */
 	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
 			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo);
+
+	
 
 }

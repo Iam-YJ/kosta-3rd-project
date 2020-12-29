@@ -13,6 +13,7 @@ import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
+import kosta.pro.rgmall.domain.OrderLine;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
@@ -212,15 +213,65 @@ public class AdminServiceImpl implements AdminService {
 		return 0;
 	}
 
+	/**
+	 * 환불신청상품 조회
+	 * 관리자가 모든 환불신청목록을 조회할 떄 사용됨
+	 */
 	@Override
 	public List<Refund> selectRefundGoods() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Refund> refundList = refundRep.selectRefundAllNew();
+		return refundList;
 	}
 
+	/**
+	 * 환불신청상품 환불처리 (환불 승인, 환불 거절 - update refundtable -> refundstate를 변경)
+	 * 0일 때 환불승인
+	 * 1일 때 환불거절
+	 * 
+	 * 더 추가될 수도 있음
+	 * 	if(refundState == 0){
+		환불상태
+		order 날리고
+		재고량 고치고
+		잔액
+		포인트
+		예치금
+		
+		}else {
+			환불상태 변경 - 메세지도 입력
+		}
+	 */
 	@Override
-	public int refundGoods(Long RefundNo, int refundState) {
-		// TODO Auto-generated method stub
+	public int refundGoods(Long RefundNo, String refundReply, int refundState) {
+		
+		Refund dbRefund = refundRep.findById(RefundNo).orElse(null);
+		if(dbRefund == null) {
+			throw new RuntimeException("환불신청 정보가 없습니다.");
+		}else {
+
+			if(refundState == 0){
+				//환불상태 - 환불승인으로 변경
+				dbRefund.setRefundState("환불승인");
+//				재고량 고치고
+				List<OrderLine> dborderLineList = dbRefund.getOrders().getList();
+				for(OrderLine ol : dborderLineList) {
+					RegisterGoods dbRegisterGoods = registerGoodsRep.findByRegNo(ol.getRegisterGoods().getRegNo());
+					dbRegisterGoods.setStock(dbRegisterGoods.getStock() + ol.getQuntity());
+				}
+//				포인트 - 기술적 보류
+//				UserList dbUserList = userListRep.findById(dbRefund.getUserList().getUserNo()).orElse(null);
+//				dbUserList.setPoints(dbUserList.getPoints() - dbRefund.getOrders().getRealpay());
+				
+//				order 날리고 - 보류				
+				
+			}else if(refundState == 1){
+				//환불거절
+				dbRefund.setRefundReply(refundReply);
+				dbRefund.setRefundState("환불거절");
+			}
+		}
+		
 		return 0;
 	}
 

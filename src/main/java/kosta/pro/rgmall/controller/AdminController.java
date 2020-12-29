@@ -21,6 +21,7 @@ import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.Orders;
+import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
@@ -89,7 +90,34 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/orderRefundList")
 	public ModelAndView orderRefundList() {
-		return new ModelAndView("myPage/adminOrderRefundList");
+		
+		List<Refund> refundList = adminService.selectRefundGoods();
+		
+		return new ModelAndView("myPage/adminOrderRefundList","refundList",refundList);
+	}
+	
+	/**
+	 * 환불승인
+	 */
+	@RequestMapping("/myPage/orderRefundList/accessRefund/{refundNo}")
+	public ModelAndView accessRefund(@PathVariable Long refundNo) {
+		
+		adminService.refundGoods(refundNo, null, 0);
+		
+		
+		return new ModelAndView("redirect:/user/myPage?state=1");
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 환불신청 상품조회 - 환불거절
+	 */
+	@RequestMapping("/myPage/orderRefundList/rejectRefund/{refundNo}")
+	public ModelAndView rejectRefund(@PathVariable Long refundNo, String refundReply) {
+		
+		adminService.refundGoods(refundNo, refundReply, 1);
+		
+		
+		return new ModelAndView("redirect:/user/myPage?state=1");
 	}
 
 	/**

@@ -9,13 +9,24 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	if(${sessionScope.userList.authority eq 'ROLE_USER'}){
-		$("#myPageContentSection").empty();
-		$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/userOrderList");
-	}else if(${sessionScope.userList.authority eq 'ROLE_ADMIN'}){
-		$("#myPageContentSection").empty();
-		$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/newOrderList");
+	if(${state == null}){
+
+		if(${sessionScope.userList.authority eq 'ROLE_USER'}){
+			$("#myPageContentSection").empty();
+			$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/userOrderList");
+		}else if(${sessionScope.userList.authority eq 'ROLE_ADMIN'}){
+			$("#myPageContentSection").empty();
+			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/newOrderList");
+		}
+	}else{
+		if(${state == 1}){
+			$("#myPageContentSection").empty();
+			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/orderRefundList");
+		}
 	}
+	
+	
+	
 	
 })//ready
 function userOrderList(){
@@ -152,7 +163,7 @@ function adminClientList(){
 								<a href="#" onclick="userOrderList()">주문목록/배송 조회</a>
 							</div>
 							<div class="row col-xl">
-								<a href="#" onclick="userOrderCancelList()">취소/환불내용 조회</a>
+								<a href="#" onclick="userOrderCancelList()">환불신청내역 조회</a>
 							</div>
 							
 							
