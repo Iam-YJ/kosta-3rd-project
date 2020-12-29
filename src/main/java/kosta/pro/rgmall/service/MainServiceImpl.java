@@ -59,9 +59,8 @@ public class MainServiceImpl implements MainService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
-	
+
 	private final MainDAO mainDAO;
-	
 
 	@Override
 	public Map<String, Object> mainView() {
@@ -84,7 +83,7 @@ public class MainServiceImpl implements MainService {
 	 */
 	@Override
 	public int userRegisterKakao(UserList userList) { //이거는 수정해야함(userGrade 테이블 수정해야함)
-		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		UserList userListResult = userListRep.save(userList);
 		if (userListResult == null) {
@@ -99,7 +98,7 @@ public class MainServiceImpl implements MainService {
 
 	@Override
 	public int userRegister(UserList userList) {
-		userList.setUsergrade(userGradeRep.findById(3L).orElse(null));
+		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		userListRep.save(userList);
 
@@ -110,7 +109,7 @@ public class MainServiceImpl implements MainService {
 	 * 회원정보 업데이트 카카오API 회원가입 후 정보 더 받기 위함
 	 */
 	@Override
-	public int updateUserKakao(UserList userList) {
+	public UserList updateUserKakao(UserList userList) {
 		String name = userList.getName();
 		String userId = userList.getUserId();
 		String passWord = userList.getPassWord();
@@ -119,7 +118,8 @@ public class MainServiceImpl implements MainService {
 		String email = userList.getEmail();
 
 		userListRep.updateUserKakao(name, userId, passWord, addr, phone, email);
-		return 0;
+		UserList userListResult = userListRep.selectPointandGrade(userId);
+		return userListResult;
 	}
 
 	@Override
@@ -134,14 +134,37 @@ public class MainServiceImpl implements MainService {
 		String phone = userList.getPhone();
 		String email = userList.getEmail();
 		UserList user = userListRep.findUserId(name, phone, email);
-		if(user==null) {
+		if (user == null) {
 			result = "";
-		}else {
+		} else {
 			result = user.getUserId();
 		}
 		return result;
 	}
 
+	/**
+	 * 회원 email로 정보 찾기
+	 */
+	@Override
+	public UserList findUserEmail(String email) {
+
+		List<UserList> user = userListRep.findUserEmail(email);
+
+		UserList realUser = new UserList();
+		for (UserList u : user) {
+			if (!u.getName().equals("kakaoTest")) {
+				realUser = u;
+			}
+		}
+
+		return realUser;
+	}
+
+	@Override
+	public void deleteUserByName(String name) {
+		userListRep.deleteByName(name);
+	}
+	
 	@Override
 	public UserList findUserPwd(UserList userList) {
 		String userId = userList.getUserId();
@@ -149,9 +172,9 @@ public class MainServiceImpl implements MainService {
 		String phone = userList.getPhone();
 		String email = userList.getEmail();
 		return userListRep.findUserPwd(userId, name, phone, email);
-	
+
 	}
-	
+
 	@Override
 	public int updatePassWord(UserList userList) {
 		String passWord = userList.getPassWord();
@@ -160,46 +183,85 @@ public class MainServiceImpl implements MainService {
 		return 0;
 	}
 
-	
 	/**
-	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
-	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
+	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
 	@Override
 	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo) {
-
 		List<RegisterGoods> list = null;
-			
-		if(mainCategoryNo == 0) {
-			list =  registerGoodsRep.findAll();
-		}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+		if(sortNo == 0) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAll();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMain(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+			}
+		}else if(sortNo == 1) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAllOrderByRegDate();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMainOrderByRegDate(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByRegDate(mainCategoryNo, subCategoryNo);
+			}
+		}else if (sortNo == 2) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAllOrderBySell();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMainOrderBySell(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderBySell(mainCategoryNo, subCategoryNo);
+			}
+		}else if(sortNo == 3) {
+			if(mainCategoryNo == 0) {
+				list =  registerGoodsRep.findAllOrderByPrice();
+			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
+				list = registerGoodsRep.findAllWithMainOrderByPrice(mainCategoryNo);
+			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo);
+			}
+
+		if (mainCategoryNo == 0) {
+			list = registerGoodsRep.findAll();
+		} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
 			list = registerGoodsRep.findAllWithMain(mainCategoryNo);
-		}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
+		} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
 			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
 		}
-		
+
+		}
 		return list;
 	}
-	
+
 	@Override
 	public List<RegisterGoods> searchGoods(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+		return registerGoodsRep.searchGoods(keyword);
 	}
 
 	@Override
 	public RegisterGoods goodsDetail(Long regNo) {
-		
+
 		RegisterGoods registerGoods = registerGoodsRep.findById(regNo).orElse(null);
-		
+
 		return registerGoods;
+	}
+
+	/**
+	 * 상품(고유번호로) 상품 정보 가져오기
+	 */
+	@Override
+	public RegisterGoods goodsInfo(Long regNo) {
+		RegisterGoods registerGoods = registerGoodsRep.findById(regNo).orElse(null);
+
+		return null;
 	}
 
 	@Override
 	public List<Review> selectReview(Long regNo) {
 		return reviewRep.selectReivew(regNo);
 	}
-	
+
 	@Override
 	public List<Notice> selectAllNotice() {
 		return noticeRep.findAll();
@@ -220,12 +282,11 @@ public class MainServiceImpl implements MainService {
 	public List<SubCategories> selectSubCategories(Long mainCateNo) {
 		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
 	}
-	
+
 	@Override
 	public List<GoodsQuestion> selectGoodsQuestions(Long regNo) {
 		List<GoodsQuestion> goodsQuestion = goodsQuestionRep.selectGoodsQuestions(regNo);
-		
-		
+
 		return goodsQuestion;
 	}
 
@@ -239,7 +300,8 @@ public class MainServiceImpl implements MainService {
 	public int updateGoodsAnswer(GoodsAnswer goodsAnswer) {
 		System.out.println(goodsAnswer.getContent());
 		System.out.println(goodsAnswer.getGoodsQuestion().getQgoodsNo());
-		int result = goodsAnswerRep.updateGoodsAnswer(goodsAnswer.getContent(),goodsAnswer.getGoodsQuestion().getQgoodsNo());
+		int result = goodsAnswerRep.updateGoodsAnswer(goodsAnswer.getContent(),
+				goodsAnswer.getGoodsQuestion().getQgoodsNo());
 		return result;
 	}
 
@@ -252,30 +314,34 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
 		goodsAnswerRep.save(goodsAnswer);
-		
+
 	}
 
 	@Override
 	public void insertGoodsQuestion(GoodsQuestion goodsQuestion) {
 		goodsQuestionRep.save(goodsQuestion);
-		
+
 	}
 
 	@Override
 	public void deleteGoodsQuestion(Long regNo) {
 		goodsQuestionRep.deleteById(regNo);
-		
+
 	}
 
 	@Override
 	public int updateGoodsQuestion(GoodsQuestion goodsQuestion) {
 		System.out.println(goodsQuestion.getContent());
 		System.out.println(goodsQuestion.getQgoodsNo());
-		goodsQuestionRep.updateGoodsQuestion(goodsQuestion.getContent(),goodsQuestion.getQgoodsNo());
+		goodsQuestionRep.updateGoodsQuestion(goodsQuestion.getContent(), goodsQuestion.getQgoodsNo());
 		return 0;
 	}
 
-	
-
-	
+	/**
+	 * FAQ 검색
+	 */
+	public List<FAQ> findFAQByWord(String word) {
+		List<FAQ> faq = FAQRep.findFAQByWord(word);
+		return faq;
+	}
 }

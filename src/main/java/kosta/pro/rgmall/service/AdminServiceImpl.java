@@ -63,7 +63,7 @@ public class AdminServiceImpl implements AdminService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
-	
+
 	@Override
 	public Admin adminLogin(String adminId, String adminPwd) {
 		return adminRep.adminLogin(adminId, adminPwd);
@@ -74,35 +74,35 @@ public class AdminServiceImpl implements AdminService {
 		registerGoodsRep.save(registerGoods);
 		return 0;
 	}
-	
+
 	@Override
 	public void insertNotice(Notice notice) {
 		Notice not = noticeRep.save(notice);
 		System.out.println("not = " + not);
-		if(not == null) {
+		if (not == null) {
 			throw new RuntimeException("내용이 존재하지 않습니다");
 		}
 	}
-	
+
 	@Override
 	public Notice selectByNotice(Long noticeNo) {
 		return noticeRep.findById(noticeNo).orElse(null);
 	}
-	
+
 	@Override
 	public void updateNotice(Notice notice) {
 		Notice dbNotice = noticeRep.findById(notice.getNoticeNo()).orElse(null);
-		if(dbNotice==null) {
+		if (dbNotice == null) {
 			throw new RuntimeException("오류로 수정실패");
 		}
 		dbNotice.setTitle(notice.getTitle());
 		dbNotice.setContent(notice.getContent());
-	 }
+	}
 
 	@Override
 	public void deleteNotice(Long noticeNo) {
 		Notice dbNotice = noticeRep.findById(noticeNo).orElse(null);
-		if(dbNotice == null) {
+		if (dbNotice == null) {
 			throw new RuntimeException("글번호 오류");
 		}
 		noticeRep.deleteById(noticeNo);
@@ -112,15 +112,15 @@ public class AdminServiceImpl implements AdminService {
 	public List<FAQ> selectAllFAQ() {
 		return FAQRep.findAll();
 	}
-	
+
 	@Override
 	public Page<FAQ> selectAll(Pageable pageable) {
 		return FAQRep.findAll(pageable);
 	}
-	
+
 	@Override
 	public void insertFAQ(FAQ faq) {
-		if(FAQRep.save(faq)== null) {
+		if (FAQRep.save(faq) == null) {
 			throw new RuntimeException("내용이 존재하지 않습니다");
 		}
 		FAQRep.save(faq);
@@ -128,15 +128,15 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void updateFAQ(FAQ faq) {
-		
+
 		System.out.println("===============================");
 		System.out.println("faq =" + faq);
-		
+
 		System.out.println("===============================");
 		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
-		System.out.println("dbFaq"+dbFaq);
+		System.out.println("dbFaq" + dbFaq);
 //		
-		if(dbFaq ==null) {
+		if (dbFaq == null) {
 			throw new RuntimeException("FAQ번호 오류로 수정 실패");
 		}
 //		
@@ -148,23 +148,32 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void deleteFAQ(FAQ faq) {
 		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
-		if(dbFaq ==null) {
+		if (dbFaq == null) {
 			throw new RuntimeException("FAQ번호 오류로 삭제 실패");
 		}
-		     
+
 		FAQRep.deleteById(faq.getFaqNo());
 	}
-	
+
 	@Override
 	public FAQ selectByFaq(Long faqNo) {
-		
+
 		return FAQRep.findById(faqNo).orElse(null);
 	}
 
 	@Override
-	public List<RegisterGoods> selectGoods(int State) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RegisterGoods> selectGoods(int state) {
+		List<RegisterGoods> list = null;
+		
+		if (state == 0) {
+			
+		} else if (state == 1) {
+			list =registerGoodsRep.findAD();
+		} else if (state == 2) {
+			list = registerGoodsRep.findStock();
+		}
+
+		return list;
 	}
 
 	@Override
@@ -180,20 +189,19 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 * 주문조회(신규/지난 주문조회) + 신규 주문조회(배송준비중만 보임)
-	 * parameter의 0(지난주문조회)/1(신규주문조회)구분
-	 * 이 항목의 경우 페이징 써야할수도 있음
+	 * 주문조회(신규/지난 주문조회) + 신규 주문조회(배송준비중만 보임) parameter의 0(지난주문조회)/1(신규주문조회)구분 이 항목의
+	 * 경우 페이징 써야할수도 있음
 	 */
 	@Override
 	public List<Orders> selectOrders(int parameter) {
 		List<Orders> orderList = null;
-		
-		if(parameter == 0) {
+
+		if (parameter == 0) {
 			orderList = null;
-		}else if(parameter == 1) {
+		} else if (parameter == 1) {
 			orderList = ordersRep.selectNewOrders();
 		}
-		
+
 		return orderList;
 	}
 
@@ -327,7 +335,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int checkProfit(String startDate, String endDate) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -336,5 +343,15 @@ public class AdminServiceImpl implements AdminService {
 		return userListRep.selectAllUser();
 	}
 
+	@Override
+	public List<RegisterGoods> selectByAd() {
+
+		return null;
+	}
+	
+	@Override
+	public UserList searchById(String userId) {
+		return userListRep.findByIdUser(userId);
+	}
 
 }

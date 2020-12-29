@@ -189,6 +189,6 @@ public interface UserService {
 	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
 			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo);
 
-	
+	int updateCart2(int qua, Long regNo);
 
 }

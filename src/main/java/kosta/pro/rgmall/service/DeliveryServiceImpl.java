@@ -1,6 +1,7 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,14 +54,15 @@ public class DeliveryServiceImpl implements DeliveryService {
 	
 	@Override
 	public List<Orders> selectAllDelivery() {
-		// TODO Auto-generated method stub
-		return null;
+		List<Orders> listOrders = ordersRep.findAll();
+		return listOrders;
 	}
 
 	@Override
 	public int updateDeliveryState(Long orderNo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = ordersRep.updateDeliveryState(orderNo);
+		
+		return result;
 	}
 
 }

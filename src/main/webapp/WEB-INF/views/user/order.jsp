@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
+
+
 $(document).ready(function(){
 	
 	calRealPay();
@@ -17,7 +19,7 @@ $(document).ready(function(){
 		if($("#points").val() > ${sessionScope.userList.points}){
 			alert("사용 가능한 포인트를 초과하였습니다.");
 			$("#points").val(0);
-		}
+		} 
 		
 		//2. 사용 가능 일시 총 상품금액 + 배송비 - 포인트 계산 후 총 결제금액에 출력
 		var totalCost = ${buyMap.registerGoods.price * buyMap.cart.quantity} + 2500 - $("#points").val();
@@ -153,20 +155,25 @@ $(document).ready(function(){
 					<div class="top col-xl"></div>
 				</div>
 				<div class="itemList row border border-left-0 border-right-0 border-top-0">
+				<c:forEach items="${buyMap}" var="map">
 					<div class="col-xl-9">
 						<div class="row align-items-center" style="height: 45px">
 							<div class="col-xl-9" style="text-align: center; font-size: 20px">
-								${buyMap.registerGoods.title}
+								 <%-- ${buyMap.registerGoods.title} --%>  ${map.value.registerGoods.title}
 							</div>
 							<div class="col-xl-3 border border-left-0 border-top-0 border-bottom-0" style="text-align: right; font-size: 15px;">
-								구매수량 : ${buyMap.cart.quantity} 개
+								구매수량 : <%-- ${buyMap.cart.quantity} --%>  ${map.value.quantity} 개 
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-3" style="text-align: center; margin: auto; font-size: 20px;  color: blue;">
-						<fmt:formatNumber value="${buyMap.registerGoods.price * buyMap.cart.quantity}" var="CommaPrice"/>
-							 ${CommaPrice} 원
+					<div class="col-xl-3" style="text-align: center; margin: auto; font-size: 20px;  color: blue;" id="totalPrice" >
+					<input type="hidden" value="${map.value.registerGoods.price * map.value.quantity}" id="tp">
+						<fmt:formatNumber value="${map.value.registerGoods.price * map.value.quantity}" var="CommaPrice"/>
+							${CommaPrice} 원
+						<%--  <fmt:formatNumber value="${buyMap.registerGoods.price * buyMap.cart.quantity}" var="CommaPrice"/>
+							 ${CommaPrice} 원  --%>
 					</div>
+					</c:forEach>
 				</div><!-- itemList -->
 			</div>
 		</div><!-- goodsInfoSection -->
@@ -180,7 +187,7 @@ $(document).ready(function(){
 						총 상품가격
 					</div>
 					<div class="TD col-xl">
-						${CommaPrice} 원
+						${totalPrice} 원
 					</div>
 				</div>
 				<div class="row border border-left-0 border-right-0 border-top-0">
@@ -212,7 +219,7 @@ $(document).ready(function(){
 						총 결제금액
 					</div>
 					<div class="TD col-xl" id="realPayCost">
-						<fmt:formatNumber value="${buyMap.registerGoods.price * buyMap.cart.quantity + 2500}" var="CommaPrice"/>
+						<fmt:formatNumber value="${totalPrice}" var="CommaPrice"/>
 							 ${CommaPrice} 원
 					</div>
 				</div>

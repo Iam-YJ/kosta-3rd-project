@@ -15,12 +15,16 @@ table{width:800px;}
 	function deleteWishList(regNo){
 		if(confirm("정말로 삭제하시겠습니까?")){
 		location.href="${pageContext.request.contextPath}/user/deleteWishList?regNo="+regNo;
+		}else{
+			return false;
 		}
 	}
 	
 	function insertCart(regNo){
 		if(confirm("장바구니에 추가 하시겠습니까?")){
 		location.href="${pageContext.request.contextPath}/user/insertcart?regNo="+regNo+"&qua=0";
+		}else{
+			return false;
 		}
 	}
 	

@@ -6,12 +6,59 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+
+
+<script type="text/javascript">
+	$(function() {
+		$("#keyword").keyup(
+			function() {
+
+				var k = $(this).val();
+				$("#userTable > tbody > tr").hide();
+				var findId = $("#userTable > tbody > tr > td:nth-child(5n+3):contains('"+ k + "')");
+				var findName = $("#userTable > tbody > tr > td:nth-child(5n+2):contains('"+ k + "')");
+
+			$(findId).parent().show();
+			$(findName).parent().show();
+
+		})//keyup 
+		
+		$("#userTable").tablesorter({sortList:[[0,0],[1,0]]});
+		
+	})
+</script>
+
 </head>
+
 <body>
-	<h1>ADMIN의 마이페이지</h1>
-	<h3>회원목록을 조회하는 페이지 입니다.</h3>
+	<div id="container">
+		<div id="input-form">
+			검색 : <input type="text" id="keyword">
+		</div>
 
-
+		<table class="userTable" id="userTable" width="100%" cellspacing="0">
+			<thead>
+				<tr>
+					<th>UserNo</th>
+					<th>UserId</th>
+					<th>UserName</th>
+					<th>UserGrade</th>
+				</tr>
+			</thead>
+			<c:forEach items="${userList}" var="userList">
+				<tbody>
+					<tr>
+						<td>${userList.userNo}</td>
+						<td><a href="${pageContext.request.contextPath}/admin/myPage/userRead/${userList.userId}">${userList.userId}</a></td>
+						<td>${userList.name}</td>
+						<td>${userList.usergrade.gradeNo}</td>
+					</tr>
+				</tbody>
+			</c:forEach>	
+		</table>
+	</div>
 
 </body>
 </html>

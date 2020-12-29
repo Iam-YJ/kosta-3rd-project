@@ -51,7 +51,7 @@ public interface MainService {
 	 * 회원정보 업데이트
 	 * 카카오API 회원가입 후 정보 더 받기 위함
 	 */
-	public int updateUserKakao(UserList userList);
+	public UserList updateUserKakao(UserList userList);
 	
 	/**
 	 * 로그인
@@ -68,6 +68,16 @@ public interface MainService {
 	 * 이름, 연락처, 이메일
 	 */
 	public String findUserId(UserList userList);
+	
+	/**
+	 * 회원 email로 정보 조회
+	 */
+	public UserList findUserEmail(String email);
+	
+	/**
+	 * 카카오 로그인 가입 후 버그 수정 위함
+	 */
+	public void deleteUserByName(String name);
 	
 	/**
 	 * 비밀번호 찾기
@@ -102,6 +112,11 @@ public interface MainService {
 	 * 인수 : 글번호
 	 */
 	public RegisterGoods goodsDetail(Long regNo);
+	
+	/**
+	 * 상품(고유번호로) 상품 정보 가져오기 
+	 */
+	public RegisterGoods goodsInfo(Long regNo);
 	
 	/**
 	 * 상품 후기 보기
@@ -167,4 +182,11 @@ public interface MainService {
 	 * 상품 문의 수정(only 회원)
 	 */
 	public int updateGoodsQuestion(GoodsQuestion goodsQuestion);
+	
+	/**
+	 * faq검색하기
+	 * */
+	public List<FAQ> findFAQByWord(String word);
+	
+
 }

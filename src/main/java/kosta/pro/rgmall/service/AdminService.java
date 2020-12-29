@@ -89,7 +89,7 @@ public interface AdminService {
 	 * state = 1, 광고조회를 위한 state
 	 * state = 2, 재고조회를 위한 state
 	 */
-	public List<RegisterGoods> selectGoods(int State);
+	public List<RegisterGoods> selectGoods(int state);
 	
 	/**
 	 * 판매상품 조회 관리(수정)
@@ -192,8 +192,13 @@ public interface AdminService {
 	 * (전체조회, 등급별조회, 검색어-사용자이름 조회)
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
+	
+	/**
+	 * 광고 조회
+	 */
+	public List<RegisterGoods> selectByAd();
 
-
+	public UserList searchById(String userId);
 
 
 	

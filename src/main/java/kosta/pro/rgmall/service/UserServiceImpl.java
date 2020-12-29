@@ -237,6 +237,12 @@ public class UserServiceImpl implements UserService {
 		cartRep.updateCart(regNo);
 		return 0;
 	}
+	
+	@Override
+	public int updateCart2(int qua,Long regNo) {
+		cartRep.updateCart2(qua,regNo);
+		return 0;
+	}
 
 	@Override
 	public int deleteCart(Long userNo,Long regNo) {
@@ -298,7 +304,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserGrade loginAPIGrade() {
-		UserGrade userGradeResult = userGradeRep.findById((long) 4).orElse(null);
+		UserGrade userGradeResult = userGradeRep.findById((long) 1).orElse(null);
 		return userGradeResult;
 	}
 

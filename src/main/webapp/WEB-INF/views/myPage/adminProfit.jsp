@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<h1>ADMIN의 마이페이지</h1>
-	<h3>수익을 조회하는 페이지 입니다.</h3>
-
+	
 
 
 </body>
