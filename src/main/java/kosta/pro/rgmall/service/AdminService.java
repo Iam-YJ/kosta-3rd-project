@@ -195,7 +195,7 @@ public interface AdminService {
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
 
-
+	public UserList searchById(String userId);
 
 
 	

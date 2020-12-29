@@ -47,5 +47,8 @@ public interface UserListRepository extends JpaRepository<UserList, Long> {
 	
 	@Query("select  u from UserList u order by u.usergrade.gradeNo desc")
 	List<UserList> selectAllUser();
+
+	@Query("select u from UserList u where u.userId=?1")
+	UserList findByIdUser(String userId);
 	
 }// class

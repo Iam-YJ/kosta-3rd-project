@@ -23,7 +23,10 @@
 			$(findId).parent().show();
 			$(findName).parent().show();
 
-		})
+		})//keyup 
+		
+		$("#userTable").tablesorter({sortList:[[0,0],[1,0]]});
+		
 	})
 </script>
 
@@ -49,7 +52,7 @@
 				<tbody>
 					<tr>
 						<td>${userList.userNo}</td>
-						<td><a href="">${userList.userId}</a></td>
+						<td><a href="${pageContext.request.contextPath}/admin/myPage/main/userRead/${userList.userId}">${userList.userId}</a></td>
 						<td>${userList.name}</td>
 						<td>${userList.usergrade.gradeNo}</td>
 					</tr>

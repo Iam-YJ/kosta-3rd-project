@@ -3,6 +3,7 @@ package kosta.pro.rgmall.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import kosta.pro.rgmall.domain.Orders;
@@ -16,5 +17,10 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	//관리자가 신규주문목록을 확인할 수 있음. 배송상태로 확인
 	@Query("select orders from Orders orders where orders.delState = '배송준비중' order by orders.orderdate asc")
 	List<Orders> selectNewOrders();
+	
+	//딜리버리맨 배송완료하기
+	@Query("update Orders o set o.delState='배송완료' where o.orderNo=?1")
+	@Modifying
+	int updateDeliveryState(Long orderNo);
 	
 }//class
