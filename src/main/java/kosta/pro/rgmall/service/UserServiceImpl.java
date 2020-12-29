@@ -248,7 +248,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserGrade loginAPIGrade() {
-		UserGrade userGradeResult = userGradeRep.findById((long) 4).orElse(null);
+		UserGrade userGradeResult = userGradeRep.findById((long) 1).orElse(null);
 		return userGradeResult;
 	}
 

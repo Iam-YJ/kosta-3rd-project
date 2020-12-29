@@ -1,9 +1,16 @@
 package kosta.pro.rgmall.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import kosta.pro.rgmall.domain.FAQ;
 
 public interface FAQRepository extends JpaRepository<FAQ, Long> {
-
+	
+	
+	//FAQ 검색
+	@Query("select f from FAQ f where f.question like concat('%',:word,'%')")
+	FAQ findFAQByWord(@Param("word") String word);
+	
 }//class

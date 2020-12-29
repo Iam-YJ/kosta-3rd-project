@@ -374,7 +374,7 @@ public class AdminController {
 		return new ModelAndView("admin/");
 	}
 
-	// 카테고리 수정 폼 띄우기
+	// 카테고리 수정 폼 띄우기 //카테고리 수정
 	@RequestMapping("/myPage/modiCategories")
 	public ModelAndView modiCategories() {
 		List<MainCategories> mainList = mainService.selectCategories();
