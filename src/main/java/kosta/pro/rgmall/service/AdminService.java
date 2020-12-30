@@ -187,6 +187,7 @@ public interface AdminService {
 	 */
 	public int checkProfit(String startDate,String endDate); 
 	
+	//public List<Orders> checkDayProfit(String orderDate);
 	/**
 	 * 회원조회
 	 * (전체조회, 등급별조회, 검색어-사용자이름 조회)

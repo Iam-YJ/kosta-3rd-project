@@ -53,7 +53,8 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/goodsList")
 	public ModelAndView goodsList() {
-		return new ModelAndView("myPage/adminGoodsList");
+		List<RegisterGoods> listRegisterGoods = adminService.selectGoods(0);
+		return new ModelAndView("myPage/adminGoodsList","listRegisterGoods",listRegisterGoods);
 	}
 
 	/**
@@ -190,13 +191,20 @@ public class AdminController {
 	}
 
 	/**
-	 * 관리자 마이페이지 - 매출조회
+	 * 관리자 마이페이지 - 총매출조회
 	 */
 	@RequestMapping("/myPage/profit")
-	public ModelAndView profit() {
-		return new ModelAndView("myPage/adminProfit");
+	public ModelAndView profit(String startDate, String endDate) {
+		int profit = adminService.checkProfit(startDate, endDate);
+		return new ModelAndView("myPage/adminProfit", "profit",profit);
 	}
-
+	/*
+	@RequestMapping("/myPage/dayprofit")
+	public ModelAndView dayProfit(String orderDate) {
+		List<Orders> dayProfit = adminService.checkDayProfit(orderDate);
+		return new ModelAndView("myPage/adminProfit","dayProfit", dayProfit);
+	}*/
+	
 	/**
 	 * 관리자 마이페이지 - 회원조회
 	*/ 

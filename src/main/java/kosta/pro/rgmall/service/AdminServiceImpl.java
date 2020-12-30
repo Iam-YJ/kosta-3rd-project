@@ -166,7 +166,7 @@ public class AdminServiceImpl implements AdminService {
 		List<RegisterGoods> list = null;
 		
 		if (state == 0) {
-			
+			list = registerGoodsRep.findAll();
 		} else if (state == 1) {
 			list =registerGoodsRep.findAD();
 		} else if (state == 2) {
@@ -178,7 +178,7 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int updateGoods(RegisterGoods registerGoods) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
@@ -335,8 +335,15 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int checkProfit(String startDate, String endDate) {
-		return 0;
+		int result = adminRep.checkProfits();
+		return result;
 	}
+	/*
+	@Override
+	public List<Orders> checkDayProfit(String orderDate) {
+		
+		return adminRep.checkDayProfit(orderDate);
+	}*/
 
 	@Override
 	public List<UserList> searchAllUser(String grade, String keyword) {
@@ -353,5 +360,7 @@ public class AdminServiceImpl implements AdminService {
 	public UserList searchById(String userId) {
 		return userListRep.findByIdUser(userId);
 	}
+
+	
 
 }
