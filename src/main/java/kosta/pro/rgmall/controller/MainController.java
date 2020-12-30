@@ -7,10 +7,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -209,16 +213,19 @@ public class MainController {
 	 * 상품리스트를 조회를 하는 Controller
 	 */
 	@RequestMapping("/goodsList/{main}/{sub}/{sort}")
-	public ModelAndView goodsList(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort) {
+	public ModelAndView goodsList(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort,
+			@RequestParam(defaultValue = "0")int nowPage) {
 		Map<String, Object> goodsListMap = new HashMap<String, Object>();
-		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
-		System.out.println(sort);
+		Pageable pageable = PageRequest.of(nowPage, 16);
+		Page<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort,pageable);
 		List<MainCategories> mainCategories = mainService.selectCategories();
-
+		goodsListMap.put("sort", sort);
 		goodsListMap.put("registerGoodsList", registerGoodsList);
-		goodsListMap.put("registerGoods", registerGoodsList.get(0));
+		goodsListMap.put("regGoods",registerGoodsList.getContent());
+		goodsListMap.put("registerGoods", registerGoodsList.getContent().get(0));
 		goodsListMap.put("mainCategories", mainCategories);
 		goodsListMap.put("main", main);// main
+		goodsListMap.put("sub", sub);// sub
 		goodsListMap.put("sub", sub);// sub
 
 		ModelAndView mv = new ModelAndView("main/goodsList", "goodsListMap", goodsListMap);
@@ -231,9 +238,11 @@ public class MainController {
 	 */
 	@RequestMapping("/goodsListOrder/{main}/{sub}/{sort}")
 	@ResponseBody
-	public List<RegisterGoods> goodsListOrder(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort) {
-		List<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort);
-		return registerGoodsList;
+	public List<RegisterGoods> goodsListOrder(@PathVariable Long main, @PathVariable Long sub, @PathVariable int sort,
+			@RequestParam(defaultValue = "0")int nowPage) {
+		Pageable pageable = PageRequest.of(nowPage, 16);
+		Page<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort,pageable);
+		return registerGoodsList.getContent();
 	}
 	
 	/**
@@ -241,9 +250,10 @@ public class MainController {
 	 * */
 	@ResponseBody
 	@RequestMapping(value = "/goodsListKeyword", method = RequestMethod.POST)
-	public List<RegisterGoods> goodsListKeyword(String keyword) {
-		List<RegisterGoods> registerGoodsList = mainService.searchGoods(keyword);
-		return registerGoodsList;
+	public List<RegisterGoods> goodsListKeyword(String keyword,@RequestParam(defaultValue = "0")int nowPage) {
+		Pageable pageable = PageRequest.of(nowPage, 16);
+		Page<RegisterGoods> registerGoodsList = mainService.searchGoods(keyword,pageable);
+		return registerGoodsList.getContent();
 	}
 	
 	/**

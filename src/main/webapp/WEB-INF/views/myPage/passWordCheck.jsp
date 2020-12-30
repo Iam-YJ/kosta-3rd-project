@@ -9,11 +9,11 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$(document).on("click", "[value='확인']", function(){
-		var passWord = ${passWord};
+		var passWord = '${userList.passWord}';
 		console.log(passWord);
 		console.log($("input[name=passWord]").val());
 		if(passWord==$("input[name=passWord]").val()) {
-			location.href="${pageCotext.request.contextPath}/user/mypage/updateUserListForm"
+			location.href="${pageCotext.request.contextPath}/user/myPage/updateUserListForm"
 		}else{
 			alert("비밀번호를 확인해주세요")
 		}

@@ -22,11 +22,14 @@ $(document).ready(function(){
 		if(${state == 1}){
 			$("#myPageContentSection").empty();
 			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/orderRefundList");
+		}else if(${state == 4}){
+			$("#myPageContentSection").empty();
+			$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/userGoodsReviewList");
 		}
 	}
 	
 	
-	
+	 
 	
 })//ready
 function userOrderList(){

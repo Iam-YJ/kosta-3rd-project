@@ -3,6 +3,8 @@ package kosta.pro.rgmall.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -187,47 +189,47 @@ public class MainServiceImpl implements MainService {
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
 	@Override
-	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo) {
-		List<RegisterGoods> list = null;
+	public Page<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo,Pageable pageable) {
+		Page<RegisterGoods> list = null;
 		if(sortNo == 0) {
 			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAll();
+				list =  registerGoodsRep.findAll(pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMain(mainCategoryNo);
+				list = registerGoodsRep.findAllWithMain(mainCategoryNo,pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+				list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo,pageable);
 			}
 		}else if(sortNo == 1) {
 			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAllOrderByRegDate();
+				list =  registerGoodsRep.findAllOrderByRegDate(pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMainOrderByRegDate(mainCategoryNo);
+				list = registerGoodsRep.findAllWithMainOrderByRegDate(mainCategoryNo,pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSubOrderByRegDate(mainCategoryNo, subCategoryNo);
+				list = registerGoodsRep.findAllWithMainAndSubOrderByRegDate(mainCategoryNo, subCategoryNo,pageable);
 			}
 		}else if (sortNo == 2) {
 			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAllOrderBySell();
+				list =  registerGoodsRep.findAllOrderBySell(pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMainOrderBySell(mainCategoryNo);
+				list = registerGoodsRep.findAllWithMainOrderBySell(mainCategoryNo,pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSubOrderBySell(mainCategoryNo, subCategoryNo);
+				list = registerGoodsRep.findAllWithMainAndSubOrderBySell(mainCategoryNo, subCategoryNo,pageable);
 			}
 		}else if(sortNo == 3) {
 			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAllOrderByPrice();
+				list =  registerGoodsRep.findAllOrderByPrice(pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMainOrderByPrice(mainCategoryNo);
+				list = registerGoodsRep.findAllWithMainOrderByPrice(mainCategoryNo,pageable);
 			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo);
+				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo,pageable);
 			}
 
 		if (mainCategoryNo == 0) {
-			list = registerGoodsRep.findAll();
+			list = registerGoodsRep.findAll(pageable);
 		} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
-			list = registerGoodsRep.findAllWithMain(mainCategoryNo);
+			list = registerGoodsRep.findAllWithMain(mainCategoryNo,pageable);
 		} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
-			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo);
+			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo,pageable);
 		}
 
 		}
@@ -235,8 +237,8 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<RegisterGoods> searchGoods(String keyword) {
-		return registerGoodsRep.searchGoods(keyword);
+	public Page<RegisterGoods> searchGoods(String keyword,Pageable pageable) {
+		return registerGoodsRep.searchGoods(keyword,pageable);
 	}
 
 	@Override

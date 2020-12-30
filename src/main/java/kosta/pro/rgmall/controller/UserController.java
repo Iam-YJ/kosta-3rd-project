@@ -106,8 +106,11 @@ public class UserController {
 	
 	//마이페이지 구매후기 내역 조회
 	@RequestMapping("/myPage/userGoodsReviewList")	
-	public ModelAndView userGoodsReviewList() {
-		return new ModelAndView("myPage/userGoodsReviewList");
+	public ModelAndView myReview(HttpSession session) {
+		UserList userList = (UserList)session.getAttribute("userList");
+		Long userNo = userList.getUserNo();
+		List<Review>review = userService.selectReview(userNo);
+		return new ModelAndView("myPage/userGoodsReviewList","review",review);
 	}
 	
 	//마이페이지 찜 목록 조회
@@ -129,18 +132,18 @@ public class UserController {
 	}
 	
 	//마이페이지-개인정보확인/수정 - 개인정보수정폼
-	@RequestMapping("/mypage/updateUserListForm")
+	@RequestMapping("/myPage/updateUserListForm")
 	public String updateUserListForm() {
 		return "user/myPage/updateUserList";
 	}//updateUserListForm
 	
 	//마이페이지-개인정보확인/수정 - //개인정보수정
-	@RequestMapping("/mypage/updateUserList")
+	@RequestMapping("/myPage/updateUserList")
 	public String updateUserList(UserList userList,HttpSession session) {
 		UserList sessionUser = (UserList)session.getAttribute("userList");
 		userList.setUserNo(sessionUser.getUserNo());
 		userService.updateUserList(userList);
-		return "user/myPage/main";
+		return "user/myPageForm";
 	}//updateUserList
 	
 	//포인트/등급 조회
@@ -334,7 +337,7 @@ public class UserController {
 		return"redirect:/user/cartList";
 	}
 	
-	//상품후기 등록(상품구매 후)
+	//상품후기 등록폼(상품구매 후)
 	@RequestMapping("/myPage/writeReviewForm/{regNo}")
 	public ModelAndView writeReviewForm(@PathVariable Long regNo) {
 		ModelAndView mv = new ModelAndView();
@@ -343,23 +346,17 @@ public class UserController {
 		return mv;
 	}
 	
+	//상품후기 등록
 	@RequestMapping("/myPage/insertReview/{regNo}")
 	public String inserReview(Review review,@PathVariable Long regNo,HttpSession session) {
 		UserList userList =(UserList) session.getAttribute("userList");
 		review.setUserList(userList);
 		review.setRegisterGoods(mainService.goodsDetail(regNo));;
 		userService.insertReview(review);
-		return "redirect:/user/myPage/myReview";
+		return "redirect:/user/myPage/userGoodsReviewList";
 	}
 	
-	@RequestMapping("/myPage/myReview")
-	public ModelAndView myReview(HttpSession session) {
-		UserList userList = (UserList)session.getAttribute("userList");
-		Long userNo = userList.getUserNo();
-		List<Review>review = userService.selectReview(userNo);
-		return new ModelAndView("user/myPage/myReview","review",review);
-	}
-	
+	//후기 수정폼
 	@RequestMapping("/myPage/updateReviewForm/{reviewNo}")
 	public ModelAndView updateReviewForm(@PathVariable Long reviewNo) {
 		ModelAndView mv = new ModelAndView();
@@ -368,17 +365,19 @@ public class UserController {
 		return mv;
 	}
 	
+	//후기 수정
 	@RequestMapping("/myPage/updateReview/{reviewNo}")
 	public String  updateReview(Review review, @PathVariable Long reviewNo) {
 		review.setReviewNo(reviewNo);
 		userService.updateReview(review);
-		return "redirect:/user/myPage/myReview";
+		return "redirect:/user/myPage?state=4";
 	}
 	
+	//후기삭제
 	@RequestMapping("/myPage/deleteReview/{reviewNo}")
 	public String deleteReview(@PathVariable Long reviewNo) {
 		userService.deleteReview(reviewNo);
-		return "redirect:/user/myPage/myReview";
+		return "redirect:/user/myPage?state=4";
 	}
 	
 	/**
