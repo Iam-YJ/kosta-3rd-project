@@ -1,6 +1,6 @@
 package kosta.pro.rgmall.controller;
 
-import java.io.File;
+import java.io.File;	
 import java.io.IOException;
 import java.util.List;
 
@@ -128,6 +128,11 @@ public class AdminController {
 		List<RegisterGoods> list = adminService.selectGoods(2);
 		return new ModelAndView("myPage/adminGoodsStockList","list", list);
 	}
+	
+	/**
+	 * 관리자 마이페이지 - 재고량 수정
+	 */
+	//@RequestMapping("/maPage/goodsStockListUpdate/{regNo}")
 
 	/**
 	 * 관리자 마이페이지 - 광고상품 조회
@@ -142,13 +147,12 @@ public class AdminController {
 	/**
 	 * 관리자 마이페이지 - 광고상품 삭제
 	 */
-	@RequestMapping("/myPage/goodsADListDelete")
-	public String goodsADListDelete() {
-		return null;
+	@RequestMapping("/myPage/goodsADListDelete/{regNo}")
+	public String deleteAdGoods(@PathVariable Long regNo) {
+		adminService.deleteAdGoods(regNo);
+		return "redirect:/user/myPage";
 	}
 	
-	
-
 	/**
 	 * 관리자 마이페이지 - 공지사항
 	 */

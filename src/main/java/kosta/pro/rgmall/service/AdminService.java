@@ -100,7 +100,7 @@ public interface AdminService {
 	/**
 	 * 광고상품 삭제(게시글 삭제가 아니라 광고사용여부를 수정)
 	 */
-	public int deleteAdGoods(Long regNo);
+	public void deleteAdGoods(Long regNo);
 	
 	
 	/**
@@ -193,13 +193,11 @@ public interface AdminService {
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
 	
-	/**
-	 * 광고 조회
-	 */
-	public List<RegisterGoods> selectByAd();
+
 
 	public UserList searchById(String userId);
 
+	
 
 	
 }

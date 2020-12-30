@@ -183,9 +183,12 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int deleteAdGoods(Long regNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteAdGoods(Long regNo) {
+		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
+		if (dbRegisterGoods == null) {
+			throw new RuntimeException("오류");
+		}
+		dbRegisterGoods.setAd(0);
 	}
 
 	/**
@@ -343,11 +346,6 @@ public class AdminServiceImpl implements AdminService {
 		return userListRep.selectAllUser();
 	}
 
-	@Override
-	public List<RegisterGoods> selectByAd() {
-
-		return null;
-	}
 	
 	@Override
 	public UserList searchById(String userId) {

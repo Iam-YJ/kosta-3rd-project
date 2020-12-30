@@ -1,15 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
-	$('#A').click(function(){
-		location.href="${pageContext.request.contextPath}/admin/myPage/goodsADList";
-	})
+	$(function(){
+		alert(11)
+		$('#b').click(function(){
+			location.href="${pageContext.request.contextPath}/admin/myPage/goodsADListDelete/${registerGoods.regNo}";
+		})
+	});
+	
+	
 </script>
 </head>
 <body>
@@ -35,7 +42,7 @@
              ${registerGoods.mainCategories}
              ${registerGoods.subCategories}
              ${registerGoods.reviewList}
-             <input type="button" value="삭제" id="A" />
+             <input type="button" value="삭제" id="b" />
 		<p>
 	</c:forEach>
 
