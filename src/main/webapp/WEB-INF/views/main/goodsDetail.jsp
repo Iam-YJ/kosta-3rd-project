@@ -304,7 +304,7 @@ $(function(){
 				  상품문의가 없습니다.
 				  
 				 <form action="${pageContext.request.contextPath}/main/goodsDetail/${goodsQuestionMap.registerGoods.regNo}/goodsQuestion/insert">
-									
+									${userList}
 									<input type="button" data-toggle="collapse" data-target="#demo" value="등록">
 										<div id="demo" class="collapse" style="float:left;">
 											<input type="text" name="content">			

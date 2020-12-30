@@ -84,7 +84,7 @@ public class MainServiceImpl implements MainService {
 	 * 회원가입 사용자로부터 이름, 아이디, 비밀번호, 주소, 연락처를 입력받아 회원가입을 시도한다.
 	 */
 	@Override
-	public int userRegisterKakao(UserList userList) { //이거는 수정해야함(userGrade 테이블 수정해야함)
+	public int userRegisterKakao(UserList userList) { // 이거는 수정해야함(userGrade 테이블 수정해야함)
 		userList.setUsergrade(userGradeRep.findById(1L).orElse(null));
 		userList.setAuthority("ROLE_USER");
 		UserList userListResult = userListRep.save(userList);
@@ -166,7 +166,7 @@ public class MainServiceImpl implements MainService {
 	public void deleteUserByName(String name) {
 		userListRep.deleteByName(name);
 	}
-	
+
 	@Override
 	public UserList findUserPwd(UserList userList) {
 		String userId = userList.getUserId();
@@ -189,56 +189,48 @@ public class MainServiceImpl implements MainService {
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
 	@Override
-	public Page<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo,Pageable pageable) {
+	public Page<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo, Pageable pageable) {
 		Page<RegisterGoods> list = null;
-		if(sortNo == 0) {
-			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAll(pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMain(mainCategoryNo,pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo,pageable);
+		if (sortNo == 0) {
+			if (mainCategoryNo == 0) {
+				list = registerGoodsRep.findAll(pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
+				list = registerGoodsRep.findAllWithMain(mainCategoryNo, pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
+				list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo, pageable);
 			}
-		}else if(sortNo == 1) {
-			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAllOrderByRegDate(pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMainOrderByRegDate(mainCategoryNo,pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSubOrderByRegDate(mainCategoryNo, subCategoryNo,pageable);
+		} else if (sortNo == 1) {
+			if (mainCategoryNo == 0) {
+				list = registerGoodsRep.findAllOrderByRegDate(pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
+				list = registerGoodsRep.findAllWithMainOrderByRegDate(mainCategoryNo, pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByRegDate(mainCategoryNo, subCategoryNo, pageable);
 			}
-		}else if (sortNo == 2) {
-			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAllOrderBySell(pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMainOrderBySell(mainCategoryNo,pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSubOrderBySell(mainCategoryNo, subCategoryNo,pageable);
+		} else if (sortNo == 2) {
+			if (mainCategoryNo == 0) {
+				list = registerGoodsRep.findAllOrderBySell(pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
+				list = registerGoodsRep.findAllWithMainOrderBySell(mainCategoryNo, pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderBySell(mainCategoryNo, subCategoryNo, pageable);
 			}
-		}else if(sortNo == 3) {
-			if(mainCategoryNo == 0) {
-				list =  registerGoodsRep.findAllOrderByPrice(pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo ==0) {
-				list = registerGoodsRep.findAllWithMainOrderByPrice(mainCategoryNo,pageable);
-			}else if(mainCategoryNo !=0 && subCategoryNo !=0) {
-				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo,pageable);
+		} else if (sortNo == 3) {
+			if (mainCategoryNo == 0) {
+				list = registerGoodsRep.findAllOrderByPrice(pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
+				list = registerGoodsRep.findAllWithMainOrderByPrice(mainCategoryNo, pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo, pageable);
 			}
-
-		if (mainCategoryNo == 0) {
-			list = registerGoodsRep.findAll(pageable);
-		} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
-			list = registerGoodsRep.findAllWithMain(mainCategoryNo,pageable);
-		} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
-			list = registerGoodsRep.findAllWithMainAndSub(mainCategoryNo, subCategoryNo,pageable);
 		}
 
-		}
 		return list;
 	}
 
 	@Override
-	public Page<RegisterGoods> searchGoods(String keyword,Pageable pageable) {
-		return registerGoodsRep.searchGoods(keyword,pageable);
+	public Page<RegisterGoods> searchGoods(String keyword, Pageable pageable) {
+		return registerGoodsRep.searchGoods(keyword, pageable);
 	}
 
 	@Override
@@ -292,9 +284,19 @@ public class MainServiceImpl implements MainService {
 		return goodsQuestion;
 	}
 
+	public List<GoodsQuestion> selectAllGoodsQuestion() {
+		List<GoodsQuestion> goodsQuestion = goodsQuestionRep.findAll();
+		return goodsQuestion;
+	}
+
 	@Override
 	public List<GoodsAnswer> selectGoodsAnswer(long qgoodsNo) {
 		List<GoodsAnswer> goodsAnswer = goodsAnswerRep.selectGoodsAnswer(qgoodsNo);
+		return goodsAnswer;
+	}
+
+	public List<GoodsAnswer> selectAllGoodsAnswer() {
+		List<GoodsAnswer> goodsAnswer = goodsAnswerRep.findAll();
 		return goodsAnswer;
 	}
 

@@ -100,7 +100,7 @@ public interface AdminService {
 	/**
 	 * 광고상품 삭제(게시글 삭제가 아니라 광고사용여부를 수정)
 	 */
-	public int deleteAdGoods(Long regNo);
+	public void deleteAdGoods(Long regNo);
 	
 	
 	/**
@@ -169,12 +169,17 @@ public interface AdminService {
 	/**
 	 * 상품문의내역 답변
 	 */
-	public int insertGoodsAnswer(GoodsAnswer goodsAnswer);
+	public void insertGoodsAnswer(GoodsAnswer goodsAnswer);
 	
 	/**
 	 * 상품문의내역 삭제
 	 */
 	public int deleteGoodsAnswer(Long agoodsNo);
+	
+	/**
+	 * 상품문의내역 수정
+	 */
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply);
 	
 	/**
 	 * 상품평 조회
@@ -187,19 +192,18 @@ public interface AdminService {
 	 */
 	public int checkProfit(String startDate,String endDate); 
 	
+	//public List<Orders> checkDayProfit(String orderDate);
 	/**
 	 * 회원조회
 	 * (전체조회, 등급별조회, 검색어-사용자이름 조회)
 	 */
 	public List<UserList> searchAllUser(String grade, String keyword);
 	
-	/**
-	 * 광고 조회
-	 */
-	public List<RegisterGoods> selectByAd();
+
 
 	public UserList searchById(String userId);
 
+	
 
 	
 }

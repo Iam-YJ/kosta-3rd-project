@@ -327,29 +327,26 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
 			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo) throws RuntimeException {
-		//각종 정보 불러오기(User, RegisterGoods, Cart, Pay);
-		UserList dbUserList = userListRep.findById(userNo).orElse(null);
-		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
-		Cart dbCart = cartRep.findById(cartNo).orElse(null);
-		Pay dbPay = payRep.findById(payNo).orElse(null);
-		//1.Orders DB저장
-		Orders order = new Orders(null, shippingAddr, unitTotalPrice, null, "배송준비중", realPay, dbUserList, dbPay);
-		ordersRep.save(order);
-		
-		//2. Orderline DB저장
-		OrderLine orderLine = new OrderLine(null, quantity, unitPrice, unitTotalPrice, order, dbRegisterGoods);
-		orderLineRep.save(orderLine);
-		//3. 재고감소
-		dbRegisterGoods.setStock(dbRegisterGoods.getStock()-quantity);
-		//4. 카트제거
-		cartRep.delete(dbCart);
-		//5. 유저 포인트 감소(배송완료 후 포인트 추가)
-		//if(dbUserList.getUsergrade())<--사용해야함
-		
-		dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
-		
-		//6. 등급 비교 후 감가.
-		
+		/*
+		 * //각종 정보 불러오기(User, RegisterGoods, Cart, Pay); UserList dbUserList =
+		 * userListRep.findById(userNo).orElse(null); RegisterGoods dbRegisterGoods =
+		 * registerGoodsRep.findById(regNo).orElse(null); Cart dbCart =
+		 * cartRep.findById(cartNo).orElse(null); Pay dbPay =
+		 * payRep.findById(payNo).orElse(null); //1.Orders DB저장 //Orders order = new
+		 * Orders(null, shippingAddr, unitTotalPrice, null, "배송준비중", realPay,
+		 * dbUserList, dbPay); //ordersRep.save(order);
+		 * 
+		 * //2. Orderline DB저장 OrderLine orderLine = new OrderLine(null, quantity,
+		 * unitPrice, unitTotalPrice, order, dbRegisterGoods);
+		 * orderLineRep.save(orderLine); //3. 재고감소
+		 * dbRegisterGoods.setStock(dbRegisterGoods.getStock()-quantity); //4. 카트제거
+		 * cartRep.delete(dbCart); //5. 유저 포인트 감소(배송완료 후 포인트 추가)
+		 * //if(dbUserList.getUsergrade())<--사용해야함
+		 * 
+		 * dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
+		 * 
+		 * //6. 등급 비교 후 감가.
+		 */		
 		return 0;
 	}
 }

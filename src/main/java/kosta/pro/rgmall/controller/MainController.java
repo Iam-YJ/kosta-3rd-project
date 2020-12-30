@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
@@ -92,7 +93,7 @@ public class MainController {
 
 		UserList userList = mainService.findUserEmail(userEmail);
 		session.setAttribute("userList", userList);
-		
+
 		mainService.deleteUserByName("kakaoTest");
 
 		return "main/index";
@@ -226,7 +227,6 @@ public class MainController {
 		goodsListMap.put("mainCategories", mainCategories);
 		goodsListMap.put("main", main);// main
 		goodsListMap.put("sub", sub);// sub
-		goodsListMap.put("sub", sub);// sub
 
 		ModelAndView mv = new ModelAndView("main/goodsList", "goodsListMap", goodsListMap);
 
@@ -244,10 +244,10 @@ public class MainController {
 		Page<RegisterGoods> registerGoodsList = mainService.selectAllGoods(main, sub, sort,pageable);
 		return registerGoodsList.getContent();
 	}
-	
+
 	/**
 	 * 상품 keyword검색하는 Controller
-	 * */
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/goodsListKeyword", method = RequestMethod.POST)
 	public List<RegisterGoods> goodsListKeyword(String keyword,@RequestParam(defaultValue = "0")int nowPage) {
@@ -255,7 +255,7 @@ public class MainController {
 		Page<RegisterGoods> registerGoodsList = mainService.searchGoods(keyword,pageable);
 		return registerGoodsList.getContent();
 	}
-	
+
 	/**
 	 * 상품 상세조회를 하는 Controller
 	 */
@@ -274,42 +274,50 @@ public class MainController {
 
 		goodsQuestionMap.put("registerGoods", registerGoods);
 		goodsQuestionMap.put("goodsQuestionList", goodsQuestionList);
-		
+
 		List<Review> review = mainService.selectReview(regNo);
-		goodsQuestionMap.put("review",review);
-		
+		goodsQuestionMap.put("review", review);
+
 		ModelAndView mv = new ModelAndView("main/goodsDetail", "goodsQuestionMap", goodsQuestionMap);
 		return mv;
 	}
-
 
 	/**
 	 * 상품문의 A에 대한 기능(only 관리자)
 	 */
 	@RequestMapping("/goodsDetail/{qgoodsNo}/goodsAnswer/{state}") // 나중에 세션 인수로 받아야할듯?
-	public String UpdateGoodsAnswer(@PathVariable Long qgoodsNo, @PathVariable String state,
-			HttpServletRequest request) {
+	public String UpdateGoodsAnswer(@PathVariable Long qgoodsNo, @PathVariable String state, HttpServletRequest request,
+			HttpSession session) {
 
-		if (state.equals("update")) {
-			String content = request.getParameter("content");
+		Admin sessionUserList = (Admin) session.getAttribute("userList");
+		String authority = sessionUserList.getAuthority();
+		if (authority.equals("ROLE_ADMIN")) {
 
-			GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
-			GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
+			if (state.equals("update")) {
+				String content = request.getParameter("content");
 
-			mainService.updateGoodsAnswer(goodsAnswer);
+				GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
+				GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
 
-		} else if (state.equals("delete")) {
-			mainService.deleteGoodsAnswer(qgoodsNo);
-		} else if (state.equals("insert")) {
+				mainService.updateGoodsAnswer(goodsAnswer);
 
-			String content = request.getParameter("content");
+			} else if (state.equals("delete")) {
+				mainService.deleteGoodsAnswer(qgoodsNo);
+			} else if (state.equals("insert")) {
 
-			GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
-			GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
+				String content = request.getParameter("content");
 
-			mainService.insertGoodsAnswer(goodsAnswer);
+				GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
+				GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
 
-		}
+				mainService.insertGoodsAnswer(goodsAnswer);
+
+			}
+		} /*
+			 * else if (authority.equals("ROLE_USER")) {
+			 * 
+			 * }
+			 */
 
 		return "redirect:/main/goodsList/0/0/0";
 	}
@@ -318,8 +326,8 @@ public class MainController {
 	 * 상품문의 Q에 대한 기능(유저)
 	 */
 	@RequestMapping("/goodsDetail/{regNo}/goodsQuestion/{state}") // 나중에 세션 인수로 받아야할듯?
-	public String UpdateGoodsQuestion(@PathVariable Long regNo, @PathVariable String state,
-			HttpServletRequest request) {
+	public String UpdateGoodsQuestion(@PathVariable Long regNo, @PathVariable String state, HttpServletRequest request,
+			HttpSession session) {
 
 		if (state.equals("update")) {
 
@@ -335,7 +343,10 @@ public class MainController {
 
 			String content = request.getParameter("content");
 
-			UserList userList = new UserList(93L);
+			UserList sessionUserList = (UserList) session.getAttribute("userList");
+			Long userNo = sessionUserList.getUserNo();
+
+			UserList userList = new UserList(userNo);
 			RegisterGoods registerGoods = new RegisterGoods(regNo);
 
 			GoodsQuestion goodsQuestion = new GoodsQuestion(content, userList, registerGoods);
@@ -346,7 +357,7 @@ public class MainController {
 
 		return "redirect:/main/goodsList/0/0/0";
 	}
-	
+
 	/**
 	 * FAQ에서 검색
 	 */
@@ -357,14 +368,12 @@ public class MainController {
 		return faq;
 	}
 
-	
-	
 	/**
 	 * 우편번호 api test
 	 */
 	@RequestMapping("/testtt")
 	public void APITest() {
-		
+
 	}
-	
+
 }// class
