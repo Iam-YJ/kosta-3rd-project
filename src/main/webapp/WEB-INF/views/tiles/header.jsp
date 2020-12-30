@@ -53,8 +53,8 @@ function loginAlert(){
 							${sessionScope.userList.name}님 환영합니다.
 							<a href="${pageContext.request.contextPath}/user/logout" onclick="logout()">로그아웃</a>
 							<a href="${pageContext.request.contextPath}/user/myPage">주문/배송조회</a>
-							<a href="${pageContext.request.contextPath}/user/wishList">찜목록</a>
-							<a href="${pageContext.request.contextPath}/user/cartList">장바구니</a>
+							<a href="${pageContext.request.contextPath}/user/myPage?state=3">찜목록</a>
+							<a href="${pageContext.request.contextPath}/user/myPage?state=2">장바구니</a>
 						</c:otherwise>
 					</c:choose>
 					
@@ -110,9 +110,6 @@ function loginAlert(){
 			</div>
 				<div class="col-xl">
 				<a href="#" class="btn btn-success">~~ 상품조회</a>
-			</div>
-			<div class="col-xl">
-				<a href="${pageContext.request.contextPath}/admin/myPage/insertGoodsForm" class="btn btn-success">상품등록</a>
 			</div>
 			
 			<div class="col-xl-2">

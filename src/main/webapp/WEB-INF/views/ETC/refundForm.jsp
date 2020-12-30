@@ -92,7 +92,7 @@ $(document).ready(function(){
 					환불예상금액
 				</div>
 				<div class="TD col">
-					<fmt:formatNumber value="${orders.realpay}"/> 원
+					<fmt:formatNumber value="${orders.realpay - 2500}"/> 원
 				</div>
 			</div>
 			<form action="#" method="post" id="refundForm">

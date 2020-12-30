@@ -16,27 +16,23 @@ $(document).ready(function(){
 	
 	function calRealPay(){
 		//1. 사용가능 포인트랑 숫자비교 후 커지면 alert
-		if($("#points").val() > ${sessionScope.userList.points}){
+		if($("#points").val() > ${requestScope.userList.points}){
 			alert("사용 가능한 포인트를 초과하였습니다.");
 			$("#points").val(0);
 		} 
-		
+
 		//2. 사용 가능 일시 총 상품금액 + 배송비 - 포인트 계산 후 총 결제금액에 출력
-		var totalCost = ${buyMap.registerGoods.price * buyMap.cart.quantity} + 2500 - $("#points").val();
+		var totalCost = ${totalPrice} + 2500 - $("#points").val();
 		$("#realPayCost").empty();
 		$("#realPayCost").append(AddComma(totalCost)+" 원");
 		$("#realPay").val(totalCost); 
 	};
-	
+	 
 	$(document).on("keyup","#points",function(){
-		//console.log($(this).val());
 		calRealPay();
-		
 	});//pointsInput_keyup
 	
 	$(document).on("change","#points",function(){
-		//console.log($(this).val());
-		//1. 사용가능 포인트랑 숫자비교 후 커지면 alert
 		calRealPay();
 	});//pointsInput_keyup
 	
@@ -96,7 +92,7 @@ $(document).ready(function(){
 						이름
 					</div>
 					<div class="TD col-xl">
-						${sessionScope.userList.name}
+						${requestScope.userList.name}
 					</div>
 				</div>
 				<div class="row border border-left-0 border-right-0 border-top-0">
@@ -104,7 +100,7 @@ $(document).ready(function(){
 						이메일
 					</div>
 					<div class="TD col-xl">
-						${sessionScope.userList.email}
+						${requestScope.userList.email}
 					</div>
 				</div>
 				<div class="row border border-left-0 border-right-0 border-top-0">
@@ -112,7 +108,7 @@ $(document).ready(function(){
 						연락처
 					</div>
 					<div class="TD col-xl">
-						${sessionScope.userList.phone}
+						${requestScope.userList.phone}
 					</div>
 				</div>
 			</div>
@@ -125,7 +121,7 @@ $(document).ready(function(){
 						받는 사람
 					</div>
 					<div class="TD col-xl">
-  						<input type="text" class="form-control" id="usr" value="${sessionScope.userList.name}">
+  						<input type="text" class="form-control" id="usr" value="${requestScope.userList.name}">
 					</div>
 				</div>
 				<div class="row border border-left-0 border-right-0 border-top-0">
@@ -133,7 +129,7 @@ $(document).ready(function(){
 						배송지 주소
 					</div>
 					<div class="TD col-xl">
-  						<input type="text" class="form-control" id="addr" value="${sessionScope.userList.addr}">
+  						<input type="text" class="form-control" id="addr" value="${requestScope.userList.addr}">
 					</div>
 				</div>
 				<div class="row border border-left-0 border-right-0 border-top-0">
@@ -141,7 +137,7 @@ $(document).ready(function(){
 						받는 사람 연락처
 					</div>
 					<div class="TD col-xl">
-  						<input type="text" class="form-control" id="phone" value="${sessionScope.userList.phone}">
+  						<input type="text" class="form-control" id="phone" value="${requestScope.userList.phone}">
 					</div>
 				</div>
 			</div>
@@ -187,7 +183,7 @@ $(document).ready(function(){
 						총 상품가격
 					</div>
 					<div class="TD col-xl">
-						${totalPrice} 원
+						<fmt:formatNumber value="${totalPrice}"/> 원						
 					</div>
 				</div>
 				<div class="row border border-left-0 border-right-0 border-top-0">
@@ -205,10 +201,10 @@ $(document).ready(function(){
 					<div class="TD col-xl">
 						<div class="row">
 							<div class="col-xl-3">
-								<input type="number" min="0" max="${sessionScope.userList.points}" step="1" class="form-control" id="points" value="0">
+								<input type="number" min="0" max="${requestScope.userList.points}" step="1" class="form-control" id="points" value="0">
 							</div>						
 							<div class="col-xl" style="color: blue; margin: auto;">
-								(사용가능 포인트 : ${sessionScope.userList.points})	
+								(사용가능 포인트 : ${requestScope.userList.points})	
 							</div>
 						</div>
 						
@@ -253,15 +249,15 @@ $(document).ready(function(){
 			<form action="" method="post" id="orderPay">
 				<div class="row">
 					<div class="hiddendInfo">
-						<input type="hidden" id="shippingAddr" name="shippingAddr" value="${sessionScope.userList.addr}">
-						<input type="hidden" id="totalPrice" name="totalPrice" value="${buyMap.registerGoods.price * buyMap.cart.quantity +2500}">
+						<input type="hidden" id="shippingAddr" name="shippingAddr" value="${requestScope.userList.addr}">
+						<input type="hidden" id="totalPrice" name="totalPrice" value="${totalPrice + 2500}">
 						<input type="hidden" id="realPay" name="realPay" value="0">
-						<input type="hidden" id="regNo" name="regNo" value="${buyMap.registerGoods.regNo}">
-						<input type="hidden" id="quantity" name="quantity" value="${buyMap.cart.quantity}">
-						<input type="hidden" id="unitPrice" name="unitPrice" value="${buyMap.registerGoods.price}">
-						<input type="hidden" id="unitTotalPrice" name="unitTotalPrice" value="${buyMap.registerGoods.price * buyMap.cart.quantity}">
 						<input type="hidden" id="usingPoints" name="usingPoints" value=0>
-						<input type="hidden" id="cartNo" name="cartNo" value="${buyMap.cart.cartNo}">
+						<c:forEach items="${buyMap}" var="cart" varStatus="index">
+							<input type="hidden" name="cartList[${index.count-1}].cartNo" value="${cart.value.cartNo}">
+						</c:forEach>
+						
+						<!-- Cart List로 넘기는방법 찾자.. -->
 					</div>
 					<div class="col-xl" style="text-align: center; margin: auto;">
 						<input type="button" class="btn btn-success" value="결제하기" id="payBtn">

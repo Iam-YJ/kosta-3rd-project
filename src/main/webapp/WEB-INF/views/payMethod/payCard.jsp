@@ -88,12 +88,10 @@ $(document).ready(function(){
 						<input type="hidden" id="shippingAddr" name="shippingAddr" value="${shippingAddr}">
 						<input type="hidden" id="totalPrice" name="totalPrice" value="${totalPrice}">
 						<input type="hidden" id="realPay" name="realPay" value="${realPay}">
-						<input type="hidden" id="regNo" name="regNo" value="${regNo}">
-						<input type="hidden" id="quantity" name="quantity" value="${quantity}">
-						<input type="hidden" id="unitPrice" name="unitPrice" value="${unitPrice}">
-						<input type="hidden" id="unitTotalPrice" name="unitTotalPrice" value="${unitTotalPrice}">
 						<input type="hidden" id="usingPoints" name="usingPoints" value="${usingPoints}">
-						<input type="hidden" id="cartNo" name="cartNo" value="${cartNo}">
+						<c:forEach items="${cartList}" var="cart" varStatus="index">
+							<input type="hidden" name="cartList[${index.count-1}].cartNo" value="${cart.cartNo}">
+						</c:forEach>
 						<input type="hidden" id="payNo" name="payNo" value=2>
 					</form>
 				</div>

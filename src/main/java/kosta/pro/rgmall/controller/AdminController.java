@@ -97,7 +97,7 @@ public class AdminController {
 	}
 	
 	/**
-	 * 환불승인
+	 * 관리자 마이페이지 - 환불승인
 	 */
 	@RequestMapping("/myPage/orderRefundList/accessRefund/{refundNo}")
 	public ModelAndView accessRefund(@PathVariable Long refundNo) {
@@ -145,24 +145,6 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsADListDelete")
 	public String goodsADListDelete() {
 		return null;
-	}
-	
-	
-
-	/**
-	 * 관리자 마이페이지 - 공지사항
-	 */
-	@RequestMapping("/myPage/noticeList")
-	public ModelAndView noticeList() {
-		return new ModelAndView("myPage/adminNoticeList");
-	}
-
-	/**
-	 * 관리자 마이페이지 - FAQ
-	 */
-	@RequestMapping("/myPage/FAQList")
-	public ModelAndView FAQList() {
-		return new ModelAndView("myPage/adminFAQList");
 	}
 
 	/**

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import kosta.pro.rgmall.domain.Cart;
+import kosta.pro.rgmall.domain.CartList;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.OrderLine;
@@ -21,6 +22,10 @@ import kosta.pro.rgmall.domain.WishList;
 
 public interface UserService {
 
+	/**
+	 * userNo에 해당하는 User정보 받아오기
+	 */
+	public UserList findByUserListbyUserNo(Long userNo);
 	
 	/**
 	 * 개인정보 수정 
@@ -112,11 +117,15 @@ public interface UserService {
 	 * */
 	public int deleteWishList(Long wishNo);
 	
+	/**
+	 * 유저넘버에 해당하는 모든 찜리스트 삭제하기
+	 * */
+	public int deleteWishListByUserNo(Long userNo);
 	
 	/**
 	 * 장바구니 등록하기
 	 * */
-	public int insertCart(Cart cart);
+	public Cart insertCart(Cart cart);
 
 	/**
 	 * 장바구니 조회하기
@@ -186,8 +195,7 @@ public interface UserService {
 	/**
 	 * 상품결제하기
 	 */
-	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
-			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo);
+	public int payGoods(String shippingAddr, int totalPrice, int realPay, int usingPoints, CartList cartList, Long payNo, Long userNo);
 
 	int updateCart2(int qua, Long regNo);
 

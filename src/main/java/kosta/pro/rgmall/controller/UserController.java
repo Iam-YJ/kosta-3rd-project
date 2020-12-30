@@ -1,6 +1,5 @@
 package kosta.pro.rgmall.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,15 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import kosta.pro.rgmall.domain.Cart;
+import kosta.pro.rgmall.domain.CartList;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
@@ -26,7 +23,6 @@ import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.domain.WishList;
-import kosta.pro.rgmall.service.AdminService;
 import kosta.pro.rgmall.service.MainService;
 import kosta.pro.rgmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -110,17 +106,119 @@ public class UserController {
 		return new ModelAndView("myPage/userGoodsReviewList");
 	}
 	
-	//마이페이지 찜 목록 조회
+	//마이페이지 찜 목록 - 조회
 	@RequestMapping("/myPage/userWishList")	
-	public ModelAndView userWishList() {
-		return new ModelAndView("myPage/userWishList");
+	public ModelAndView userWishList(HttpSession session) {
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		List<WishList> wishList=userService.selectWishList(userNo);
+		
+		return new ModelAndView("myPage/userWishList","wishList",wishList);
 	}
+	//마이페이지 찜 목록 - 찜목록 삭제
+	@RequestMapping("/deleteWishList")
+	public String deleteWishList(HttpSession session, Long regNo, String state) {
+		
+		UserList userList = (UserList)session.getAttribute("userList");
+		
+		System.out.println(state);
+
+		if(state == null) {
+			WishList wishList = userService.selectWishNo(regNo);
+			userService.deleteWishList(wishList.getWishNo());
+		}else {
+			userService.deleteWishListByUserNo(userList.getUserNo());
+		}
+
+		return "redirect:/user/myPage?state=3" ;
+	}//deleteWishList
+	
+
+	///마이페이지 찜 목록 - 찜목록에서 장바구니 추가
+	@RequestMapping("/insertcart")
+	public String cart(HttpSession session,int qua, Long regNo) {
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		
+		List<Cart> list =userService.selectCart(userNo);
+		for(Cart c : list) {
+			if(c.getRegisterGoods().getRegNo()==regNo) {
+				userService.updateCart(regNo);
+				if(qua==0) {
+					return "redirect:/user/wishList" ;
+				}else {
+					return "redirect:/main/goodsDetail/"+regNo ;
+				}
+			}
+		}
+		
+		Cart cart = new Cart();
+		UserList userList= new UserList();
+		userList.setUserNo(userNo);
+		RegisterGoods registerGoods= new RegisterGoods();
+		registerGoods.setRegNo(regNo);
+		cart.setRegisterGoods(registerGoods);
+		cart.setUserList(userList);
+		if(qua==0) {
+			cart.setQuantity(1);
+			userService.insertCart(cart);
+			return "redirect:/user/wishList" ;
+		}else {
+			cart.setQuantity(qua);
+			userService.insertCart(cart);
+			return "redirect:/main/goodsDetail/"+regNo ;
+		}
+	}//cart
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//마이페이지 장바구니 목록 조회
 	@RequestMapping("/myPage/userCartList")	
-	public ModelAndView userCartList() {
-		return new ModelAndView("myPage/userCartList");
+	public ModelAndView userCartList(HttpSession session) {
+		
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		List<Cart> cartList=userService.selectCart(userNo);
+
+		return new ModelAndView("myPage/userCartList","cartList",cartList);
 	}
+	
+	//마이페이지 장바구니 목록 조회 - 장바구니 변경
+	@RequestMapping("/cartInfoChange")
+	@ResponseBody
+	public int cartInfoChange(String unitQuantitiy, String unitPrice,HttpSession session,Long regNo) {
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		List<Cart> list=userService.selectCart(userNo);
+		for(Cart c : list) {
+			if(c.getRegisterGoods().getRegNo()==regNo) {
+				userService.updateCart2((Integer.parseInt(unitQuantitiy)-c.getQuantity()),regNo);
+			}
+		}
+		
+		return Integer.parseInt(unitQuantitiy)*Integer.parseInt(unitPrice);
+	}//cartInfoChange
+		
+	//마이페이지 장바구니 목록 조회 - 장바구니 삭제
+	@RequestMapping("/deleteCartList")
+	public String deleteCartList(Long regNo, HttpSession session) {
+		UserList userInfo=(UserList) session.getAttribute("userList");
+		Long userNo= userInfo.getUserNo();
+		userService.deleteCart(userNo, regNo);
+		return "redirect:/user/myPage?state=2";
+	}
+
+	
 	
 	//마이페이지-개인정보확인/수정 - 개인정보 수정전 비밀번호 확인폼
 	@RequestMapping("/myPage/passWordCheck")
@@ -248,91 +346,9 @@ public class UserController {
 		return new ModelAndView("user/wishList","list",list);
 	}//wishList
 	
-	//찜목록 삭제
-	@RequestMapping("/deleteWishList")
-	public String deleteWishList(Long regNo,HttpSession session) {
-		WishList whishList=userService.selectWishNo(regNo);
-		userService.deleteWishList(whishList.getWishNo());
-		return "redirect:/user/wishList" ;
-	}//deleteWishList
-	
 
-	/**
-	 * 장바구니 추가기능
-	 */
-	@RequestMapping("/insertcart")
-	public String cart(HttpSession session,int qua, Long regNo) {
-		UserList userInfo=(UserList) session.getAttribute("userList");
-		Long userNo= userInfo.getUserNo();
-		
-		List<Cart> list =userService.selectCart(userNo);
-		for(Cart c : list) {
-			if(c.getRegisterGoods().getRegNo()==regNo) {
-				userService.updateCart(regNo);
-				if(qua==0) {
-					return "redirect:/user/wishList" ;
-				}else {
-					return "redirect:/main/goodsDetail/"+regNo ;
-				}
-			}
-		}
-		
-		Cart cart = new Cart();
-		UserList userList= new UserList();
-		userList.setUserNo(userNo);
-		RegisterGoods registerGoods= new RegisterGoods();
-		registerGoods.setRegNo(regNo);
-		cart.setRegisterGoods(registerGoods);
-		cart.setUserList(userList);
-		if(qua==0) {
-			cart.setQuantity(1);
-			userService.insertCart(cart);
-			return "redirect:/user/wishList" ;
-		}else {
-			cart.setQuantity(qua);
-			userService.insertCart(cart);
-			return "redirect:/main/goodsDetail/"+regNo ;
-		}
-	}//cart
 	
-	//장바구니 조회
-	@RequestMapping("/cartList")
-	public ModelAndView cartList(HttpSession session) {
-		UserList userInfo=(UserList) session.getAttribute("userList");
-		Long userNo= userInfo.getUserNo();
-		List<Cart> list=userService.selectCart(userNo);
-		for(Cart c : list) {
-			System.out.println("333333333"+c+"============================");
-		}
-		return new ModelAndView("user/cart","list",list);
-	}//cartList
 	
-	//장바구니 변경
-	@RequestMapping("/cartInfoChange")
-	@ResponseBody
-	public int cartInfoChange(String unitQuantitiy, String unitPrice,HttpSession session,Long regNo) {
-		UserList userInfo=(UserList) session.getAttribute("userList");
-		Long userNo= userInfo.getUserNo();
-		List<Cart> list=userService.selectCart(userNo);
-		for(Cart c : list) {
-			if(c.getRegisterGoods().getRegNo()==regNo) {
-				userService.updateCart2((Integer.parseInt(unitQuantitiy)-c.getQuantity()),regNo);
-			}
-		}
-		
-		return Integer.parseInt(unitQuantitiy)*Integer.parseInt(unitPrice);
-		
-		//return 0;
-	}//cartInfoChange
-	
-	//장바구니 삭제
-	@RequestMapping("/deleteCartList")
-	public String deleteCartList(Long regNo, HttpSession session) {
-		UserList userInfo=(UserList) session.getAttribute("userList");
-		Long userNo= userInfo.getUserNo();
-		userService.deleteCart(userNo, regNo);
-		return"redirect:/user/cartList";
-	}
 	
 	//상품후기 등록(상품구매 후)
 	@RequestMapping("/myPage/writeReviewForm/{regNo}")
@@ -389,34 +405,41 @@ public class UserController {
 	 */
 	@RequestMapping("/instantBuy/{regNo}")
 	public ModelAndView instantBuy(HttpSession session, @PathVariable Long regNo, int quantity) {
-		
 		UserList userList = (UserList)session.getAttribute("userList");
+		UserList dbUserList = userService.findByUserListbyUserNo(userList.getUserNo());
 		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
-		Cart cart = new Cart(null, quantity, userList, registerGoods);
-		userService.insertCart(cart);
+		Cart dbCart = userService.insertCart(new Cart(null, quantity, userList, registerGoods));
+
+		Map<Long, Object> buyMap = new HashMap<Long, Object>();
 		
-		Map<String, Object> buyMap = new HashMap<String, Object>();
-		buyMap.put("registerGoods", registerGoods);
-		buyMap.put("cart", cart);
+		buyMap.put(dbCart.getCartNo(), dbCart);
+		int price = dbCart.getQuantity() * dbCart.getRegisterGoods().getPrice();
 		
-		return new ModelAndView("user/order","buyMap",buyMap);
+		ModelAndView mv = new ModelAndView("user/order");
+		
+		mv.addObject("userList", dbUserList);
+		mv.addObject("buyMap", buyMap);
+		mv.addObject("totalPrice" , price);
+		
+		return mv;
 	}
 	
 	@RequestMapping("/buyCartGoods")
 	public ModelAndView buyCartGoods(HttpSession session) {
 		UserList userList = (UserList)session.getAttribute("userList");
-		Long userNo = userList.getUserNo();
-		List<Cart> list=userService.selectCart(userNo);
+		UserList dbUserList = userService.findByUserListbyUserNo(userList.getUserNo());
+		List<Cart> list = userService.selectCart(dbUserList.getUserNo());
 		Map<Long, Object> buyMap = new HashMap<Long, Object>();
-		int price =0;
-		for(Cart c : list) {
-			buyMap.put(c.getCartNo(), c);
-			
-			price +=c.getQuantity() * c.getRegisterGoods().getPrice();
+		
+		int price = 0;
+		for(Cart cart : list) {
+			buyMap.put(cart.getCartNo(), cart);
+			price += cart.getQuantity() * cart.getRegisterGoods().getPrice();
 		}
 		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/order");
+		ModelAndView mv = new ModelAndView("user/order");
+
+		mv.addObject("userList", dbUserList);
 		mv.addObject("buyMap", buyMap);
 		mv.addObject("totalPrice" , price);
 		
@@ -435,19 +458,16 @@ public class UserController {
 	 * 상품 결제  폼열기- 신용카드/체크카드
 	 */
 	@RequestMapping("/payMethod/card")
-	public ModelAndView payCard(String shippingAddr, int totalPrice, int realPay, Long regNo, 
-			int quantity, int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo) {
+	public ModelAndView payCard(String shippingAddr, int totalPrice, int realPay, 
+		 int usingPoints, CartList cartList) {
 		
 		ModelAndView mv = new ModelAndView("payMethod/payCard");
+	
 		mv.addObject("shippingAddr", shippingAddr);
 		mv.addObject("totalPrice", totalPrice);
 		mv.addObject("realPay", realPay);
-		mv.addObject("regNo", regNo);
-		mv.addObject("quantity", quantity);
-		mv.addObject("unitPrice", unitPrice);
-		mv.addObject("unitTotalPrice", unitTotalPrice);
 		mv.addObject("usingPoints", usingPoints);
-		mv.addObject("cartNo", cartNo);
+		mv.addObject("cartList",cartList.getCartList());
 		
 		return mv;
 	}
@@ -472,14 +492,12 @@ public class UserController {
 	
 	@RequestMapping("/payGoods")
 	@ResponseBody
-	public int payGoods(HttpSession session, String shippingAddr, int totalPrice, int realPay, Long regNo, 
-			int quantity, int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo) {
+	public int payGoods(HttpSession session, String shippingAddr, int totalPrice, int realPay,  
+			  int usingPoints, CartList cartList, Long payNo) {
 		int result = 0;
 		UserList userList = (UserList)session.getAttribute("userList");
-		try 
-		{
-			userService.payGoods(shippingAddr, totalPrice, realPay, regNo, quantity, unitPrice, unitTotalPrice, usingPoints, cartNo, payNo, userList.getUserNo());		
-			System.out.println(3);
+		try {
+			userService.payGoods(shippingAddr, totalPrice, realPay, usingPoints, cartList, payNo, userList.getUserNo());
 		} catch (RuntimeException e) {
 			System.out.println("error");
 			result = 1;

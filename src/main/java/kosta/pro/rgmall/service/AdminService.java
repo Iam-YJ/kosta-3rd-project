@@ -198,6 +198,7 @@ public interface AdminService {
 	 */
 	public List<RegisterGoods> selectByAd();
 
+	
 	public UserList searchById(String userId);
 
 

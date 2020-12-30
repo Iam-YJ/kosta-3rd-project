@@ -2,13 +2,11 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
-import javax.persistence.criteria.Order;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import kosta.pro.rgmall.domain.Cart;
+import kosta.pro.rgmall.domain.CartList;
 import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.OrderLine;
@@ -64,6 +62,16 @@ public class UserServiceImpl implements UserService {
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
 
+	/**
+	 * userNo에 해당하는 User정보 받아오기
+	 */
+	@Override
+	public UserList findByUserListbyUserNo(Long userNo) {
+		UserList userList = userListRep.findById(userNo).orElse(null);
+		return userList;
+	}
+	
+	
 	@Override
 	public int updateUserList(UserList userList) {
 		String passWord = userList.getPassWord();
@@ -90,7 +98,6 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public List<Orders> selectOrders(Long userNo) {
-
 		List<Orders> orderList = ordersRep.selectOrdersByUserNo(userNo);
 		return orderList;
 	}
@@ -209,22 +216,38 @@ public class UserServiceImpl implements UserService {
 		return 0;
 	}
 
+	/**
+	 * 찜리스트 삭제하기(단일 항목)
+	 * */
 	@Override
 	public int deleteWishList(Long wishNo) {
 		wishListRep.deleteById(wishNo);
 		return 0;
 	}
 
+	/**
+	 * 유저넘버에 해당하는 모든 찜리스트 삭제하기
+	 * */
 	@Override
-	public int insertCart(Cart cart) {
+	public int deleteWishListByUserNo(Long userNo) {
+		wishListRep.deleteWishListByUserNo(userNo);
+		return 0;
+	}
+	
+	
+	@Override
+	public Cart insertCart(Cart cart) {
 		//카트가 중복이면 저장 X
 		Cart dbCart = cartRep.findCartByUserAndRegisterGoods
 				(cart.getUserList().getUserNo(), cart.getRegisterGoods().getRegNo());
 
 		if(dbCart == null) {
 			cartRep.save(cart);
+			dbCart = cartRep.findCartByUserAndRegisterGoods
+					(cart.getUserList().getUserNo(), cart.getRegisterGoods().getRegNo());
 		}
-		return 0;
+		
+		return dbCart;
 	}
 
 	@Override
@@ -325,29 +348,39 @@ public class UserServiceImpl implements UserService {
 	 * 6. 등급 비교 후 감가.
 	 */
 	@Override
-	public int payGoods(String shippingAddr, int totalPrice, int realPay, Long regNo, int quantity,
-			int unitPrice, int unitTotalPrice, int usingPoints, Long cartNo, Long payNo, Long userNo) throws RuntimeException {
+	public int payGoods(String shippingAddr, int totalPrice, int realPay, 
+			 int usingPoints, CartList cartList, Long payNo, Long userNo) throws RuntimeException {
 		//각종 정보 불러오기(User, RegisterGoods, Cart, Pay);
 		UserList dbUserList = userListRep.findById(userNo).orElse(null);
-		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
-		Cart dbCart = cartRep.findById(cartNo).orElse(null);
 		Pay dbPay = payRep.findById(payNo).orElse(null);
-		//1.Orders DB저장
-		Orders order = new Orders(null, shippingAddr, unitTotalPrice, null, "배송준비중", realPay, dbUserList, dbPay);
-		ordersRep.save(order);
+		//Cart dbCart = cartRep.findById(cartNo).orElse(null);
 		
-		//2. Orderline DB저장
-		OrderLine orderLine = new OrderLine(null, quantity, unitPrice, unitTotalPrice, order, dbRegisterGoods);
-		orderLineRep.save(orderLine);
-		//3. 재고감소
-		dbRegisterGoods.setStock(dbRegisterGoods.getStock()-quantity);
-		//4. 카트제거
-		cartRep.delete(dbCart);
+		//1.Orders DB저장
+		Orders orders = new Orders(null, shippingAddr, totalPrice, null, "배송준비중", realPay, dbUserList, dbPay);;
+		ordersRep.save(orders);
+		
+		for(Cart cart : cartList.getCartList()) {
+			//Cart에서 regNo를 불러와 RegisterGoodsdb불러오기;
+			Cart dbcart = cartRep.findById(cart.getCartNo()).orElse(null);
+			System.out.println(dbcart.getRegisterGoods().getRegNo());
+			RegisterGoods dbRegisterGoods = registerGoodsRep.findById(dbcart.getRegisterGoods().getRegNo()).orElse(null);
+			//OrderLine 생성
+			OrderLine orderLine = new OrderLine(null, dbcart.getQuantity(), dbRegisterGoods.getPrice(), 
+					dbcart.getQuantity()*dbRegisterGoods.getPrice(), orders, dbRegisterGoods); 
+			//2. Orderline DB저장
+			orderLineRep.save(orderLine);
+			
+			//3. 재고감소
+			dbRegisterGoods.setStock(dbRegisterGoods.getStock()-dbcart.getQuantity());
+			
+			//4. 카트제거
+			cartRep.delete(dbcart);
+		}
+
 		//5. 유저 포인트 감소(배송완료 후 포인트 추가)
 		//if(dbUserList.getUsergrade())<--사용해야함
 		
 		dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
-		
 		//6. 등급 비교 후 감가.
 		
 		return 0;

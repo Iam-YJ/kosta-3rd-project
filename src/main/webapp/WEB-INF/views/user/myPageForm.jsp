@@ -18,15 +18,16 @@ $(document).ready(function(){
 			$("#myPageContentSection").empty();
 			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/newOrderList");
 		}
-	}else{
+	}else{ 
 		if(${state == 1}){
-			$("#myPageContentSection").empty();
-			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/orderRefundList");
+			adminOrderRefundList();
+		}else if(${state == 2}) {
+			userCartList();
 		}
-	}
-	
-	
-	
+		else if(${state == 3}) {
+			userWishList();
+		}
+	} 
 	
 })//ready
 function userOrderList(){
@@ -105,14 +106,6 @@ function adminGoodsADList(){
 	$("#myPageContentSection").empty();
 	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/goodsADList");
 }
-function adminNoticeList(){
-	$("#myPageContentSection").empty();
-	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/noticeList");
-}
-function adminFAQList(){
-	$("#myPageContentSection").empty();
-	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/FAQList");
-}
 function adminGoodsQuestionList(){
 	$("#myPageContentSection").empty();
 	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/goodsQuestionList");
@@ -137,131 +130,139 @@ function adminClientList(){
 </script>
 </head>
 <body>
-<div class="myPageFrame"> 
-	<div class="container">
-		<div class="row">
-			<div class="col-xl-3" style="background-color: #d5edb4; text-align : center; padding: 50px; font-size: 30px">
-				<b>마이페이지</b>
-			</div>
-			<div class="col-xl" style="background-color: #f0f6e8; padding: 50px;">
-				<div class="row">
-					<div class="col-xl-3" style="font-size: 30px">
+	<div class="myPageFrame">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-3">
+					<div class="row">
+						<div class="col-xl"
+							style="background-color: #d5edb4; text-align: center; padding: 50px; font-size: 30px">
+							<b>마이페이지</b>
+						</div>
 					</div>
-				</div>	
+					<div class="row">
+						<div class="col-xl" style="background-color: #f0f6e8">
+							<div class="myPageMenuSection">
+								<c:choose>
+									<c:when
+										test="${sessionScope.userList.authority eq 'ROLE_USER'}">
+										<div class="row col-xl" style="margin-top: 15px">
+											<h4>
+												<b>My 쇼핑</b>
+											</h4>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userOrderList()">주문목록/배송 조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userOrderCancelList()">환불신청내역 조회</a>
+										</div>
+
+
+										<div class="row col-xl" style="margin-top: 50px">
+											<h4>
+												<b>My 활동</b>
+											</h4>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userGoodsQuestionList()">상품 문의내역 조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userGoodsReviewList()">구매후기 내역 조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userWishList()">찜 목록 조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userCartList()">장바구니 목록 조회</a>
+										</div>
+
+										<div class="row col-xl" style="margin-top: 50px;">
+											<h4>
+												<b>My 정보</b>
+											</h4>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="passWordCheck()">개인정보확인/수정</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="userPointGradeList()">포인트/등급 조회</a>
+										</div>
+										<div class="row col-xl" style="margin-bottom: 15px">
+											<a href="#" onclick="userPointDonate()">포인트 기부</a>
+										</div>
+									</c:when>
+									<c:when
+										test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
+										<div class="row col-xl" style="margin-top: 15px">
+											<h4>
+												<b>상품관련</b>
+											</h4>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminInsertGoodsForm()">상품등록</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminGoodsList()">판매상품목록 조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminNewOrderList()">신규 주문조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminOrderDeliveryList()">상품 배송조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminOrderRefundList()">환불신청 상품조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminGoodsStockList()">재고량 조회</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminGoodsADList()">광고상품 조회</a>
+										</div>
+
+
+										<div class="row col-xl" style="margin-top: 50px">
+											<h4>
+												<b>게시판 관련</b>
+											</h4>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminGoodsQuestionList()">상품문의 내역</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminGoodsReviewList()">구매후기내역</a>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminCategoryList()">상품 카테고리</a>
+										</div>
+
+										<div class="row col-xl" style="margin-top: 50px">
+											<h4>
+												<b>홈페이지 관련</b>
+											</h4>
+										</div>
+										<div class="row col-xl">
+											<a href="#" onclick="adminProfit()">매출조회</a>
+										</div>
+										<div class="row col-xl" style="margin-bottom: 15px">
+											<a href="#" onclick="adminClientList()">회원조회</a>
+										</div>
+									</c:when>
+								</c:choose>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl">
+					<div class="myPageContentSection" id="myPageContentSection">
+						<!-- 내용이 들어갈 구간입니다 -->
+					</div>
+				</div>
 			</div>
 		</div>
-		
-		<div class="row">
-			<div class="col-xl-3" style="background-color: #f0f6e8">
-				<div class="myPageMenuSection">
-					<c:choose>
-						<c:when test="${sessionScope.userList.authority eq 'ROLE_USER'}">
-							<div class="row col-xl" style="margin-top: 15px">
-								<h4><b>My 쇼핑</b></h4>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userOrderList()">주문목록/배송 조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userOrderCancelList()">환불신청내역 조회</a>
-							</div>
-							
-							
-							<div class="row col-xl" style="margin-top: 50px">
-								<h4><b>My 활동</b></h4>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userGoodsQuestionList()">상품 문의내역 조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userGoodsReviewList()">구매후기 내역 조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userWishList()">찜 목록 조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userCartList()">장바구니 목록 조회</a>
-							</div>
-							
-							<div class="row col-xl" style="margin-top: 50px;">
-								<h4><b>My 정보</b></h4>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="passWordCheck()">개인정보확인/수정</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="userPointGradeList()">포인트/등급 조회</a>
-							</div>
-							<div class="row col-xl" style="margin-bottom: 15px">
-								<a href="#" onclick="userPointDonate()">포인트 기부</a>
-							</div>
-						</c:when>
-						<c:when test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
-						 	<div class="row col-xl" style="margin-top: 15px">
-								<h4><b>상품관련</b></h4>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminInsertGoodsForm()">상품등록</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminGoodsList()">판매상품목록 조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminNewOrderList()">신규 주문조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminOrderDeliveryList()">상품 배송조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminOrderRefundList()">환불신청 상품조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminGoodsStockList()">재고량 조회</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminGoodsADList()">광고상품 조회</a>
-							</div>
-
-							
-							<div class="row col-xl" style="margin-top: 50px">
-								<h4><b>게시판 관련</b></h4>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminNoticeList()">공지사항</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminFAQList()">FAQ</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminGoodsQuestionList()">상품문의 내역</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminGoodsReviewList()">구매후기내역</a>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminCategoryList()">상품 카테고리</a>
-							</div>
-							
-							<div class="row col-xl" style="margin-top: 50px">
-								<h4><b>홈페이지 관련</b></h4>
-							</div>
-							<div class="row col-xl">
-								<a href="#" onclick="adminProfit()">매출조회</a>
-							</div>
-							<div class="row col-xl" style="margin-bottom: 15px">
-								<a href="#" onclick="adminClientList()">회원조회</a>
-							</div>
-						</c:when>
-					</c:choose>
-				</div>
-			</div>
-			<div class="col-xl">
-				<div class="myPageContentSection" id="myPageContentSection">
-					<!-- 내용이 들어갈 구간입니다 -->
-				</div>
-			</div>
-		</div><!-- row -->
+		<!-- container -->
 	</div>
-</div><!-- myPageFrame -->
+	<!-- myPageFrame -->
 </body>
 </html>

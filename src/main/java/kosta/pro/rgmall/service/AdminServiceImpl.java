@@ -168,7 +168,7 @@ public class AdminServiceImpl implements AdminService {
 		if (state == 0) {
 			
 		} else if (state == 1) {
-			list =registerGoodsRep.findAD();
+			list = registerGoodsRep.findAD();
 		} else if (state == 2) {
 			list = registerGoodsRep.findStock();
 		}
