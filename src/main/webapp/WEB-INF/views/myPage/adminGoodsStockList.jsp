@@ -22,6 +22,12 @@
              ${registerGoods.area}
              ${registerGoods.method}
              ${registerGoods.stock}
+           
+  추가할 수량은? :
+  <input type="text" name="regNo" value="${registerGoods.regNo}">
+  <input type="submit" value="추가">
+
+
              ${registerGoods.price}
              ${registerGoods.sellcount}
              ${registerGoods.ad}
@@ -35,6 +41,12 @@
       		
             
 </c:forEach>
+
+<form>
+
+
+
+</form>
 
 
 </body>

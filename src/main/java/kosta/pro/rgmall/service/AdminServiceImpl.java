@@ -166,7 +166,7 @@ public class AdminServiceImpl implements AdminService {
 		List<RegisterGoods> list = null;
 		
 		if (state == 0) {
-			
+			list = registerGoodsRep.findAll();
 		} else if (state == 1) {
 			list =registerGoodsRep.findAD();
 		} else if (state == 2) {
@@ -178,14 +178,17 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int updateGoods(RegisterGoods registerGoods) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
-	public int deleteAdGoods(Long regNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteAdGoods(Long regNo) {
+		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
+		if (dbRegisterGoods == null) {
+			throw new RuntimeException("오류");
+		}
+		dbRegisterGoods.setAd(0);
 	}
 
 	/**
@@ -339,19 +342,21 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int checkProfit(String startDate, String endDate) {
-		return 0;
+		int result = adminRep.checkProfits();
+		return result;
 	}
+	/*
+	@Override
+	public List<Orders> checkDayProfit(String orderDate) {
+		
+		return adminRep.checkDayProfit(orderDate);
+	}*/
 
 	@Override
 	public List<UserList> searchAllUser(String grade, String keyword) {
 		return userListRep.selectAllUser();
 	}
 
-	@Override
-	public List<RegisterGoods> selectByAd() {
-
-		return null;
-	}
 	
 	@Override
 	public UserList searchById(String userId) {
