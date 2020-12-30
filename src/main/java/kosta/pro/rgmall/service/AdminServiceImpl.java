@@ -166,7 +166,7 @@ public class AdminServiceImpl implements AdminService {
 		List<RegisterGoods> list = null;
 		
 		if (state == 0) {
-			
+			list = registerGoodsRep.findAll();
 		} else if (state == 1) {
 			list = registerGoodsRep.findAD();
 		} else if (state == 2) {
@@ -178,14 +178,17 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int updateGoods(RegisterGoods registerGoods) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	@Override
-	public int deleteAdGoods(Long regNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void deleteAdGoods(Long regNo) {
+		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(regNo).orElse(null);
+		if (dbRegisterGoods == null) {
+			throw new RuntimeException("오류");
+		}
+		dbRegisterGoods.setAd(0);
 	}
 
 	/**
@@ -196,8 +199,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<Orders> selectOrders(int parameter) {
 		List<Orders> orderList = null;
 
+		//0은 지난 주문조회 1은 신규주문조회
 		if (parameter == 0) {
-			orderList = null;
+			orderList = ordersRep.selectLastOrders();
+			
+			
 		} else if (parameter == 1) {
 			orderList = ordersRep.selectNewOrders();
 		}
@@ -316,15 +322,16 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int insertGoodsAnswer(GoodsAnswer goodsAnswer) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
+		goodsAnswerRep.save(goodsAnswer);
 	}
 
 	@Override
-	public int deleteGoodsAnswer(Long agoodsNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply) {
+
+		GoodsAnswer goodsAnwer = goodsAnswerRep.findById(agoodsNo).orElse(null);
+		goodsAnwer.setContent(refundReply);
+
 	}
 
 	@Override
@@ -335,23 +342,31 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int checkProfit(String startDate, String endDate) {
-		return 0;
+		int result = adminRep.checkProfits();
+		return result;
 	}
+	/*
+	@Override
+	public List<Orders> checkDayProfit(String orderDate) {
+		
+		return adminRep.checkDayProfit(orderDate);
+	}*/
 
 	@Override
 	public List<UserList> searchAllUser(String grade, String keyword) {
 		return userListRep.selectAllUser();
 	}
 
-	@Override
-	public List<RegisterGoods> selectByAd() {
-
-		return null;
-	}
 	
 	@Override
 	public UserList searchById(String userId) {
 		return userListRep.findByIdUser(userId);
+	}
+
+	@Override
+	public int deleteGoodsAnswer(Long agoodsNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -73,6 +73,4 @@ public class Orders {
 		this.pay = pay;
 	}
 	
-	
-	
 }// class

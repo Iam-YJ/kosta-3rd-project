@@ -64,6 +64,18 @@
 					 								<a href="" class="col-xl btn btn-outline-success" style="margin: 10px">구매평쓰기</a>	
 					 							</div>
 											</c:if>
+											<c:choose>
+												<c:when test="${orders.delState eq '배송준비중'}">
+													<div class="row">
+						 								<a href="" class="col-xl btn btn-outline-success" style="margin: 5px">주문취소</a>	
+						 							</div>
+												</c:when>
+												<c:when test="${orders.delState eq '배송완료'}">
+						 							<div class="row">
+						 								<a href="${pageContext.request.contextPath}/myPage/writeReviewForm/${orderLine.registerGoods.regNo}" class="col-xl btn btn-outline-success" style="margin: 5px">구매평쓰기</a>	
+						 							</div>
+												</c:when>
+											</c:choose>											
 						 				</div>
 						 			</div>
 						 		</div>

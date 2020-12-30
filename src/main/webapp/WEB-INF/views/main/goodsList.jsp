@@ -241,7 +241,7 @@ $(document).ready(function(){
 				
 				<div class="row" id="content">
 					<!-- goodListSection -->
-					<c:forEach items="${goodsListMap.registerGoodsList}" var="registerGoodsList">
+					<c:forEach items="${goodsListMap.regGoods}" var="registerGoodsList">
 						<div class="col-xl-3" style="padding-bottom: 30px">
 							<div class="border">
 								<div class="row">
@@ -276,6 +276,22 @@ $(document).ready(function(){
 	</div><!-- container -->
 </div><!-- goodsList -->
 
+
+	
+${goodsListMap.registerGoodsList.hasPrevious()}/${goodsListMap.registerGoodsList.hasNext()}
+<!-- 페이징 처리 -->
+<div style="text-align:center">
+<c:forEach begin="0" end="${goodsListMap.registerGoodsList.totalPages-1}" var="i">
+  <c:choose>
+    <c:when test="${goodsListMap.registerGoodsList.number==i}">
+       <a href="${pageContext.request.contextPath}/main/goodsList/${goodsListMap.main}/${goodsListMap.sub}/${goodsListMap.sort}?nowPage=${i}" style="color:red">[${i+1}]</a>
+    </c:when>
+    <c:otherwise>
+       <a href="${pageContext.request.contextPath}/main/goodsList/${goodsListMap.main}/${goodsListMap.sub}/${goodsListMap.sort}?nowPage=${i}">[${i+1}]</a>
+    </c:otherwise>
+  </c:choose>
+</c:forEach>
+</div>
 
 	
 

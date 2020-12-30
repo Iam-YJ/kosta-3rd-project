@@ -382,7 +382,6 @@ public class UserServiceImpl implements UserService {
 		
 		dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
 		//6. 등급 비교 후 감가.
-		
 		return 0;
 	}
 }

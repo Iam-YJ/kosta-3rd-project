@@ -3,6 +3,9 @@ package kosta.pro.rgmall.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.GoodsAnswer;
 import kosta.pro.rgmall.domain.GoodsQuestion;
@@ -97,12 +100,12 @@ public interface MainService {
 	 * Header의 전체상품보기 버튼을 눌렀을 때 넘어가는 페이지
 	 * 카테고리(Lv1, Lv2) 상품리스트 + 페이징처리가 필요하다.
 	 */
-	public List<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo);
+	public Page<RegisterGoods> selectAllGoods(Long mainCategoryNo, Long subCategoryNo, int sortNo,Pageable pageabe);
 	
 	/**
 	 * 상품 검색(제목검색)
 	 */
-	public List<RegisterGoods> searchGoods(String keyword);
+	public Page<RegisterGoods> searchGoods(String keyword,Pageable pageable);
 	
 	/**
 	 * 상품을 눌렀을 때 상품상세정보 페이지 이동
@@ -144,10 +147,15 @@ public interface MainService {
 	public List<SubCategories> selectSubCategories(Long mainCateNo);
 
 	/**
-	 * 상품문의 조회
+	 * 상품문의 조회(자기자신것만)
 	 */
 	public List<GoodsQuestion> selectGoodsQuestions(Long regNo);
 
+	/**
+	 * 상품문의 조회(전체)
+	 */
+	public List<GoodsQuestion> selectAllGoodsQuestion();
+	
 	/**
 	 * 상품 답변 조회
 	 */
@@ -187,6 +195,11 @@ public interface MainService {
 	 * faq검색하기
 	 * */
 	public List<FAQ> findFAQByWord(String word);
+
+	/**
+	 * 상품 문의 답변 조회(전체)
+	 */
+	public List<GoodsAnswer> selectAllGoodsAnswer();
 	
 
 }

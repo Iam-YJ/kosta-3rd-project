@@ -10,24 +10,30 @@
 $(document).ready(function(){
 	
 	if(${state == null}){
-
 		if(${sessionScope.userList.authority eq 'ROLE_USER'}){
 			$("#myPageContentSection").empty();
 			$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/userOrderList");
 		}else if(${sessionScope.userList.authority eq 'ROLE_ADMIN'}){
 			$("#myPageContentSection").empty();
 			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/newOrderList");
-		}
+		} 
 	}else{ 
 		if(${state == 1}){
 			adminOrderRefundList();
 		}else if(${state == 2}) {
 			userCartList();
-		}
-		else if(${state == 3}) {
+		}else if(${state == 3}) {
 			userWishList();
+		}else if(${state == 4}){
+			userGoodsReviewList();
+		}else if(${state == 5}){
+			adminGoodsADList();
+		}else if(${state == 6}){
+			adminGoodsQuestionList();
 		}
-	} 
+	}
+		
+	 
 	
 })//ready
 function userOrderList(){

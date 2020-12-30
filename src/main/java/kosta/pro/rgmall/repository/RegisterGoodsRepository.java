@@ -2,6 +2,8 @@ package kosta.pro.rgmall.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,45 +17,45 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	 * 검색(글번호 or 제목)
 	 */
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1")
-	List<RegisterGoods> findAllWithMain(Long mainCategoryNo);
+	Page<RegisterGoods> findAllWithMain(Long mainCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2")
-	List<RegisterGoods> findAllWithMainAndSub(Long mainCategoryNo, Long subCategoryNo);
+	Page<RegisterGoods> findAllWithMainAndSub(Long mainCategoryNo, Long subCategoryNo,Pageable pageable);
 	
 	RegisterGoods findByRegNo(Long regNo);
 
 	@Query("select registerGoods from RegisterGoods registerGoods order by registerGoods.price asc")
-	List<RegisterGoods>findAllOrderByPrice();
+	Page<RegisterGoods>findAllOrderByPrice(Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods order by registerGoods.sellcount desc")
-	List<RegisterGoods>findAllOrderBySell();
+	Page<RegisterGoods>findAllOrderBySell(Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods order by registerGoods.regDate desc")
-	List<RegisterGoods>findAllOrderByRegDate();
+	Page<RegisterGoods>findAllOrderByRegDate(Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 order by registerGoods.price asc")
-	List<RegisterGoods> findAllWithMainOrderByPrice(Long mainCategoryNo);
+	Page<RegisterGoods> findAllWithMainOrderByPrice(Long mainCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 order by registerGoods.sellcount desc")
-	List<RegisterGoods> findAllWithMainOrderBySell(Long mainCategoryNo);
+	Page<RegisterGoods> findAllWithMainOrderBySell(Long mainCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 order by registerGoods.regDate desc")
-	List<RegisterGoods> findAllWithMainOrderByRegDate(Long mainCategoryNo);
+	Page<RegisterGoods> findAllWithMainOrderByRegDate(Long mainCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2"
 			+ " order by registerGoods.price asc")
-	List<RegisterGoods> findAllWithMainAndSubOrderByPrice(Long mainCategoryNo, Long subCategoryNo);
+	Page<RegisterGoods> findAllWithMainAndSubOrderByPrice(Long mainCategoryNo, Long subCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2"
 			+ " order by registerGoods.sellcount desc")
-	List<RegisterGoods> findAllWithMainAndSubOrderBySell(Long mainCategoryNo, Long subCategoryNo);
+	Page<RegisterGoods> findAllWithMainAndSubOrderBySell(Long mainCategoryNo, Long subCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2"
 			+ " order by registerGoods.regDate desc")
-	List<RegisterGoods> findAllWithMainAndSubOrderByRegDate(Long mainCategoryNo, Long subCategoryNo);
+	Page<RegisterGoods> findAllWithMainAndSubOrderByRegDate(Long mainCategoryNo, Long subCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.title like concat('%',:keyword,'%')")
-	List<RegisterGoods> searchGoods(@Param("keyword") String keyword);
+	Page<RegisterGoods> searchGoods(@Param("keyword") String keyword,Pageable pageable);
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.ad=1")
 	List<RegisterGoods> findAD();
 
