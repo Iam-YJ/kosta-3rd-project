@@ -196,8 +196,11 @@ public class AdminServiceImpl implements AdminService {
 	public List<Orders> selectOrders(int parameter) {
 		List<Orders> orderList = null;
 
+		//0은 지난 주문조회 1은 신규주문조회
 		if (parameter == 0) {
-			orderList = null;
+			orderList = ordersRep.selectLastOrders();
+			
+			
 		} else if (parameter == 1) {
 			orderList = ordersRep.selectNewOrders();
 		}
@@ -316,15 +319,16 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int insertGoodsAnswer(GoodsAnswer goodsAnswer) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
+		goodsAnswerRep.save(goodsAnswer);
 	}
 
 	@Override
-	public int deleteGoodsAnswer(Long agoodsNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply) {
+
+		GoodsAnswer goodsAnwer = goodsAnswerRep.findById(agoodsNo).orElse(null);
+		goodsAnwer.setContent(refundReply);
+
 	}
 
 	@Override
@@ -352,6 +356,12 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public UserList searchById(String userId) {
 		return userListRep.findByIdUser(userId);
+	}
+
+	@Override
+	public int deleteGoodsAnswer(Long agoodsNo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

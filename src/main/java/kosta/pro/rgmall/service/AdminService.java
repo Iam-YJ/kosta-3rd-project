@@ -169,12 +169,17 @@ public interface AdminService {
 	/**
 	 * 상품문의내역 답변
 	 */
-	public int insertGoodsAnswer(GoodsAnswer goodsAnswer);
+	public void insertGoodsAnswer(GoodsAnswer goodsAnswer);
 	
 	/**
 	 * 상품문의내역 삭제
 	 */
 	public int deleteGoodsAnswer(Long agoodsNo);
+	
+	/**
+	 * 상품문의내역 수정
+	 */
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply);
 	
 	/**
 	 * 상품평 조회

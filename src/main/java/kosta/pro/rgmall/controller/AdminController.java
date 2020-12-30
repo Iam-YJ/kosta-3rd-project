@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
+import kosta.pro.rgmall.domain.GoodsAnswer;
+import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.MainCategories;
 import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.Orders;
@@ -38,6 +41,8 @@ public class AdminController {
 	private final MainService mainService;
 	private final MainCategories mainCategories;
 	private final SubCategories subCategories;
+
+	private final MainController mainController;
 
 	/**
 	 * 관리자 마이페이지 - 상품등록
@@ -61,28 +66,40 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/newOrderList")
 	public ModelAndView newOrderList() {
-		
+
 		List<Orders> orderList = adminService.selectOrders(1);
-		return new ModelAndView("myPage/adminNewOrderList","orderList",orderList);
+		return new ModelAndView("myPage/adminNewOrderList", "orderList", orderList);
 	}
-	
+
 	/**
 	 * 관리자 마이페이지 - 신규 주문조회 - 상품출고
 	 */
 	@RequestMapping("/myPage/newOrderList/goodsRelease/{orderNo}")
 	public ModelAndView goodsRelease(@PathVariable Long orderNo) {
-		
+
 		adminService.updateDelState(orderNo);
 		return new ModelAndView("redirect:/user/myPage");
 	}
-	
 
 	/**
 	 * 관리자 마이페이지 - 상품 배송조회
 	 */
 	@RequestMapping("/myPage/orderDeliveryList")
 	public ModelAndView orderDeliveryList() {
-		return new ModelAndView("myPage/adminOrderDeliveryList");
+		
+		ModelAndView mv = new ModelAndView();
+		
+		//0 지난주문 조회    1은 신규주문조회
+		List<Orders> lastOrders = adminService.selectOrders(0);
+		
+		List<Orders> newOrders = adminService.selectOrders(1);
+		
+		mv.addObject("lastOrders", lastOrders);
+		mv.addObject("newOrders", newOrders);
+		
+		mv.setViewName("myPage/adminOrderDeliveryList");
+		
+		return mv;
 	}
 
 	/**
@@ -90,33 +107,31 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/orderRefundList")
 	public ModelAndView orderRefundList() {
-		
+
 		List<Refund> refundList = adminService.selectRefundGoods();
-		
-		return new ModelAndView("myPage/adminOrderRefundList","refundList",refundList);
+
+		return new ModelAndView("myPage/adminOrderRefundList", "refundList", refundList);
 	}
-	
+
 	/**
 	 * 환불승인
 	 */
 	@RequestMapping("/myPage/orderRefundList/accessRefund/{refundNo}")
 	public ModelAndView accessRefund(@PathVariable Long refundNo) {
-		
+
 		adminService.refundGoods(refundNo, null, 0);
-		
-		
+
 		return new ModelAndView("redirect:/user/myPage?state=1");
 	}
-	
+
 	/**
 	 * 관리자 마이페이지 - 환불신청 상품조회 - 환불거절
 	 */
 	@RequestMapping("/myPage/orderRefundList/rejectRefund/{refundNo}")
 	public ModelAndView rejectRefund(@PathVariable Long refundNo, String refundReply) {
-		
+
 		adminService.refundGoods(refundNo, refundReply, 1);
-		
-		
+
 		return new ModelAndView("redirect:/user/myPage?state=1");
 	}
 
@@ -126,7 +141,7 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsStockList")
 	public ModelAndView goodsStockList() {
 		List<RegisterGoods> list = adminService.selectGoods(2);
-		return new ModelAndView("myPage/adminGoodsStockList","list", list);
+		return new ModelAndView("myPage/adminGoodsStockList", "list", list);
 	}
 
 	/**
@@ -134,11 +149,11 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/goodsADList")
 	public ModelAndView goodsADList() {
-		
+
 		List<RegisterGoods> list = adminService.selectGoods(1);
 		return new ModelAndView("myPage/adminGoodsADList", "list", list);
 	}
-	
+
 	/**
 	 * 관리자 마이페이지 - 광고상품 삭제
 	 */
@@ -146,8 +161,6 @@ public class AdminController {
 	public String goodsADListDelete() {
 		return null;
 	}
-	
-	
 
 	/**
 	 * 관리자 마이페이지 - 공지사항
@@ -170,7 +183,43 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/goodsQuestionList")
 	public ModelAndView GoodsQuestionList() {
-		return new ModelAndView("myPage/adminGoodsQuestionList");
+
+		List<GoodsQuestion> goodsQuestion = mainService.selectAllGoodsQuestion();
+		List<GoodsAnswer> goodsAnswer = mainService.selectAllGoodsAnswer();
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("GoodsQuestionList", goodsQuestion);
+		mv.addObject("GoodsAnswerList", goodsAnswer);
+		
+		mv.setViewName("myPage/adminGoodsQuestionList");
+
+		return mv;
+	}
+
+	/**
+	 * 관리자 마이페이지 - 상품문의 내역 답변하기 regNo - 는 상품번호 userNo - 는 회원번호
+	 * 
+	 */
+	@RequestMapping("/myPage/goodsQuestionListAnswer/{regNo}")
+	public String GoodsQuestionListAnswer(@PathVariable Long regNo, String refundReply) {
+
+		GoodsQuestion goodsQuestion = new GoodsQuestion(regNo);
+		GoodsAnswer goodsAnswer = new GoodsAnswer(refundReply, goodsQuestion);
+
+		adminService.insertGoodsAnswer(goodsAnswer);
+
+		return "redirect:/user/myPage";
+
+	}
+	
+	@RequestMapping("/myPage/goodsQuestionUpdateAnswer/{agoodsNo}")
+	public String GoodsQuestionUpdateAnswer(@PathVariable Long agoodsNo, String refundReply) {
+
+		adminService.updateGoodsAnswer(agoodsNo, refundReply);
+
+		return "redirect:/user/myPage";
+
 	}
 
 	/**
@@ -199,7 +248,7 @@ public class AdminController {
 
 	/**
 	 * 관리자 마이페이지 - 회원조회
-	*/ 
+	 */
 	@RequestMapping("/myPage/clientList")
 	public ModelAndView clientList(String grade, String keyword) {
 		List<UserList> userList = adminService.searchAllUser(grade, keyword);
@@ -359,21 +408,20 @@ public class AdminController {
 
 		return "redirect:/admin/cs/list";
 	}
-	
+
 	/**
 	 * 회원정보 검색
-	 
-	@RequestMapping("/myPage/UserList")
-	public ModelAndView userList(String grade, String keyword) {
-		List<UserList> userList = adminService.searchAllUser(grade, keyword);
-		System.out.println(userList);
-
-		return new ModelAndView("myPage/adminClientList", "userList", userList);
-	}*/
+	 * 
+	 * @RequestMapping("/myPage/UserList") public ModelAndView userList(String
+	 * grade, String keyword) { List<UserList> userList =
+	 * adminService.searchAllUser(grade, keyword); System.out.println(userList);
+	 * 
+	 * return new ModelAndView("myPage/adminClientList", "userList", userList); }
+	 */
 
 	/**
 	 * 회원 상세정보
-	*/ 
+	 */
 	@RequestMapping("/myPage/userRead/{userId}")
 	public ModelAndView userRead(@PathVariable String userId) {
 		System.out.println(userId);
@@ -425,8 +473,6 @@ public class AdminController {
 		return new ModelAndView("redirect:/admin/myPage/insertGoodsForm", "registerGoods", registerGoods);
 
 	}// insertGoods
-
-	
 
 	// 카테고리 수정 폼 띄우기 //카테고리 수정
 	@RequestMapping("/myPage/modiCategories")

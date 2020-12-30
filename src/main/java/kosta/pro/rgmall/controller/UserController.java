@@ -1,6 +1,5 @@
 package kosta.pro.rgmall.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,16 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
-
 import kosta.pro.rgmall.domain.Cart;
 import kosta.pro.rgmall.domain.Donation;
+import kosta.pro.rgmall.domain.GoodsAnswer;
+import kosta.pro.rgmall.domain.GoodsQuestion;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
@@ -26,7 +24,6 @@ import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.UserGrade;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.domain.WishList;
-import kosta.pro.rgmall.service.AdminService;
 import kosta.pro.rgmall.service.MainService;
 import kosta.pro.rgmall.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -100,9 +97,30 @@ public class UserController {
 	
 	//마이페이지 상품문의내역 조회
 	@RequestMapping("/myPage/userGoodsQuestionList")	
-	public ModelAndView userGoodsQuestionList() {
-		return new ModelAndView("myPage/userGoodsQuestionList");
+	public ModelAndView userGoodsQuestionList(HttpSession session) {
+		
+		UserList userList = (UserList) session.getAttribute("userList");
+		
+		Long userNo = userList.getUserNo();
+		
+		/*
+		 * List<GoodsQuestion> goodsQuestion = mainService.selectGoodsQuestions();
+		 * List<GoodsAnswer> goodsAnswer = mainService.selectGoodsAnswer();
+		 */
+
+		ModelAndView mv = new ModelAndView();
+
+		/*
+		 * mv.addObject("GoodsQuestionList", goodsQuestion);
+		 * mv.addObject("GoodsAnswerList", goodsAnswer);
+		 */
+		mv.setViewName("myPage/userGoodsQuestionList");
+
+		return mv;
+		
 	}
+	
+	
 	
 	//마이페이지 구매후기 내역 조회
 	@RequestMapping("/myPage/userGoodsReviewList")	
