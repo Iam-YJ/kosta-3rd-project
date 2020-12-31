@@ -13,9 +13,8 @@ import kosta.pro.rgmall.domain.RegisterGoods;
 public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Long> {
 
 	
-	/**
-	 * 검색(글번호 or 제목)
-	 */
+
+	//상품 조회(카테고리별, 정렬 순)
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1")
 	Page<RegisterGoods> findAllWithMain(Long mainCategoryNo,Pageable pageable);
 	
@@ -67,9 +66,18 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.title like concat('%',:keyword,'%')")
 	Page<RegisterGoods> searchGoods(@Param("keyword") String keyword,Pageable pageable);
+	
+	//관리자 광고보기
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.ad=1")
 	List<RegisterGoods> findAD();
 
+	//관리자 재고 확인
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.stock>=0 order by registerGoods.stock")
 	List<RegisterGoods> findStock();
+	
+	//Header 품절임박
+	@Query("select registerGoods from RegisterGoods registerGoods order by registerGoods.stock asc")
+	List<RegisterGoods> soldout();
+
+
 }//class

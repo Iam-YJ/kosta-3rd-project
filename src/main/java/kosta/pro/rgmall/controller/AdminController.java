@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -148,7 +149,11 @@ public class AdminController {
 	/**
 	 * 관리자 마이페이지 - 재고량 수정
 	 */
-	//@RequestMapping("/maPage/goodsStockListUpdate/{regNo}")
+	@RequestMapping(value= "/myPage/updateGoods", method = RequestMethod.POST)
+	public String updateGoods(RegisterGoods registerGoods) {
+		adminService.updateGoods(registerGoods);
+		return "redirect:/user/myPage";
+	}
 
 	/**
 	 * 관리자 마이페이지 - 광고상품 조회

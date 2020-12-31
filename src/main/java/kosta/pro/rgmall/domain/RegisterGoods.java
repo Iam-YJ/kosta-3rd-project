@@ -18,6 +18,8 @@ import javax.servlet.annotation.MultipartConfig;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -84,11 +86,12 @@ public class RegisterGoods {
 	@JoinColumn(name = "mainCategoryNo")
 	private MainCategories mainCategories;
 
+	
 	@OneToOne
 	@JoinColumn(name = "subCategoryNo")
 	private SubCategories subCategories;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "registerGoods") 
 	private List<Review> reviewList = new ArrayList<Review>();
 

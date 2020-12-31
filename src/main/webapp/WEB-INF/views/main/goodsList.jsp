@@ -24,6 +24,11 @@ $(document).ready(function(){
 				dataType : "json", 
 				data : {keyword :$("#key").val()},
 				success : function(result) {
+					if(result.length==0){
+						$("#content").empty();
+						str="<h2>"+$("#key").val()+"에 이름의 상품이 존재하지 않습니다.</h2>";
+						$("#content").html(str);
+					}else{
 					 str="";
 					  $("#content").empty();
 					  $.each(result, function (i, list) {
@@ -41,6 +46,7 @@ $(document).ready(function(){
 							
 		                });
 					  $("#content").html(str);
+					}
 				},
 				error : function(err){
 				}
@@ -51,8 +57,8 @@ $(document).ready(function(){
 	$("#sel1").change(function(){
 		var main = ${goodsListMap.main};
 		var sub = ${goodsListMap.sub};
-		console.log(main);
-		console.log(sub);
+		//console.log(main);
+		//console.log(sub);
 		if($(this).val()==1){
 			 $.ajax({
 				  url : "${pageContext.request.contextPath}/main/goodsListOrder/"+main+"/"+sub+"/"+1 ,//서버요청주소
@@ -78,7 +84,7 @@ $(document).ready(function(){
 					  $("#content").html(str);
 				  },
 				  error : function(err){
-					  console.log(err+"예외발생");
+					  console.log(err);
 				  }
 			  });//ajax
 		}else if($(this).val()==2){
@@ -106,7 +112,7 @@ $(document).ready(function(){
 					  $("#content").html(str);
 				  },
 				  error : function(err){
-					  console.log(err+"예외발생");
+					  console.log(err);
 				  }
 			  });//ajax
 		}else{
@@ -134,7 +140,7 @@ $(document).ready(function(){
 					  $("#content").html(str);
 				  },
 				  error : function(err){
-					  console.log(err+"예외발생");
+					  console.log(err);
 				  }
 			  });//ajax
 		}
@@ -143,7 +149,9 @@ $(document).ready(function(){
 	
 })
 
+
 </script>
+
 </head>
 <body>
 
@@ -225,7 +233,7 @@ $(document).ready(function(){
 									<input type="button" class="btn btn-success col-xl-1" id="keyword" value="검색">
 									<div class="col-xl-2">
 										<div class="form-group" style="text-align: right;">
-											<select class="form-control" id="sel1" name="sellist1">
+											<select class="form-control" id="sel1" name="sellist1" >
 												<option value="0">정렬</option>
 												<option value="1">최신순</option>
 												<option value="2">인기순</option>
@@ -268,7 +276,7 @@ $(document).ready(function(){
 							</div><!-- 상품리스트 1개 영역 -->
 						</div><!-- col=3 -->
 					</c:forEach>	
-					</div>
+					
 					<!-- End : goodListSection  -->
 				</div><!-- row -->
 			</div><!-- col-10 -->
@@ -278,7 +286,7 @@ $(document).ready(function(){
 
 
 	
-${goodsListMap.registerGoodsList.hasPrevious()}/${goodsListMap.registerGoodsList.hasNext()}
+
 <!-- 페이징 처리 -->
 <div style="text-align:center">
 <c:forEach begin="0" end="${goodsListMap.registerGoodsList.totalPages-1}" var="i">
