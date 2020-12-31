@@ -157,7 +157,7 @@ public interface UserService {
 	 * 포인트 기부하기
 	 * 도네이션 테이블의 기부 내역을 저장하고, userList 테이블에서 기부한만큼 포인트 차감
 	 * */
-	public void insertDonation(Donation donation);
+	public void insertDonation(Donation donation,Long userNo);
 	
 	/**
 	 * 누적기부 포인트 조회하기(내꺼보기)

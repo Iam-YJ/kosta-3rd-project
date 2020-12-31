@@ -311,12 +311,19 @@ public class UserController {
 		Donation donation =new Donation();
 		donation.setDonaPoint(dona);
 		donation.setUserList(userList);
-		if(userService.selectMyDonation(userNo).getUserList().getUserNo()==userNo) {
-			userService.updateDonation(userNo, dona);
+		System.out.println("33333333333333333333333333333333333333333333");
+		System.out.println("dona       "+dona);
+		System.out.println("userNo       "+userNo);
+		System.out.println("donation       "+donation);
+		
+		if(userService.selectMyDonation(userNo)==null) {
+			userService.insertDonation(donation,userNo);
 		}else {
-			userService.insertDonation(donation);
+			System.out.println("111111111111111111111111111111111");
+			userService.updateDonation(userNo, dona);
+			
 		}
-		return "redirect:/user/myPage/donationForm";
+		return "redirect:/user/myPage?state=7";
 	}//donation
 	
 	@RequestMapping("/myPage/{userId}")

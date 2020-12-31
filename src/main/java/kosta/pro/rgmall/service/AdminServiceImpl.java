@@ -273,15 +273,48 @@ public class AdminServiceImpl implements AdminService {
 					RegisterGoods dbRegisterGoods = registerGoodsRep.findByRegNo(ol.getRegisterGoods().getRegNo());
 					dbRegisterGoods.setStock(dbRegisterGoods.getStock() + ol.getQuntity());
 				}
-//				포인트 - 기술적 보류
-//				UserList dbUserList = userListRep.findById(dbRefund.getUserList().getUserNo()).orElse(null);
-//				dbUserList.setPoints(dbUserList.getPoints() - dbRefund.getOrders().getRealpay());
 				
-//				order 날리고 - 보류				
+				//////////////////////////////////////////
+				Refund refund =refundRep.findById(RefundNo).orElse(null);
+				Long orderNo = refund.getOrders().getOrderNo();
+				Long userNo=refund.getOrders().getUserList().getUserNo();
+				Long gradeNo=refund.getOrders().getUserList().getUsergrade().getGradeNo();
+				int realPay =refund.getOrders().getRealpay();
+				double point =0;
+				if(gradeNo==1) {
+					point=-0.02*realPay;
+				}else if(gradeNo==2) {
+					point=-0.05*realPay;
+				}else {
+					point=-0.08*realPay;
+				}
+				
+				//포인트 차감
+				userListRep.addPoints((int)Math.round(point),userNo);
+				
+				//주문테이블 주문상태 환불상품로 변경
+				ordersRep.updateDeliveryState("환불상품",orderNo);
+				
+				//등급 재조정
+				List<Orders> dbo=ordersRep.selectRefundOrders(userNo);
+				int totalPay=0;
+				for(Orders o : dbo) {
+					totalPay +=o.getRealpay();   
+				}
+				UserList userList =userListRep.findById(userNo).orElse(null);
+				String grade=userGradeRep.findGrade(totalPay);
+				int afterGradeNo=userGradeRep.findGradeNo(grade);
+				//System.out.println("grade                      "+grade);
+				//System.out.println("userList.getUsergrade().getGrade()           "+ userList.getUsergrade().getGrade());
+				if(gradeNo!=afterGradeNo){
+					userListRep.updateUserGrade((long)userGradeRep.findGradeNo(grade),userNo);
+				}
+				
+				 
 				
 			}else if(refundState == 1){
 				//환불거절
-				dbRefund.setRefundReply(refundReply);
+				dbRefund.setRefundReply(refundReply); 
 				dbRefund.setRefundState("환불거절");
 			}
 		}

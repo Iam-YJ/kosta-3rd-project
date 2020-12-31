@@ -293,21 +293,21 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void insertDonation(Donation donation) {
+	public void insertDonation(Donation donation,Long userNo) {
 		Donation dona=donationRep.save(donation);
-//		if(dona==null) {
-//			throw new RuntimeException("기부가 실패했습니다.");
-//		}
+		userListRep.addPoints(-donation.getDonaPoint(), userNo);
 	}
 	
 	@Override
 	public void updateDonation(Long userNo, int dona ) {
 		donationRep.updateDonation(dona, userNo);
+		userListRep.addPoints(-dona, userNo);
 	}
 	
 	@Override
 	public Donation selectMyDonation(Long userNo) {
 		Donation dona =donationRep.findByUserListUserNo(userNo);
+		System.out.println("333333333333333333333333333333333"+dona);
 //		if(dona==null) {
 //			throw new RuntimeException("기부가 실패했습니다.");
 //		}

@@ -60,6 +60,16 @@ public interface UserListRepository extends JpaRepository<UserList, Long> {
 	List<UserList> selectAllUser();
 
 	@Query("select u from UserList u where u.userId=?1")
-	UserList findByIdUser(String userId);
+	UserList findByIdUser(String userId); 
 	
+	@Query("update UserList u set u.points= u.points+?1 where u.userNo=?2")
+	@Modifying
+	void addPoints(int point,Long userNo);
+
+	@Query("update UserList u set u.usergrade.gradeNo=?1 where u.userNo = ?2")
+	@Modifying
+	void updateUserGrade(Long findGradeNo, Long userNo);
+	  
+	 
+	 
 }// class
