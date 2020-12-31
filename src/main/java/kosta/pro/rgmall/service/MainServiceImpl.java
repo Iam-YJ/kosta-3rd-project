@@ -223,6 +223,14 @@ public class MainServiceImpl implements MainService {
 			} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
 				list = registerGoodsRep.findAllWithMainAndSubOrderByPrice(mainCategoryNo, subCategoryNo, pageable);
 			}
+		} else if (sortNo == 4) {
+			if (mainCategoryNo == 0) {
+				list = registerGoodsRep.findAllOrderByStock(pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo == 0) {
+				list = registerGoodsRep.findAllWithMainOrderByStock(mainCategoryNo, pageable);
+			} else if (mainCategoryNo != 0 && subCategoryNo != 0) {
+				list = registerGoodsRep.findAllWithMainAndSubOrderByStock(mainCategoryNo, subCategoryNo, pageable);
+			}
 		}
 
 		return list;

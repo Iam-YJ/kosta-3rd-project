@@ -40,4 +40,10 @@ public class MainCategories {
 	@OneToMany(mappedBy = "mainCategory")
 	private List<SubCategories> subCategoryList = new ArrayList<SubCategories>();
 
+	public MainCategories(Long mainCategoryNo) {
+		this.mainCategoryNo = mainCategoryNo;
+	}
+
+	
+	
 }

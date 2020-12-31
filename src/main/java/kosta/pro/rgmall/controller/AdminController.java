@@ -1,10 +1,10 @@
 package kosta.pro.rgmall.controller;
 
-import java.io.File;	
+
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -278,7 +278,7 @@ public class AdminController {
 			result = "main/loginFail";
 		} else {
 			session.setAttribute("userList", admin);
-			result = "main/index";
+			result = "redirect:/";
 		}
 		return result;
 	}
@@ -459,18 +459,19 @@ public class AdminController {
 	public ModelAndView insertGoods(RegisterGoods registerGoods, Long mainCateNo, Long subCateNo,
 			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
 
-		String path = "C:\\Edu\\Spring\\SpringWork\\RGMALL\\src\\main\\webapp\\WEB-INF\\adimg";
+		String path = "C:/Edu/save";
 		String tfileName = tfile.getOriginalFilename();
 		String adfileName = adfile.getOriginalFilename();
 
-		System.out.println("tfileName = " + tfileName);
-		System.out.println("adfileName = " + adfileName);
-		mainCategories.setMainCategoryNo(mainCateNo);
-		subCategories.setSubCategoryNo(subCateNo);
-		registerGoods.setSubCategories(subCategories);
-		registerGoods.setMainCategories(mainCategories);
-		registerGoods.setThumbnailImg(tfileName);
-		registerGoods.setAdImg(adfileName);
+		
+		
+		RegisterGoods inRegisteGoods = new RegisterGoods(null, registerGoods.getTitle(), 
+				registerGoods.getDetail(), tfileName, adfileName, registerGoods.getName(), 
+				registerGoods.getOptions(), registerGoods.getArea(), registerGoods.getMethod(), 
+				registerGoods.getStock(), registerGoods.getPrice(), 0, registerGoods.getAd(), null, 
+				new MainCategories(mainCateNo) , new SubCategories(subCateNo));
+		
+				adminService.insertGoods(inRegisteGoods);
 
 		try {
 			// 파일을 저장
@@ -480,12 +481,12 @@ public class AdminController {
 			e.printStackTrace();
 		}
 
-		adminService.insertGoods(registerGoods);
-
 		return new ModelAndView("redirect:/admin/myPage/insertGoodsForm", "registerGoods", registerGoods);
 
 	}// insertGoods
 
+	
+	
 	// 카테고리 수정 폼 띄우기 //카테고리 수정
 	@RequestMapping("/myPage/modiCategories")
 	public ModelAndView modiCategories() {

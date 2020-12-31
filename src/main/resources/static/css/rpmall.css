@@ -52,6 +52,39 @@ input[type=password]{
 	background-color: #3e8e41;
 }
 
+
+.indexBestItemSection, .indexSellItemSection{
+	margin-top: 100px; 
+}
+
+.indexNewItemSection{
+	margin-top: 100px;
+	padding : 50px;
+	background-color: #f0f6e8;
+}
+
+.indexBestItemSection .mainTitleSection, .indexNewItemSection .mainTitleSection, .indexSellItemSection .mainTitleSection{
+	font-size: 30px;	
+}
+
+.indexBestItemSection .subTitleSection, .indexNewItemSection .subTitleSection, .indexSellItemSection .subTitleSection{
+	font-size: 20px;	
+}
+
+.indexBestItemSection .ItemInfoSection, .indexNewItemSection .ItemInfoSection, .indexSellItemSection .ItemInfoSection{
+	margin : 10px;	
+}
+
+.ItemInfoSection li{
+	
+	padding: 0px;
+}
+
+
+
+
+
+
 .goodsList a {
 	color: black;
 	text-decoration: none;
@@ -280,7 +313,7 @@ input[type=password]{
 
 .userOrderListSetcion .OrderListTitle, .newOrderListSetcion .OrderListTitle,
 .userOrderCancelListSetcion .OrderCancelListTitle, .adminRefundListSetcion .refundListTitle,
-.userCartSection .titleSection, .userWishListSection .titleSection{
+.userCartSection .titleSection, .userWishListSection .titleSection, .insertOrdersForm .titleSection{
 	font-size: 20px;
 	margin-bottom: 10px; 
 }
@@ -289,7 +322,11 @@ input[type=password]{
 	font-size: 20px;
 	margin-bottom: 10px;
 }
-
+ /* 
+.insertOrdersForm .contentSection{
+	padding: 10px;
+}
+ */
 .footer{
 	margin-top: 20px;	
 }

@@ -336,8 +336,10 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<Review> selectReview() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Review> reviewList =  reviewRep.findAll();
+		
+		return reviewList;
 	}
 
 	@Override

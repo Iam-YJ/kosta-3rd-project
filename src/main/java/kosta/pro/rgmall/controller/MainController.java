@@ -96,7 +96,7 @@ public class MainController {
 
 		mainService.deleteUserByName("kakaoTest");
 
-		return "main/index";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/kakaoLogin/{userNick}/{userEmail}")
@@ -120,7 +120,7 @@ public class MainController {
 		UserList userList = mainService.updateUserKakao(userLsit);
 		session.setAttribute("userList", userList);
 
-		return "main/index";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/registerReady")
@@ -148,7 +148,7 @@ public class MainController {
 	@RequestMapping("/register")
 	public String register(UserList userList) {
 		mainService.userRegister(userList);
-		return "main/index";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/loginForm")
@@ -165,7 +165,7 @@ public class MainController {
 			result = "main/loginFail";
 		} else {
 			session.setAttribute("userList", userList);
-			result = "main/index";
+			result = "redirect:/";
 		}
 		return result;
 	}

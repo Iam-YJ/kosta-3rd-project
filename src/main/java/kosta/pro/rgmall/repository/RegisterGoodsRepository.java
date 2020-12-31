@@ -33,6 +33,9 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	@Query("select registerGoods from RegisterGoods registerGoods order by registerGoods.regDate desc")
 	Page<RegisterGoods>findAllOrderByRegDate(Pageable pageable);
 	
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.stock > 0 order by registerGoods.stock asc")
+	Page<RegisterGoods>findAllOrderByStock(Pageable pageable);
+	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 order by registerGoods.price asc")
 	Page<RegisterGoods> findAllWithMainOrderByPrice(Long mainCategoryNo,Pageable pageable);
 	
@@ -41,6 +44,9 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 order by registerGoods.regDate desc")
 	Page<RegisterGoods> findAllWithMainOrderByRegDate(Long mainCategoryNo,Pageable pageable);
+	
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1  and registerGoods.stock > 0 order by registerGoods.stock asc")
+	Page<RegisterGoods> findAllWithMainOrderByStock(Long mainCategoryNo,Pageable pageable);
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2"
 			+ " order by registerGoods.price asc")
@@ -53,6 +59,11 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2"
 			+ " order by registerGoods.regDate desc")
 	Page<RegisterGoods> findAllWithMainAndSubOrderByRegDate(Long mainCategoryNo, Long subCategoryNo,Pageable pageable);
+	
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.mainCategories.mainCategoryNo = ?1 and registerGoods.subCategories.subCategoryNo = ?2"
+			+ " and registerGoods.stock > 0 order by registerGoods.stock asc")
+	Page<RegisterGoods> findAllWithMainAndSubOrderByStock(Long mainCategoryNo, Long subCategoryNo,Pageable pageable);
+	
 	
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.title like concat('%',:keyword,'%')")
 	Page<RegisterGoods> searchGoods(@Param("keyword") String keyword,Pageable pageable);
