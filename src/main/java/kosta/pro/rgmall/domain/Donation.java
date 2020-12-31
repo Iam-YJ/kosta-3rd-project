@@ -17,12 +17,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Donation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO,generator = "dona_no_seq")

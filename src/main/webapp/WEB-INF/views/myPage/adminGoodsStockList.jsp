@@ -27,31 +27,6 @@
 </head>
 <body>
 
-	<%-- <c:forEach items="${list}" var="registerGoods">
-   			 ${registerGoods.regNo}<br>
-             ${registerGoods.title}<br>
-             ${registerGoods.detail}<br>
-             ${registerGoods.thumbnailImg}<br>
-             ${registerGoods.adImg}<br>
-             ${registerGoods.name}<br>
-             ${registerGoods.options}<br>
-             ${registerGoods.area}<br>
-             ${registerGoods.method}<br>
-             ${registerGoods.stock}<br>
-  추가할 수량은? :
-  <input type="hidden" name="addRegNo" value="${registerGoods.regNo}"/>
-  <input type="text" name="addStock" id="addStock">
-  <input type="button" value="추가" id="btn">
-             ${registerGoods.price}<br>
-             ${registerGoods.sellcount}<br>
-             ${registerGoods.ad}<br>
-             ${registerGoods.regDate}<br>
-             ${registerGoods.mainCategories}<br>
-             ${registerGoods.subCategories}<br>
-             ${registerGoods.reviewList}<br>
-             <p>
-            
-</c:forEach> --%>
 
 	<form
 		action="${pageContext.request.contextPath}/admin/myPage/updateGoods"
@@ -117,6 +92,12 @@
 	</div>
 	<!-- userOrderListSetcion -->
 
+
+
+<form action="${pageContext.request.contextPath}/admin/myPage/updateGoods" method="post" id="addStockForm">
+   <input type="hidden" name="regNo"  id="regNo">
+   <input type="hidden" name="stock"  id="stock">
+</form>
 
 
 
