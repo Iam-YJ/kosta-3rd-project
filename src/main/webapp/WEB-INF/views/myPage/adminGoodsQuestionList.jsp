@@ -21,7 +21,7 @@
 			</div>
 			<!-- OrderCancelListTitle -->
 			<div class="OrderListInfo">
-				<c:if test="${empty refundList}">
+				<c:if test="${empty GoodsQuestionList}">
 					상품문의 내역이 없습니다.
 				</c:if>
 
@@ -72,50 +72,48 @@
 						</form>
 
 						</c:if>
-						
-						<c:if test="${not empty refund.goodsAnswer.content}">
-								<div class="col-xl" style="text-align: right;">
-									<%-- <a href="${pageContext.request.contextPath}/admin/myPage/orderRefundList/accessRefund/${refund.refundNo}" class="btn btn-success">환불승인</a> --%>
-									<input type="button" class="btn btn-outline-success"
-										value="수정하기" data-toggle="collapse"
-										data-target="#rejectRefund${refund.qgoodsNo}">
-								</div>
 
-								<div class="col-xl-1"></div>
+						<c:if test="${not empty refund.goodsAnswer.content}">
+							<div class="col-xl" style="text-align: right;">
+								<%-- <a href="${pageContext.request.contextPath}/admin/myPage/orderRefundList/accessRefund/${refund.refundNo}" class="btn btn-success">환불승인</a> --%>
+								<input type="button" class="btn btn-outline-success"
+									value="수정하기" data-toggle="collapse"
+									data-target="#rejectRefund${refund.qgoodsNo}">
+							</div>
+
+							<div class="col-xl-1"></div>
+					</div>
+					<!-- btn  -->
+					<form
+						action="${pageContext.request.contextPath}/admin/myPage/goodsQuestionUpdateAnswer/${refund.goodsAnswer.agoodsNo}"
+						method="post">
+						<div class="row collapse" id="rejectRefund${refund.qgoodsNo}">
+							<div class="col-xl-1"></div>
+							<div class="col-xl-2" style="text-align: center; margin: auto;">
+								수정내용 :</div>
+							<input type="text" class="col-xl" id="refundReply"
+								name="refundReply" style="margin: 0px 10px;"> <input
+								type="submit" class="col-xl-1 btn btn-success"
+								id="rejectSubmitBtn" value="제출" style="margin: 0px 10px;">
+							<div class="col-xl-2"></div>
 						</div>
 						<!-- btn  -->
-						<form
-							action="${pageContext.request.contextPath}/admin/myPage/goodsQuestionUpdateAnswer/${refund.goodsAnswer.agoodsNo}"
-							method="post">
-							<div class="row collapse" id="rejectRefund${refund.qgoodsNo}">
-								<div class="col-xl-1"></div>
-								<div class="col-xl-2" style="text-align: center; margin: auto;">
-									수정내용 :</div>
-								<input type="text" class="col-xl" id="refundReply"
-									name="refundReply" style="margin: 0px 10px;"> <input
-									type="submit" class="col-xl-1 btn btn-success"
-									id="rejectSubmitBtn" value="제출" style="margin: 0px 10px;">
-								<div class="col-xl-2"></div>
-							</div>
-							<!-- btn  -->
-						</form>
+					</form>
 
-						</c:if>
-
-
-					</div>
-					<!-- orders -->
-
-
-				</c:forEach>
+					</c:if>
 			</div>
-			<!-- OrderListInfo -->
+			<!-- orders -->
 
+
+			</c:forEach>
 		</div>
-		<!-- container-fluid -->
+		<!-- OrderListInfo -->
+
+	</div>
+
+	<!-- container-fluid -->
 	</div>
 	<!-- userOrderListSetcion -->
-
 
 
 </body>

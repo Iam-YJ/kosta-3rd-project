@@ -16,6 +16,9 @@ public interface GoodsQuestionRepository extends JpaRepository<GoodsQuestion, Lo
 	
 	  @Query("select g from GoodsQuestion g where g.registerGoods.regNo=?1")
 	  List<GoodsQuestion> selectGoodsQuestions(Long regNo);
+	  
+	  @Query("select g from GoodsQuestion g where g.userList.userNo=?1")
+	  List<GoodsQuestion> selectGoodsQuestionsByUserNo(Long userNo);
 	 
 	  @Modifying
 	  @Transactional 

@@ -152,8 +152,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<GoodsQuestion> selectGoodsQuestion(Long userNo) {
-		// TODO Auto-generated method stub
-		return null;
+		List<GoodsQuestion> goodsQuestion =  goodsQuestionRep.selectGoodsQuestionsByUserNo(userNo);
+		return goodsQuestion;
 	}
 
 	@Override
