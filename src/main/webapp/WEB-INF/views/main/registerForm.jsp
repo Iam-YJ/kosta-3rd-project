@@ -241,11 +241,12 @@ $(document).ready(function(){
 							
 							<div class="form-group">
 								<label for="addr">주소 : </label>
-							<!-- 	<input type="text" class="form-control" id="addr" name = "addr"> -->
-							<input type="text" class="form-control" id="sample4_postcode" placeholder="우편번호">
-							<input type="text"  class="form-control" id="sample4_roadAddress" id="addr" name = "addr" placeholder="도로명주소">
-							<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-							<!-- <input type="text" id="sample4_jibunAddress" placeholder="지번주소"> -->
+								<input type="hidden" class="form-control" id="sample4_postcode" placeholder="우편번호">
+							
+								<input type="hidden" id="sample4_jibunAddress" placeholder="지번주소">
+								<input type="text" id="sample4_roadAddress" name="addr" placeholder="도로명주소" class="form-control" style="color: black;"><br>
+									<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+								<span id="guide" style="color:#999"></span>
 							</div>
 
 							<div class="form-group">

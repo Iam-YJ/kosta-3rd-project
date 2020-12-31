@@ -18,6 +18,8 @@ import javax.servlet.annotation.MultipartConfig;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -84,13 +86,38 @@ public class RegisterGoods {
 	@JoinColumn(name = "mainCategoryNo")
 	private MainCategories mainCategories;
 
+	
 	@OneToOne
 	@JoinColumn(name = "subCategoryNo")
 	private SubCategories subCategories;
 	
-	
+	@JsonIgnore
 	@OneToMany(mappedBy = "registerGoods") 
 	private List<Review> reviewList = new ArrayList<Review>();
+
+
+	public RegisterGoods(Long regNo, String title, String detail, String thumbnailImg, String adImg, String name,
+			String options, String area, String method, int stock, int price, int sellcount, int ad,
+			LocalDateTime regDate, MainCategories mainCategories, SubCategories subCategories) {
+		this.regNo = regNo;
+		this.title = title;
+		this.detail = detail;
+		this.thumbnailImg = thumbnailImg;
+		this.adImg = adImg;
+		this.name = name;
+		this.options = options;
+		this.area = area;
+		this.method = method;
+		this.stock = stock;
+		this.price = price;
+		this.sellcount = sellcount;
+		this.ad = ad;
+		this.regDate = regDate;
+		this.mainCategories = mainCategories;
+		this.subCategories = subCategories;
+	}
 	
 
+	
+	
 }//class

@@ -7,17 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		alert(11)
-		$('#b').click(function(){
-			location.href="${pageContext.request.contextPath}/admin/myPage/goodsADListDelete/${registerGoods.regNo}";
-		})
-	});
 	
-	
-</script>
 </head>
 <body>
 	<h1>ADMIN의 마이페이지</h1>
@@ -39,10 +29,10 @@
              ${registerGoods.sellcount}
              ${registerGoods.ad}
              ${registerGoods.regDate}
-             ${registerGoods.mainCategories}
-             ${registerGoods.subCategories}
+             ${registerGoods.mainCategories.mainCategoryNo}
+             ${registerGoods.subCategories.subCategoryName}
              ${registerGoods.reviewList}
-             <input type="button" value="삭제" id="b" />
+             <input type="button" value="삭제" id="b" onclick="location.href='${pageContext.request.contextPath}/admin/myPage/goodsADListDelete/${registerGoods.regNo}'" />
 		<p>
 	</c:forEach>
 

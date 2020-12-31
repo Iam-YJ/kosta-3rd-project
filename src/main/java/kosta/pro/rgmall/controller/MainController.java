@@ -1,5 +1,6 @@
 package kosta.pro.rgmall.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,7 +97,7 @@ public class MainController {
 
 		mainService.deleteUserByName("kakaoTest");
 
-		return "main/index";
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "/kakaoLogin/{userNick}/{userEmail}")
@@ -120,7 +121,7 @@ public class MainController {
 		UserList userList = mainService.updateUserKakao(userLsit);
 		session.setAttribute("userList", userList);
 
-		return "main/index";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/registerReady")
@@ -148,7 +149,7 @@ public class MainController {
 	@RequestMapping("/register")
 	public String register(UserList userList) {
 		mainService.userRegister(userList);
-		return "main/index";
+		return "redirect:/";
 	}
 
 	@RequestMapping("/loginForm")
@@ -165,7 +166,7 @@ public class MainController {
 			result = "main/loginFail";
 		} else {
 			session.setAttribute("userList", userList);
-			result = "main/index";
+			result = "redirect:/";
 		}
 		return result;
 	}
@@ -209,6 +210,43 @@ public class MainController {
 		mainService.updatePassWord(userList);
 		return "main/login";
 	}
+	
+	/**
+	 * Header의 인기 추천 상품
+	 * */
+	@RequestMapping("/bestGoods")
+	public ModelAndView bestGoods() {
+		List<RegisterGoods> full = mainService.bestGoods();
+		return new ModelAndView("main/bestGoods", "registerGoods", full.subList(0, 16));
+	}
+	
+	/**
+	 * Header의 !품절 임박! 상품
+	 * */
+	@RequestMapping("/soldout")
+	public ModelAndView soldout() {
+		List<RegisterGoods> full = mainService.soldout();
+		return new ModelAndView("main/soldout","registerGoods",full.subList(0, 16));
+	}
+	
+	/**
+	 * Header의 따끈 리뷰 상품
+	 * */
+	@RequestMapping("/reviewMain")
+	public ModelAndView reviewMain(){
+		List<Review> full = mainService.reviewMain();
+		List<Long> noList = new ArrayList<Long>();
+		List<Review> result = new ArrayList<Review>();
+		for(int i=0;i<full.size();i++) {
+			Long no = full.get(i).getRegisterGoods().getRegNo();
+			if(!noList.contains(no)) {
+				noList.add(no);
+				result.add(full.get(i));
+				//System.out.println(no);
+			}
+		}
+		return new ModelAndView("main/reviewMain","review",result);
+	}
 
 	/**
 	 * 상품리스트를 조회를 하는 Controller
@@ -248,8 +286,9 @@ public class MainController {
 	/**
 	 * 상품 keyword검색하는 Controller
 	 */
-	@ResponseBody
+	
 	@RequestMapping(value = "/goodsListKeyword", method = RequestMethod.POST)
+	@ResponseBody
 	public List<RegisterGoods> goodsListKeyword(String keyword,@RequestParam(defaultValue = "0")int nowPage) {
 		Pageable pageable = PageRequest.of(nowPage, 16);
 		Page<RegisterGoods> registerGoodsList = mainService.searchGoods(keyword,pageable);

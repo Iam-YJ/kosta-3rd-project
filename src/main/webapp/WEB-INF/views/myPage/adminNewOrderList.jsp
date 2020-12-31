@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-		<div class="newOrderListSetcion">
+	<div class="newOrderListSetcion">
 		<div class="container-fluid">
 			<div class="OrderListTitle">
 				<div class="row">

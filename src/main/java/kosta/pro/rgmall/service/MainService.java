@@ -117,6 +117,21 @@ public interface MainService {
 	public RegisterGoods goodsDetail(Long regNo);
 	
 	/**
+	 * Header의 인기 추천 상품
+	 * */
+	public List<RegisterGoods> bestGoods();
+	
+	/**
+	 * Header의 !품절 임박! 상품
+	 * */
+	public List<RegisterGoods> soldout();
+	
+	/**
+	 * Header의 따끈 리뷰 상품
+	 * */
+	public List<Review> reviewMain();
+	
+	/**
 	 * 상품(고유번호로) 상품 정보 가져오기 
 	 */
 	public RegisterGoods goodsInfo(Long regNo);

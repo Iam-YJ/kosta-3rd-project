@@ -297,95 +297,221 @@ $(function(){
 				</div>
 				
 				<!-- 상품문의 -->
-				<div id="menu2" class="tab-pane fade"><br>
-				
-				<c:choose>
-				<c:when test="${empty goodsQuestionMap.goodsQuestionList}">
-				  상품문의가 없습니다.
-				  
-				 <form action="${pageContext.request.contextPath}/main/goodsDetail/${goodsQuestionMap.registerGoods.regNo}/goodsQuestion/insert">
-									${userList}
-									<input type="button" data-toggle="collapse" data-target="#demo" value="등록">
-										<div id="demo" class="collapse" style="float:left;">
-											<input type="text" name="content">			
-											<input type="submit"  value="전송">
-											
-										</div>
-								</form>
-				  
-				</c:when>
-				<c:otherwise>
-					 <c:forEach items="${goodsQuestionMap.goodsQuestionList}" var="list">
-						<div class="faq">
-						    <div class="faqHeader">
-						        <!--button type="button" class="showAll">답변 모두 여닫기</button-->
-						    </div>
-						    <ul class="faqBody">
-						        <li class="article" id="a1">
-						            <p class="q"><a href="#a1">${list.content}&nbsp&nbsp&nbsp--&nbsp&nbsp&nbsp작성자 : ${list.userList.userId}</a></p>
-						            
-						     <input type="button" id="button12" onclick = "location.href = '${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsQuestion/delete' " value="삭제" />
-									<form action="${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsQuestion/update">
-									
-									<input type="button" data-toggle="collapse" data-target="#demo" value="수정">
-										<div id="demo" class="collapse" style="float:left;">
-											<input type="text" name="content">			
-											<input type="submit"  value="전송">				
-										</div>
-									</form>
-						    
-						    
-						    <c:choose>
-								<c:when test="${empty list.goodsAnswer.content}">
-									등록된 답변이 없습니다. 
-								
-								<form action="${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsAnswer/insert">
-									
-									<input type="button" data-toggle="collapse" data-target="#demo" value="등록">
-										<div id="demo" class="collapse" style="float:left;">
-											<input type="text" name="content">			
-											<input type="submit"  value="전송">
-										</div>
-								</form>
-									</p> 
-								</c:when>
-								
-								<c:otherwise>
-									<p class="a">${list.goodsAnswer.content}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-									<input type="button" id="button12" onclick = "location.href = '${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsAnswer/delete' " value="삭제" />
-									<form action="${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsAnswer/update">
-									
-									<input type="button" data-toggle="collapse" data-target="#demo" value="수정">
-										<div id="demo" class="collapse" style="float:left;">
-											<input type="text" name="content">			
-											<input type="submit"  value="전송">				
-										</div>
-									</form>
-									</p> 
-								</c:otherwise>
-							</c:choose>
-				
-						    
-						        </li>
-						    </ul>
-						</div>
-							
-				</c:forEach> 
-				</c:otherwise>
-				</c:choose>
-				</div>
+				<div id="menu2" class="tab-pane fade">
+                  <br>
+                  <c:choose>
+                     <c:when test="${empty goodsQuestionMap.goodsQuestionList}">
+              상품문의가 없습니다.
+              
+             <form
+                           action="${pageContext.request.contextPath}/main/goodsDetail/${goodsQuestionMap.registerGoods.regNo}/goodsQuestion/insert">
+                           ${userList} <input type="button" data-toggle="collapse"
+                              data-target="#demo" value="등록">
+                           <div id="demo" class="collapse" style="float: left;">
+                              <input type="text" name="content"> <input
+                                 type="submit" value="전송">
+
+                           </div>
+                        </form>
+
+                     </c:when>
+                     <c:otherwise>
+                        <c:forEach items="${goodsQuestionMap.goodsQuestionList}"
+                           var="list">
+                           <div class="faq">
+                              <div class="faqHeader">
+                                 <!--button type="button" class="showAll">답변 모두 여닫기</button-->
+                              </div>
+                              <ul class="faqBody">
+                                 <li class="article" id="a1">
+                                    <p class="q">
+                                       <a href="#a1">${list.content}&nbsp&nbsp&nbsp--&nbsp&nbsp&nbsp작성자
+                                          : ${list.userList.userId}</a>
+                                    </p> <input type="button" id="button12"
+                                    onclick="location.href = '${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsQuestion/delete' "
+                                    value="삭제" />
+                                    <form
+                                       action="${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsQuestion/update">
+
+                                       <input type="button" data-toggle="collapse"
+                                          data-target="#demo" value="수정">
+                                       <div id="demo" class="collapse" style="float: left;">
+                                          <input type="text" name="content"> <input
+                                             type="submit" value="전송">
+                                       </div>
+                                    </form> <c:choose>
+                                       <c:when test="${empty list.goodsAnswer.content}">
+                           등록된 답변이 없습니다. 
+                        
+                        <form
+                                             action="${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsAnswer/insert">
+
+                                             <input type="button" data-toggle="collapse"
+                                                data-target="#demo" value="등록">
+                                             <div id="demo" class="collapse" style="float: left;">
+                                                <input type="text" name="content"> <input
+                                                   type="submit" value="전송">
+                                             </div>
+                                          </form>
+                                          </p>
+                                       </c:when>
+
+                                       <c:otherwise>
+                                          <p class="a">${list.goodsAnswer.content}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                             <input type="button" id="button12"
+                                                onclick="location.href = '${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsAnswer/delete' "
+                                                value="삭제" />
+                                          <form
+                                             action="${pageContext.request.contextPath}/main/goodsDetail/${list.qgoodsNo}/goodsAnswer/update">
+
+                                             <input type="button" data-toggle="collapse"
+                                                data-target="#demo" value="수정">
+                                             <div id="demo" class="collapse" style="float: left;">
+                                                <input type="text" name="content"> <input
+                                                   type="submit" value="전송">
+                                             </div>
+                                          </form>
+                                          </p>
+                                       </c:otherwise>
+                                    </c:choose>
+
+
+                                 </li>
+                              </ul>
+                           </div>
+
+                        </c:forEach>
+                     </c:otherwise>
+                  </c:choose>
+                  
+                     <!-- 상품문의 새로하기 -->
+               <div class="adminRefundListSetcion">
+                  <div class="container-fluid">
+                     <div class="refundListTitle">
+                        <div class="row">
+                           <div class="col-xl">상품문의 내역</div>
+                        </div>
+                     </div>
+                     <!-- OrderCancelListTitle -->
+                     <div class="OrderListInfo">
+                        <c:if test="${empty GoodsQuestionList}">
+                           상품문의 내역이 없습니다.
+                        </c:if>
+
+                        <c:forEach items="${goodsQuestionMap.goodsQuestionList}" var="q">
+
+                           <div class="Orders border rounded"
+                              style="margin-bottom: 20px; padding-bottom: 10px">
+                              <div class="row" style="padding: 10px">
+                                 <div class="col-xl" style="margin-left: 40px;">
+                                    <b>문의 ID : ${q.userList.userId}</b>
+                                 </div>
+                                 <div class="col-xl"
+                                    style="text-align: right; margin-left: 20px;">등록일
+                                    ${q.regDate}</div>
+
+                              </div>
+                              <div class="row" style="padding: 10px">
+                                 <div class="col-xl"
+                                    style="text-align: left; margin-left: 20px;">문의 내용 :
+                                    ${q.content}</div>
+                              </div>
+                              <div class="row" style="padding: 20px">
+                                 ${q.goodsAnswer.content}
+
+                                 <c:if test="${empty q.goodsAnswer.content}">
+                                    <div class="col-xl" style="text-align: right;">
+                                       <%-- <a href="${pageContext.request.contextPath}/admin/myPage/orderRefundList/accessRefund/${refund.refundNo}" class="btn btn-success">환불승인</a> --%>
+                                       <input type="button" class="btn btn-outline-success"
+                                          value="답변하기" data-toggle="collapse"
+                                          data-target="#rejectRefund${refund.qgoodsNo}">
+                                    </div>
+
+                                    <div class="col-xl-1"></div>
+                              </div>
+                              <!-- btn  -->
+                              <form
+                                 action="${pageContext.request.contextPath}/admin/myPage/goodsQuestionListAnswer/${q.qgoodsNo}"
+                                 method="post">
+                                 <div class="row collapse" id="rejectRefund${q.qgoodsNo}">
+                                    <div class="col-xl-1"></div>
+                                    <div class="col-xl-2"
+                                       style="text-align: center; margin: auto;">답변내용 :</div>
+                                    <input type="text" class="col-xl" id="refundReply"
+                                       name="refundReply" style="margin: 0px 10px;"> <input
+                                       type="submit" class="col-xl-1 btn btn-success"
+                                       id="rejectSubmitBtn" value="제출" style="margin: 0px 10px;">
+                                    <div class="col-xl-2"></div>
+                                 </div>
+                                 <!-- btn  -->
+                              </form>
+
+                              </c:if>
+
+                              <c:if test="${not empty q.goodsAnswer.content}">
+                                 <div class="col-xl" style="text-align: right;">
+                                    <%-- <a href="${pageContext.request.contextPath}/admin/myPage/orderRefundList/accessRefund/${refund.refundNo}" class="btn btn-success">환불승인</a> --%>
+                                    <input type="button" class="btn btn-outline-success"
+                                       value="수정하기" data-toggle="collapse"
+                                       data-target="#rejectRefund${q.qgoodsNo}">
+                                 </div>
+
+                                 <div class="col-xl-1"></div>
+                           </div>
+                           <!-- btn  -->
+                           <form
+                              action="${pageContext.request.contextPath}/admin/myPage/goodsQuestionUpdateAnswer/${q.goodsAnswer.agoodsNo}"
+                              method="post">
+                              <div class="row collapse" id="rejectRefund${q.qgoodsNo}">
+                                 <div class="col-xl-1"></div>
+                                 <div class="col-xl-2"
+                                    style="text-align: center; margin: auto;">수정내용 :</div>
+                                 <input type="text" class="col-xl" id="refundReply"
+                                    name="refundReply" style="margin: 0px 10px;"> <input
+                                    type="submit" class="col-xl-1 btn btn-success"
+                                    id="rejectSubmitBtn" value="제출" style="margin: 0px 10px;">
+                                 <div class="col-xl-2"></div>
+                              </div>
+                              <!-- btn  -->
+                           </form>
+
+                           </c:if>
+                     </div>
+                     <!-- orders -->
+
+                     </c:forEach>
+                  </div>
+               </div>
+                  
+                  
+                  
+               </div>
+               
 				<!-- 상품후기 -->
 				<div id="menu3" class="tab-pane fade"><br>
-					<h3 style="color: red">상품후기 연결예정</h3>
 					<c:choose>
-						<c:when test="${empty goodsQuestionMap.review}">
+							<c:when test="${empty goodsQuestionMap.review}">
 				  		상품후기가 없습니다.
 				  	</c:when>
 				 	<c:otherwise>
 						<c:forEach items="${goodsQuestionMap.review}" var="review">
-					 		ID : ${review.userList.userId}<Br>
-							리뷰내용 : ${review.content}<br>
-							작성날짜 : ${review.regDate}<br>
+						<div class="Orders border rounded" style="margin-bottom: 20px; padding-bottom: 10px">
+								<div class="row" style="padding: 10px">
+										<div class="col-xl" style="margin-left: 40px;">
+					 						<b>작성자 : ${review.userList.userId}</b>
+					 					</div>
+					 				<div class="col-xl" style="text-align: right; margin-left: 20px;">
+					 					<fmt:parseDate value="${review.regDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parseDateTime" />
+					 					<fmt:formatDate value="${parseDateTime}" pattern="yyyy. MM. dd" var="formatDate"/>
+					 					등록일 ${formatDate}
+					 				</div>
+								</div>
+								<div class="row" style="padding: 10px">
+										<div class="col-xl" style="text-align: left; margin-left: 20px;">
+										리뷰내용 : ${review.content}
+										</div>
+								</div>
+						</div>
 						</c:forEach>
 					</c:otherwise>
 					</c:choose>

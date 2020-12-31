@@ -40,6 +40,10 @@ public class SubCategories {
 	@JoinColumn(name = "mainCategoryNo")
 	@JsonIgnore
 	private MainCategories mainCategory;
+
+	public SubCategories(Long subCategoryNo) {
+		this.subCategoryNo = subCategoryNo;
+	}
 	
 	
 }

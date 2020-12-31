@@ -100,17 +100,15 @@ function loginAlert(){
 			  	</div><!-- dropdown -->
 			</div><!-- col -->
 			<div class="col-xl">
-				<a href="#" class="btn btn-success">베스트 상품조회</a>
+				<a href="${pageContext.request.contextPath}/main/bestGoods" class="btn btn-success">인기 추천 상품</a>
 			</div>
 			<div class="col-xl">
-				<a href="#" class="btn btn-success">~~ 상품조회</a>
+				<a href="${pageContext.request.contextPath}/main/soldout" class="btn btn-success">!품절 임박! 상품</a>
 			</div>
 			<div class="col-xl">
-				<a href="#" class="btn btn-success">~~ 상품조회</a>
+				<a href="${pageContext.request.contextPath}/main/reviewMain" class="btn btn-success">따끈 리뷰 상품</a>
 			</div>
-				<div class="col-xl">
-				<a href="#" class="btn btn-success">~~ 상품조회</a>
-			</div>
+				
 			
 			<div class="col-xl-2">
 			</div>
