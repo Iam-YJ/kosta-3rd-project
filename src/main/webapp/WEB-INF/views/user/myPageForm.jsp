@@ -30,6 +30,8 @@ $(document).ready(function(){
 			adminGoodsADList();
 		}else if(${state == 6}){
 			adminGoodsQuestionList();
+		}else if(${state == 7}){
+			userPointDonate();
 		}
 	}
 		

@@ -3,6 +3,7 @@ package kosta.pro.rgmall.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,6 +28,7 @@ import kosta.pro.rgmall.domain.Notice;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.Refund;
 import kosta.pro.rgmall.domain.RegisterGoods;
+import kosta.pro.rgmall.domain.Review;
 import kosta.pro.rgmall.domain.SubCategories;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.service.AdminService;
@@ -162,10 +164,10 @@ public class AdminController {
 		List<Orders> lastOrders = adminService.selectOrders(0);
 		
 		List<Orders> newOrders = adminService.selectOrders(1);
-		
-		mv.addObject("lastOrders", lastOrders);
+		List<Orders> nowOrders = adminService.selectOrders(2);
+		mv.addObject("lastOrders", lastOrders);;
 		mv.addObject("newOrders", newOrders);
-		
+		mv.addObject("nowOrders", nowOrders);
 		mv.setViewName("myPage/adminOrderDeliveryList");
 		
 		return mv;
@@ -304,7 +306,8 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/goodsReviewList")
 	public ModelAndView GoodsReviewList() {
-		return new ModelAndView("myPage/adminGoodsReviewList");
+		List<Review> review = adminService.selectReview();
+		return new ModelAndView("myPage/adminGoodsReviewList","review",review);
 	}
 
 	/**
@@ -320,7 +323,11 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/profit")
 	public ModelAndView profit(String startDate, String endDate) {
-		int profit = adminService.checkProfit(startDate, endDate);
+		//int profit = adminService.checkProfit(startDate, endDate);
+		List<Integer> profit = new ArrayList<>();
+		profit.add(12);
+		profit.add(15);
+		
 		return new ModelAndView("myPage/adminProfit", "profit",profit);
 	}
 	/*

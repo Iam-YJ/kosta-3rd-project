@@ -49,7 +49,6 @@ $(function(){
 						<td>${orderList.delState}</td>
 						<td>
 						<form action="${pageContext.request.contextPath}/delivery/${orderList.orderNo}">
-							<input type="text" value="${orderList.orderNo}">
 							<input type="submit" value="배송완료" >
 						</form>
 						</td>

@@ -15,7 +15,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	List<Review> selectReivew(Long regNo);
 	
 	//userNo별 후기 보기
-	@Query("select r from Review r where r.userList.userNo=?1")
+	@Query("select r from Review r where r.userList.userNo=?1 order by r.regDate desc")
 	List<Review> selectReviewByUserNo(Long userNo);
 	
 	//업데이트하기

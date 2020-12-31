@@ -287,36 +287,37 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserGrade> selectAllUserGrade() {
-		List<UserGrade> userGrade = userGradeRep.findAll();
+		List<UserGrade>userGrade = userGradeRep.findAll();
+		for(UserGrade g:userGrade) {
+			System.out.println(g.getGrade());
+		}
 		return userGrade;
 		
 	}
 
 	@Override
-	public void insertDonation(Donation donation) {
-		Donation dona=donationRep.save(donation);
-//		if(dona==null) {
-//			throw new RuntimeException("기부가 실패했습니다.");
-//		}
+	public void insertDonation(Donation donation,Long userNo) {
+		System.out.println("=======================");
+		donationRep.save(donation);
+		userListRep.addPoints(-donation.getDonaPoint(), userNo);
 	}
 	
 	@Override
 	public void updateDonation(Long userNo, int dona ) {
 		donationRep.updateDonation(dona, userNo);
+		userListRep.addPoints(-dona, userNo);
 	}
 	
 	@Override
 	public Donation selectMyDonation(Long userNo) {
 		Donation dona =donationRep.findByUserListUserNo(userNo);
-//		if(dona==null) {
-//			throw new RuntimeException("기부가 실패했습니다.");
-//		}
-		return dona;
+		System.out.println("333333333333333333333333333333333"+dona);
+		 return dona;
 	}
 
 	@Override
 	public List<Donation> selectAllDonation() {
-		return donationRep.findAll();
+		return donationRep.selectDonaList();
 	}
 
 	@Override

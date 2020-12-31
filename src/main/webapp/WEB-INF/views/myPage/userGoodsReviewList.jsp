@@ -10,8 +10,15 @@
 
 </head>
 <body>
-<div class="container">
-<h1>나의 리뷰 목록</h1>
+<div class="userCartSection">
+	<div class="container-fluid">
+		<div class=titleSection>
+			<div class="row">
+				<div class="col-xl" style="text-align: left;">
+					나의 장바구니 목록
+				</div>
+			</div>
+		</div>
 	<c:forEach items="${review}" var="review">
 		<div class="row border border-left-0 border-right-0">
 			<div class="col-xl-2">
@@ -36,6 +43,6 @@
 		</div>
 	</c:forEach>
 </div>
-
+</div>
 </body>
 </html>

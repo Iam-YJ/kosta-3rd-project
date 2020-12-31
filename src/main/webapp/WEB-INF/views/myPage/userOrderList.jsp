@@ -61,7 +61,7 @@
 						 					</div>
 											<c:if test="${orders.delState eq '배송완료'}">
 					 							<div class="row">
-					 								<a href="" class="col-xl btn btn-outline-success" style="margin: 10px">구매평쓰기</a>	
+					 								<a href="${pageContext.request.contextPath}/user//myPage/writeReviewForm/${orderLine.registerGoods.regNo}" class="col-xl btn btn-outline-success" style="margin: 10px">구매평쓰기</a>	
 					 							</div>
 											</c:if>
 											<c:choose>
@@ -71,9 +71,7 @@
 						 							</div>
 												</c:when>
 												<c:when test="${orders.delState eq '배송완료'}">
-						 							<div class="row">
-						 								<a href="${pageContext.request.contextPath}/myPage/writeReviewForm/${orderLine.registerGoods.regNo}" class="col-xl btn btn-outline-success" style="margin: 5px">구매평쓰기</a>	
-						 							</div>
+						 							
 												</c:when>
 											</c:choose>											
 						 				</div>
