@@ -360,6 +360,7 @@ public class UserServiceImpl implements UserService {
 		ordersRep.save(orders);
 		
 		for(Cart cart : cartList.getCartList()) {
+			System.out.println(cart.getCartNo());
 			//Cart에서 regNo를 불러와 RegisterGoodsdb불러오기;
 			Cart dbcart = cartRep.findById(cart.getCartNo()).orElse(null);
 			System.out.println(dbcart.getRegisterGoods().getRegNo());

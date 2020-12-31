@@ -301,10 +301,9 @@ $(function(){
                   <br>
                   <c:choose>
                      <c:when test="${empty goodsQuestionMap.goodsQuestionList}">
-              상품문의가 없습니다.
+             		 상품문의가 없습니다.
               
-             <form
-                           action="${pageContext.request.contextPath}/main/goodsDetail/${goodsQuestionMap.registerGoods.regNo}/goodsQuestion/insert">
+            		 <form action="${pageContext.request.contextPath}/main/goodsDetail/${goodsQuestionMap.registerGoods.regNo}/goodsQuestion/insert">
                            ${userList} <input type="button" data-toggle="collapse"
                               data-target="#demo" value="등록">
                            <div id="demo" class="collapse" style="float: left;">

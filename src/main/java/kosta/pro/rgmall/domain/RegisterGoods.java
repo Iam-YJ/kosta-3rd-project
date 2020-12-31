@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -46,7 +47,7 @@ public class RegisterGoods {
 	@Column(nullable = false, length = 512)
 	private String title;
 	
-	@Column(nullable = true, length = 3000)
+	@Lob
 	private String detail;
 	
 	@Column(nullable = false, length = 3000)

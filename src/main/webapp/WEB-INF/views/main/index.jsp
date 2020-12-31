@@ -31,6 +31,7 @@ $(document).ready(function(){
 <body>
 <div class="indexBannerSection">
 	<div class="container_fluid">
+		${pageContext.request.contextPath}
 		<div id="demo" class="carousel slide" data-ride="carousel">
 		<c:choose>
 			<c:when test="${empty registerGoodsADList}">
@@ -554,59 +555,60 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div id="menu8" class="tab-pane fade"><br>
-					<div class="row">
-						<c:choose>
-							<c:when test="${empty soldNut}">
-								<c:forEach begin="1" end="4" step="1">
-									<div class="col-xl border" style="margin: 15px;">
-										<div class="row">
-											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
-												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
-											</div>
-										</div>
-										<div class="row border border-left-0 border-bottom-0 border-right-0">
-											<div class="col-xl" style="text-align: center; margin-top: 10px;">
-												<h6><b>게시글-제목</b></h6>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
-												99,999 원
-											</div>
-										</div>
-									</div>									
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:forEach items="${soldNut}" var="soldNut">
-									<div class="col-xl border" style="margin: 15px;">
-										<div class="row">
-											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<a href="${pageContext.request.contextPath}/main/goodsDetail/${soldNut.regNo}">
-													<img alt="" class="img-fluid"
-													src="${pageContext.request.contextPath}/images/thumbnail/${soldNut.thumbnailImg}" >
-												</a>
-											</div>
-										</div>
-										<div class="row border border-left-0 border-bottom-0 border-right-0">
-											<div class="col-xl" style="text-align: center; margin-top: 10px;">
-												<h6><b>${soldNut.title}</b></h6>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
-												<fmt:formatNumber value="${soldNut.price}"/> 원
-											</div>
+				
+				<div class="row">
+					<c:choose>
+						<c:when test="${empty soldNut}">
+							<c:forEach begin="1" end="4" step="1">
+								<div class="col-xl border" style="margin: 15px;">
+									<div class="row">
+										<div class="col-xl" style="text-align: center; margin: 5px;">
+											<img alt="" class="img-fluid"
+											src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 										</div>
 									</div>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-					</div>
+									<div class="row border border-left-0 border-bottom-0 border-right-0">
+										<div class="col-xl" style="text-align: center; margin-top: 10px;">
+											<h6><b>게시글-제목</b></h6>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
+											99,999 원
+										</div>
+									</div>
+								</div>									
+							</c:forEach>
+						</c:when>
+						<c:otherwise>
+							<c:forEach items="${soldNut}" var="soldNut">
+								<div class="col-xl border" style="margin: 15px;">
+									<div class="row">
+										<div class="col-xl" style="text-align: center; margin: 5px;">
+											<a href="${pageContext.request.contextPath}/main/goodsDetail/${soldNut.regNo}">
+												<img alt="" class="img-fluid"
+												src="${pageContext.request.contextPath}/images/thumbnail/${soldNut.thumbnailImg}" >
+											</a>
+										</div>
+									</div>
+									<div class="row border border-left-0 border-bottom-0 border-right-0">
+										<div class="col-xl" style="text-align: center; margin-top: 10px;">
+											<h6><b>${soldNut.title}</b></h6>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
+											<fmt:formatNumber value="${soldNut.price}"/> 원
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 		</div>
+	</div>
 	
 	</div><!-- container -->
 </div><!-- indexNewItemSection -->
@@ -633,74 +635,70 @@ $(document).ready(function(){
 		</div>
 		<div class="ItemInfoSection">
 			
-			<div class="tab-content">
-				<div id="menu9" class="tab-pane active"><br>
-					<div class="row">
-						<c:choose>
-							<c:when test="${empty reviewList}">
-								<c:forEach begin="1" end="4" step="1">
-									<div class="col-xl border" style="margin: 15px;">
-										<div class="row">
-											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
-												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
-											</div>
-										</div>
-										<div class="row border border-left-0 border-bottom-0 border-right-0">
-											<div class="col-xl" style="text-align: center; margin-top: 10px;">
-												<h6><b>게시글-제목</b></h6>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
-												99,999 원
-											</div>
-										</div>
-									</div>									
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<div class="owl-carousel owl-theme">
-									<c:forEach items="${reviewList}" var="review" varStatus="reviewIndex">
-										<c:choose>
-											<c:when test="${reviewIndex.count<17}">
-											
-												<div class="item">
-													<div class="col-xl border" style="margin: 15px;">
-														<div class="row">
-															<div class="col-xl" style="text-align: center; margin: 5px;">
-																<a href="${pageContext.request.contextPath}/main/goodsDetail/${review.registerGoods.regNo}">
-																	<img alt="" class="img-fluid"
-																	src="${pageContext.request.contextPath}/images/thumbnail/${review.registerGoods.thumbnailImg}" >
-																</a>
-															</div>
-														</div>
-														<div class="row border border-left-0 border-bottom-0 border-right-0">
-															<div class="col-xl" style="text-align: center; margin-top: 10px;">
-																<h6><b>${review.registerGoods.title}</b></h6>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
-																${review.content}
-															</div>
-														</div>
+			<div class="row">
+				<c:choose>
+					<c:when test="${empty reviewList}">
+						<c:forEach begin="1" end="4" step="1">
+							<div class="col-xl border" style="margin: 15px;" >
+								<div class="row">
+									<div class="col-xl" style="text-align: center; margin: 5px;">
+										<img alt="" class="img-fluid"
+										src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
+									</div>
+								</div>
+								<div class="row border border-left-0 border-bottom-0 border-right-0">
+									<div class="col-xl" style="text-align: center; margin-top: 10px;">
+										<h6><b>게시글-제목</b></h6>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
+										99,999 원
+									</div>
+								</div>
+							</div>									
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<div class="owl-carousel owl-theme">
+							<c:forEach items="${reviewList}" var="review" varStatus="reviewIndex">
+								<c:choose>
+									<c:when test="${reviewIndex.count<17}">
+									
+										<div class="item">
+											<div class="col-xl border" style="margin: 15px;">
+												<div class="row">
+													<div class="col-xl" style="text-align: center; margin: 5px;">
+														<a href="${pageContext.request.contextPath}/main/goodsDetail/${review.registerGoods.regNo}">
+															<img alt="" class="img-fluid"
+															src="${pageContext.request.contextPath}/images/thumbnail/${review.registerGoods.thumbnailImg}" >
+														</a>
 													</div>
 												</div>
-											
-											</c:when>
-											<c:otherwise>
-												<!-- 빈공간 -->
-											</c:otherwise>
-										</c:choose>
-										
-									</c:forEach>
-								</div>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-				
+												<div class="row border border-left-0 border-bottom-0 border-right-0">
+													<div class="col-xl" style="text-align: center; margin-top: 10px;">
+														<h6><b>${review.registerGoods.title}</b></h6>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xl" style="text-align: center; margin-bottom: 5px;">
+														${review.content}
+													</div>
+												</div>
+											</div>
+										</div>
+									
+									</c:when>
+									<c:otherwise>
+										<!-- 빈공간 -->
+									</c:otherwise>
+								</c:choose>
+								
+							</c:forEach>
+						</div>
+					</c:otherwise>
+				</c:choose>
+		
 			</div>
 		</div>
 

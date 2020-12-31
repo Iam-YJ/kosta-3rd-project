@@ -46,13 +46,80 @@ public class AdminController {
 	private final MainController mainController;
 
 	/**
-	 * 관리자 마이페이지 - 상품등록
+	 * 관리자 마이페이지 - 상품등록폼 열기
 	 */
 	@RequestMapping("/myPage/insertGoodsForm")
 	public ModelAndView insertGoodsForm(Model model) {
 		model.addAttribute("list", mainService.selectCategories());
 		return new ModelAndView("myPage/adminInsertGoodsForm");
 	}
+
+	/**
+	 * 관리자 마이페이지 - 상품등록하기
+	 */
+	@PostMapping("myPage/insertGoods")
+	public ModelAndView insertGoods(HttpSession session, RegisterGoods registerGoods, Long mainCateNo, Long subCateNo,
+			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
+
+		String realPath = session.getServletContext().getRealPath("/");
+		
+		String path = realPath + "/images";
+		File Folder = new File(path);
+		
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+		
+		path = realPath + "/images/thumbnail";
+		Folder = new File(path);
+		
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+		
+		path = realPath + "/images/banner";
+		Folder = new File(path);
+		
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+		
+		String currentTime = Long.toString(System.currentTimeMillis());
+		
+		String tfileName = currentTime + tfile.getOriginalFilename();
+		String adfileName = currentTime + adfile.getOriginalFilename();
+		RegisterGoods inRegisteGoods = new RegisterGoods(null, registerGoods.getTitle(), 
+				registerGoods.getDetail(), tfileName, adfileName, registerGoods.getName(), 
+				registerGoods.getOptions(), registerGoods.getArea(), registerGoods.getMethod(), 
+				registerGoods.getStock(), registerGoods.getPrice(), 0, registerGoods.getAd(), null, 
+				new MainCategories(mainCateNo) , new SubCategories(subCateNo));
+		RegisterGoods dbRegisteGoods = adminService.insertGoods(inRegisteGoods);
+		
+		try {
+			tfile.transferTo(new File(realPath + "/images/thumbnail/" + tfileName));
+			adfile.transferTo(new File(realPath + "/images/banner/" + adfileName));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return new ModelAndView("redirect:/main/goodsDetail/" + dbRegisteGoods.getRegNo());
+
+	}// insertGoods
 
 	/**
 	 * 관리자 마이페이지 - 판매상품목록 조회
@@ -460,37 +527,6 @@ public class AdminController {
 		return mainService.selectSubCategories(mainCateNo);
 	}// subCate
 
-	@PostMapping("myPage/insertGoods")
-	public ModelAndView insertGoods(RegisterGoods registerGoods, Long mainCateNo, Long subCateNo,
-			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
-
-		String path = "C:/Edu/save";
-		String tfileName = tfile.getOriginalFilename();
-		String adfileName = adfile.getOriginalFilename();
-
-		
-		
-		RegisterGoods inRegisteGoods = new RegisterGoods(null, registerGoods.getTitle(), 
-				registerGoods.getDetail(), tfileName, adfileName, registerGoods.getName(), 
-				registerGoods.getOptions(), registerGoods.getArea(), registerGoods.getMethod(), 
-				registerGoods.getStock(), registerGoods.getPrice(), 0, registerGoods.getAd(), null, 
-				new MainCategories(mainCateNo) , new SubCategories(subCateNo));
-		
-				adminService.insertGoods(inRegisteGoods);
-
-		try {
-			// 파일을 저장
-			tfile.transferTo(new File(path + "/" + tfileName));
-			adfile.transferTo(new File(path + "/" + adfileName));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return new ModelAndView("redirect:/admin/myPage/insertGoodsForm", "registerGoods", registerGoods);
-
-	}// insertGoods
-
-	
 	
 	// 카테고리 수정 폼 띄우기 //카테고리 수정
 	@RequestMapping("/myPage/modiCategories")

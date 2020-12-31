@@ -63,6 +63,12 @@ input[type=password]{
 	background-color: #f0f6e8;
 }
 
+.indexBestItemSection img, .indexNewItemSection img, .indexSellItemSection img{
+	height: 280px;
+	max-width: 200px;
+	width: auto;
+}
+
 .indexBestItemSection .mainTitleSection, .indexNewItemSection .mainTitleSection, .indexSellItemSection .mainTitleSection{
 	font-size: 30px;	
 }

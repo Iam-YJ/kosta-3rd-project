@@ -28,7 +28,7 @@ public interface AdminService {
 	/**
 	 * 상품등록
 	 */
-	public int insertGoods(RegisterGoods registerGoods);
+	public RegisterGoods insertGoods(RegisterGoods registerGoods);
 	
 	/**
 	 * 공지사항 등록

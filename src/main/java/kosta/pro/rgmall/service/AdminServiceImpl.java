@@ -2,6 +2,7 @@ package kosta.pro.rgmall.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -70,9 +71,10 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int insertGoods(RegisterGoods registerGoods) {
-		registerGoodsRep.save(registerGoods);
-		return 0;
+	public RegisterGoods insertGoods(RegisterGoods registerGoods) {
+		RegisterGoods dbregisterGoods = registerGoodsRep.save(registerGoods);
+	
+		return dbregisterGoods;
 	}
 
 	@Override
