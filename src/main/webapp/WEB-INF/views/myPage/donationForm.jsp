@@ -7,20 +7,86 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-th,td {border: red solid 1px;}
+table th {
+  width: 155px;
+  padding: 10px;
+  font-weight: bold;
+  vertical-align: top;
+  color: #fff;
+  background: #ce4869 ;
+}
+table td {
+  width: 155px;
+  padding: 10px;
+  vertical-align: top;
+  border-bottom: 1px solid #ccc;
+  background: #eee;
+}
 </style>
 </head>
 <body>
-<h1> user/myPage/donationForm</h1>
-<form method="post" action="${pageContext.request.contextPath}/user/myPage/donation">기부천사 :  <input type="text" name="dona"><button type="submit">기부하기</button></form><br>
-내가 한 누적 기부포인트 : ${donaPoint} point
 
-<table><tr><th colspan=3>전체 기부 내역</th></tr><tr><th>등수</th><th>이름</th><th>기부포인트</th></tr>
-<c:forEach items="${donaList}"  var="list" varStatus="state">
-<tr><td>${state.count}</td><td>${list.userList.name}</td><td>${list.donaPoint}</td></tr>
-</c:forEach>
-</table>
 
+<h1>농가와 지역사회 발전에 기여하겠습니다!!</h1>
+<div class="userDonationSection">
+	<div class="container">
+		<div class=titleSection>
+			<div class="row">
+				<div class="col-xl" style="text-align: left;">
+					나의 기부포인트 : ${donaPoint} point
+				</div>
+			</div>
+		</div><!-- titleSection -->
+		<div>
+			<form method="post" action="${pageContext.request.contextPath}/user/myPage/donation">기부 포인트 :  
+			<input type="text" name="dona" size="7px"><button type="submit">기부하기</button></form><br>
+		</div>
+		<div class="donationList">
+			<c:if test="${empty donaList}">
+				기부 목록이 없습니다.			
+			</c:if>
+		</div>
+	</div><!-- container-fluid -->
+</div><!-- userWishListSection -->
+			
+			
+<div class="container ">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card rounded-0 border-0 shadow">
+                <div class="card-body p-5">
+                    <!--  Bootstrap table-->
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">등수</th>
+                                    <th scope="col">이름</th>
+                                    <th scope="col">기부 포인트</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	<c:forEach items="${donaList}"  var="list" varStatus="state">
+									<tr><td>${state.count}</td><td>${list.userList.name}</td><td>${list.donaPoint}</td></tr>
+								</c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+			
+			
+			
+			
+			
+			
+			
+			
+		</div>
+		
 
 
 
