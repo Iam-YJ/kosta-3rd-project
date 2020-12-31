@@ -61,4 +61,5 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 
 	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.stock>=0 order by registerGoods.stock")
 	List<RegisterGoods> findStock();
+	
 }//class
