@@ -287,7 +287,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<UserGrade> selectAllUserGrade() {
-		List<UserGrade> userGrade = userGradeRep.findAll();
+		List<UserGrade>userGrade = userGradeRep.findAll();
+		for(UserGrade g:userGrade) {
+			System.out.println(g.getGrade());
+		}
 		return userGrade;
 		
 	}

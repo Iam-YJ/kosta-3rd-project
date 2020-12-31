@@ -244,12 +244,6 @@ public class UserController {
 		return "user/myPageForm";
 	}// updateUserList
 
-	// 포인트/등급 조회
-	@RequestMapping("/myPage/userPointGradeList")
-	public ModelAndView userPointGradeList() {
-		return new ModelAndView("myPage/userPointGradeList");
-	}
-
 	// 포인트 기부
 	@RequestMapping("/myPage/userPointDonate")
 	public ModelAndView userPointDonate(HttpSession session) {
@@ -294,18 +288,21 @@ public class UserController {
 		return "redirect:/user/myPage/donationForm";
 	}// donation
 
-	@RequestMapping("/myPage/{userId}")
-	public ModelAndView main(@PathVariable String userId) {
-		System.out.println(userId);
-		UserList userList = userService.selectPointandGrade(userId); // 임의 회원 정보 넣음
+	@RequestMapping("/myPage/userPointGradeList")
+	public ModelAndView main(HttpSession session) {
+		UserList user = (UserList)session.getAttribute("userList");
+		Long userNo = user.getUserNo();
+		UserList userList = userService.findByUserListbyUserNo(userNo); // 임의 회원 정보 넣음
 		List<UserGrade> userGradeList = userService.selectAllUserGrade();
+		System.out.println("controller");
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("myPage/main");
 		mv.addObject("userList", userList);
 		mv.addObject("userGradeList", userGradeList);
+		System.out.println("리턴전");
 		return mv;
 	}// main
-
+	
 	/**
 	 * 회원 및 관리자의 로그아웃 기능
 	 */
@@ -364,7 +361,7 @@ public class UserController {
 		review.setRegisterGoods(mainService.goodsDetail(regNo));
 		;
 		userService.insertReview(review);
-		return "redirect:/user/myPage/userGoodsReviewList";
+		return "redirect:/user/myPage?state=4";
 	}
 
 	// 후기 수정폼

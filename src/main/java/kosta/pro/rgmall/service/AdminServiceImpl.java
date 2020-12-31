@@ -219,6 +219,8 @@ public class AdminServiceImpl implements AdminService {
 			
 		} else if (parameter == 1) {
 			orderList = ordersRep.selectNewOrders();
+		} else {
+			orderList = ordersRep.selectNowDelOrders();
 		}
 
 		return orderList;
