@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import kosta.pro.rgmall.domain.Donation;
 import kosta.pro.rgmall.domain.UserList;
 
 public interface UserListRepository extends JpaRepository<UserList, Long> {
@@ -69,6 +70,7 @@ public interface UserListRepository extends JpaRepository<UserList, Long> {
 	@Query("update UserList u set u.usergrade.gradeNo=?1 where u.userNo = ?2")
 	@Modifying
 	void updateUserGrade(Long findGradeNo, Long userNo);
+	
 	  
 	 
 	 

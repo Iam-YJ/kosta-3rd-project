@@ -323,7 +323,6 @@ public class AdminServiceImpl implements AdminService {
 					userListRep.updateUserGrade((long)userGradeRep.findGradeNo(grade),userNo);
 				}
 				
-				 
 				
 			}else if(refundState == 1){
 				//환불거절

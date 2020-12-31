@@ -294,7 +294,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void insertDonation(Donation donation,Long userNo) {
-		Donation dona=donationRep.save(donation);
+		System.out.println("=======================");
+		donationRep.save(donation);
 		userListRep.addPoints(-donation.getDonaPoint(), userNo);
 	}
 	
@@ -308,15 +309,12 @@ public class UserServiceImpl implements UserService {
 	public Donation selectMyDonation(Long userNo) {
 		Donation dona =donationRep.findByUserListUserNo(userNo);
 		System.out.println("333333333333333333333333333333333"+dona);
-//		if(dona==null) {
-//			throw new RuntimeException("기부가 실패했습니다.");
-//		}
-		return dona;
+		 return dona;
 	}
 
 	@Override
 	public List<Donation> selectAllDonation() {
-		return donationRep.findAll();
+		return donationRep.selectDonaList();
 	}
 
 	@Override
