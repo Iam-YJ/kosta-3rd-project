@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import kosta.pro.rgmall.domain.RegisterGoods;
 import kosta.pro.rgmall.domain.Review;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
@@ -26,4 +27,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	@Query("delete Review r where r.reviewNo=?1")
 	@Modifying
 	int deleteReview(Long reviewNo);
+	
+	//Header 최신 리뷰순
+	@Query("select review from Review review order by review.regDate desc")
+	List<Review> reviewMain();
+	
 }//class

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -227,6 +228,23 @@ public class MainServiceImpl implements MainService {
 
 		return list;
 	}
+	
+	@Override
+	public List<RegisterGoods> bestGoods() {
+		 Pageable pageable = PageRequest.of(0, 16);
+		 Page<RegisterGoods> page = registerGoodsRep.findAllOrderBySell(pageable);
+		 return page.getContent();
+	}
+
+	@Override
+	public List<RegisterGoods> soldout() {
+		return registerGoodsRep.soldout();
+	}
+
+	@Override
+	public List<Review> reviewMain() {
+		return reviewRep.reviewMain();
+	}
 
 	@Override
 	public Page<RegisterGoods> searchGoods(String keyword, Pageable pageable) {
@@ -348,4 +366,6 @@ public class MainServiceImpl implements MainService {
 		List<FAQ> faq = FAQRep.findFAQByWord(word);
 		return faq;
 	}
+
+
 }

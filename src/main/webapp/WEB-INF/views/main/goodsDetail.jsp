@@ -376,16 +376,32 @@ $(function(){
 				</div>
 				<!-- 상품후기 -->
 				<div id="menu3" class="tab-pane fade"><br>
-					<h3 style="color: red">상품후기 연결예정</h3>
+					
 					<c:choose>
 						<c:when test="${empty goodsQuestionMap.review}">
 				  		상품후기가 없습니다.
 				  	</c:when>
 				 	<c:otherwise>
 						<c:forEach items="${goodsQuestionMap.review}" var="review">
-					 		ID : ${review.userList.userId}<Br>
-							리뷰내용 : ${review.content}<br>
-							작성날짜 : ${review.regDate}<br>
+						<div class="Orders border rounded" style="margin-bottom: 20px; padding-bottom: 10px">
+								<div class="row" style="padding: 10px">
+										<div class="col-xl" style="margin-left: 40px;">
+					 						<b>작성자 : ${review.userList.userId}</b>
+					 					</div>
+					 				<div class="col-xl" style="text-align: right; margin-left: 20px;">
+					 					<fmt:parseDate value="${review.regDate}" pattern="yyyy-MM-dd'T'HH:mm" var="parseDateTime" />
+					 					<fmt:formatDate value="${parseDateTime}" pattern="yyyy. MM. dd" var="formatDate"/>
+					 					등록일 ${formatDate}
+					 				</div>
+								</div>
+								<div class="row" style="padding: 10px">
+										<div class="col-xl" style="text-align: left; margin-left: 20px;">
+										리뷰내용 : ${review.content}
+										</div>
+								</div>
+										
+						</div>
+						
 						</c:forEach>
 					</c:otherwise>
 					</c:choose>
