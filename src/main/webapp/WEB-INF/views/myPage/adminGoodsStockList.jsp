@@ -53,8 +53,9 @@
              ${registerGoods.subCategories}
              ${registerGoods.reviewList}
              <p>
-            
 </c:forEach>
+
+
 
 <form action="${pageContext.request.contextPath}/admin/myPage/updateGoods" method="post" id="addStockForm">
    <input type="hidden" name="regNo"  id="regNo">

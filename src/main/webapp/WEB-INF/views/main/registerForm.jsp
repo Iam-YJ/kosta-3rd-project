@@ -235,7 +235,7 @@ $(document).ready(function(){
 							</div>
 							<div class="form-group">
 								<label for="pwdChk">비밀번호확인 : </label>
-								<input type="password" class="form-control" id="pwdChk" name = "passWordCheck" style="color: black;" ><span id="pwdCheckSpan"></span>
+								<input type="password" class="form-control" id="pwdChk" name = "passWordCheck" style="color: black;"><span id="pwdCheckSpan"></span>
 							</div>
 							
 							
