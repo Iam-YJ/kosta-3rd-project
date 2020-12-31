@@ -295,12 +295,6 @@ public class MainServiceImpl implements MainService {
 		return subCategoriesRep.findByMainCategoryMainCategoryNo(mainCateNo);
 	}
 
-	@Override
-	public List<GoodsQuestion> selectGoodsQuestions(Long regNo) {
-		List<GoodsQuestion> goodsQuestion = goodsQuestionRep.selectGoodsQuestions(regNo);
-
-		return goodsQuestion;
-	}
 
 	public List<GoodsQuestion> selectAllGoodsQuestion() {
 		List<GoodsQuestion> goodsQuestion = goodsQuestionRep.findAll();
@@ -312,6 +306,17 @@ public class MainServiceImpl implements MainService {
 		List<GoodsAnswer> goodsAnswer = goodsAnswerRep.selectGoodsAnswer(qgoodsNo);
 		return goodsAnswer;
 	}
+	
+	/**
+	 * 문의사항 조회 (자기자신꺼만)
+	 */
+	@Override
+	public List<GoodsQuestion> selectGoodsQuestions(Long userNo) {
+		List<GoodsQuestion> goodsQuestion = goodsQuestionRep.selectGoodsQuestions(userNo);
+
+		return goodsQuestion;
+	}
+
 
 	public List<GoodsAnswer> selectAllGoodsAnswer() {
 		List<GoodsAnswer> goodsAnswer = goodsAnswerRep.findAll();

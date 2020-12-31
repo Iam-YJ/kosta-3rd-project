@@ -178,6 +178,19 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int updateGoods(RegisterGoods registerGoods) {
+		RegisterGoods dbregisterGoods = registerGoodsRep.findById(registerGoods.getRegNo()).orElse(null);
+		
+		int plusStock = registerGoods.getStock(); // 추가할 재고량
+		int dbStock = dbregisterGoods.getStock(); // 기존 재고
+		
+		int stock = plusStock + dbStock;
+		
+		if (dbregisterGoods == null) {
+			throw new RuntimeException("오류");
+		}else {
+			dbregisterGoods.setStock(stock);
+		}
+		
 		
 		return 0;
 	}
