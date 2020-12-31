@@ -157,6 +157,7 @@ function csNotice() {
 
 </head>
 <body>
+
 	<div class="csFrame">
 		<div class="container">
 			<div class="row col-xl" style="margin: 10px 0px"></div>
@@ -195,17 +196,6 @@ function csNotice() {
 				</div>
 				<div class="col-xl">
 					<div class="csContentSection" id="csContentSection">
-						<!-- 내용이 들어갈 구간입니다 -->
-						고객센터를 통해 궁금증을 해결하세요.
-						1:1 상담을 통하시면 빠른 상담이 가능합니다.
-						
-						1:1 친절상담
-						궁금한 사항은 언제든 문의하세요.
-						상담하기  상담내역보기
-						
-						FAQ  공지사항 1:1 상담
-						찜목록  장바구니  주문/배송조회
-						포인트 내역 상품문의 내역 구매후기
 						
 					</div>
 				</div>
