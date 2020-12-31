@@ -244,11 +244,7 @@ public class UserController {
 		return "user/myPageForm";
 	}// updateUserList
 
-	// 포인트/등급 조회
-	@RequestMapping("/myPage/userPointGradeList")
-	public ModelAndView userPointGradeList() {
-		return new ModelAndView("myPage/userPointGradeList");
-	}
+	
 
 	// 포인트 기부폼
 	@RequestMapping("myPage/userPointDonate")

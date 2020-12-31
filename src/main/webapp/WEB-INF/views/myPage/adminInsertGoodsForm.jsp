@@ -148,12 +148,7 @@ input[type="number"]::-webkit-inner-spin-button {
 		
 			
 			
-			
-			
-			
-			
-			
-			
+			$("#insertGoodsForm").submit();
 			
 		});//insertGoodsBtn_click
 		
@@ -174,7 +169,7 @@ input[type="number"]::-webkit-inner-spin-button {
 			</div>
 		</div><!-- titleSection -->
 		<div class="contentSection border" style="padding : 10px;">
-			<form action="${pageContext.request.contextPath}/admin/myPage/insertGoods" method="post" enctype="multipart/form-data" >			
+			<form action="${pageContext.request.contextPath}/admin/myPage/insertGoods" id="insertGoodsForm" method="post" enctype="multipart/form-data" >			
 				<div class="row">
 					<div class="col-xl-2" style="margin: auto; text-align: center;">
 						상품종류
