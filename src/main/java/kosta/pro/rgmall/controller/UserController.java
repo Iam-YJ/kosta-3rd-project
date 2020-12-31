@@ -250,32 +250,29 @@ public class UserController {
 		return new ModelAndView("myPage/userPointGradeList");
 	}
 
-	// 포인트 기부
-	@RequestMapping("/myPage/userPointDonate")
-	public ModelAndView userPointDonate(HttpSession session) {
-
-		UserList userList = (UserList) session.getAttribute("userList");
-
-		ModelAndView mv = new ModelAndView("myPage/donationForm");
-		// mv.addObject("donaPoint", userService.selectMyDonation((long)
-		// 3).getDonaPoint());
-		// mv.addObject("donaList", userService.selectAllDonation());
-
-		return mv;
-	}
-
-	// 기부폼
-	@RequestMapping("myPage/donationForm")
+	// 포인트 기부폼
+	@RequestMapping("myPage/userPointDonate")
 	public ModelAndView donationForm(HttpSession session) {
 		UserList userInfo = (UserList) session.getAttribute("userList");
 		Long userNo = userInfo.getUserNo();
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("user/myPage/donationForm");
-		mv.addObject("donaPoint", userService.selectMyDonation(userNo).getDonaPoint());
+		mv.setViewName("myPage/donationForm");
+		
+		Donation dona=userService.selectMyDonation(userNo);
+		
+		if(dona==null) {
+			Donation dona2= new Donation();
+			dona2.setDonaPoint(0);
+			mv.addObject("donaPoint", dona2.getDonaPoint());
+		}else {
+			mv.addObject("donaPoint", dona.getDonaPoint());
+		}
+		
 		mv.addObject("donaList", userService.selectAllDonation());
 		return mv;
 	}// donationForm
 
+	
 	// 기부하기
 	@RequestMapping("myPage/donation")
 	public String donation(int dona, HttpSession session) {
@@ -286,14 +283,28 @@ public class UserController {
 		Donation donation = new Donation();
 		donation.setDonaPoint(dona);
 		donation.setUserList(userList);
-		if (userService.selectMyDonation(userNo).getUserList().getUserNo() == userNo) {
+		System.out.println("33333333333333333333333333333333");
+		System.out.println(donation);
+		System.out.println(donation.getUserList());
+		Donation dbdona=userService.selectMyDonation(userNo);
+		if(dbdona==null) {
+			userService.insertDonation(donation,userNo);
+			//Donation dona2= new Donation();
+			//dona2.setDonaPoint(0);
+			
+		}else {
 			userService.updateDonation(userNo, dona);
-		} else {
-			userService.insertDonation(donation);
 		}
-		return "redirect:/user/myPage/donationForm";
-	}// donation
-
+		
+//		if(userService.selectMyDonation(userNo)==null) {
+//			userService.insertDonation(donation,userNo);
+//		}else {
+//			userService.updateDonation(userNo, dona);
+//		}
+		
+		return "redirect:/user/myPage?state=7";
+	}//donation
+	
 	@RequestMapping("/myPage/{userId}")
 	public ModelAndView main(@PathVariable String userId) {
 		System.out.println(userId);
