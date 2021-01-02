@@ -389,10 +389,6 @@ public class AdminServiceImpl implements AdminService {
 	 * return adminRep.checkDayProfit(orderDate); }
 	 */
 
-	@Override
-	public List<UserList> searchAllUser(String grade, String keyword) {
-		return userListRep.selectAllUser();
-	}
 
 	@Override
 	public UserList searchById(String userId) {
@@ -403,6 +399,23 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteGoodsAnswer(Long agoodsNo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	/**
+	 *  admin 마이페이지 회원조회
+	 * */
+	@Override
+	public List<UserList> searchAllUser(int state) {
+		List<UserList> userList = null;
+		
+		if(state == 0) {
+			userList = userListRep.selectAllUser();
+		} else if(state == 1) {
+			userList = userListRep.sortNoAllUser();
+		} else if(state == 2) {
+			userList =userListRep.sortIdAllUser();
+		}
+		
+		return userList;
 	}
 
 }

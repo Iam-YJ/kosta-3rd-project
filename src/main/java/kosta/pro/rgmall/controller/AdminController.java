@@ -352,9 +352,20 @@ public class AdminController {
 	 * 관리자 마이페이지 - 회원조회
 	 */
 	@RequestMapping("/myPage/clientList")
-	public ModelAndView clientList(String grade, String keyword) {
-		List<UserList> userList = adminService.searchAllUser(grade, keyword);
-		return new ModelAndView("myPage/adminClientList", "userList", userList);
+	public ModelAndView clientList() {
+		
+		
+		List<UserList> sortGrade = adminService.searchAllUser(0);
+		List<UserList> sortNo = adminService.searchAllUser(1);
+		List<UserList> sortId = adminService.searchAllUser(2);
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("sortGrade", sortGrade);
+		System.out.println(sortGrade);
+		mv.addObject("sortNo", sortNo);
+		mv.addObject("sortId", sortId);
+		mv.setViewName("myPage/adminClientList");
+		return mv;
 	}
 
 	/**

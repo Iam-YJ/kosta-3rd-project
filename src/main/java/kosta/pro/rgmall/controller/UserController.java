@@ -298,19 +298,31 @@ public class UserController {
 		//	}
 		return "redirect:/user/myPage?state=7";
 	}// donation
-
+	
+	/**
+	 * 마이페이지 나의 등급보기
+	 * */
 	@RequestMapping("/myPage/userPointGradeList")
 	public ModelAndView main(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		UserList user = (UserList)session.getAttribute("userList");
 		Long userNo = user.getUserNo();
+		int myPay = userService.selectUserPay(userNo);
 		UserList userList = userService.findByUserListbyUserNo(userNo); // 임의 회원 정보 넣음
+		Long gradeNo = userList.getUsergrade().getGradeNo();
+		if(gradeNo==3) {
+			mv.addObject("aqPay","R.P MALL 의 로얄등급에 감사합니다");
+		}else {
+			UserGrade next = userService.selectNextGrade(gradeNo+1);
+			int aqPay = next.getLowPrice()-myPay;
+			mv.addObject("aqPay", aqPay);
+		}
 		List<UserGrade> userGradeList = userService.selectAllUserGrade();
-		System.out.println("controller");
-		ModelAndView mv = new ModelAndView();
 		mv.setViewName("myPage/main");
+		mv.addObject("myPay", myPay);
 		mv.addObject("userList", userList);
 		mv.addObject("userGradeList", userGradeList);
-		System.out.println("리턴전");
+
 		return mv;
 	}// main
 	
@@ -320,7 +332,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "main/index";
+		return "redirect:/main/";
 	}// logout
 
 	/**
@@ -507,5 +519,7 @@ public class UserController {
 		System.out.println("리턴 : " + result);
 		return result;
 	}
+	
+	
 
 }// class

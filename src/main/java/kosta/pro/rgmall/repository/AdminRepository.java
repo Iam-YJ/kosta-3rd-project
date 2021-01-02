@@ -12,8 +12,7 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 	@Query("select a from Admin a where a.adminId=?1 and a.password=?2")
 	Admin adminLogin(String adminId, String password);
 	
-	//총매출
-	@Query("select sum(o.realpay) from Orders o")
+	@Query("select sum(o.orderdate) from Orders o")
 	int checkProfits();
 	
 	//일매출
@@ -23,6 +22,4 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 	//년 - 월 그룹지어 매출액 가져오기
 	@Query("select to_char(o.orderdate,'YYYY-MM'), sum(o.realpay) from Orders o where o.orderdate>='2021-01-01' and o.orderdate<'2021-12-31' group by to_char(o.orderdate, 'YYYY-MM')")
 	List<String> groupByYearAndMonth();
-	
-	
 }// class
