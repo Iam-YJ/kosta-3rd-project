@@ -1,8 +1,8 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
+import java.util.Map;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -73,7 +73,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public RegisterGoods insertGoods(RegisterGoods registerGoods) {
 		RegisterGoods dbregisterGoods = registerGoodsRep.save(registerGoods);
-	
+
 		return dbregisterGoods;
 	}
 
@@ -166,7 +166,7 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<RegisterGoods> selectGoods(int state) {
 		List<RegisterGoods> list = null;
-		
+
 		if (state == 0) {
 			list = registerGoodsRep.findAll();
 		} else if (state == 1) {
@@ -181,19 +181,18 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public int updateGoods(RegisterGoods registerGoods) {
 		RegisterGoods dbregisterGoods = registerGoodsRep.findById(registerGoods.getRegNo()).orElse(null);
-		
+
 		int plusStock = registerGoods.getStock(); // 추가할 재고량
 		int dbStock = dbregisterGoods.getStock(); // 기존 재고
-		
+
 		int stock = plusStock + dbStock;
-		
+
 		if (dbregisterGoods == null) {
 			throw new RuntimeException("오류");
-		}else {
+		} else {
 			dbregisterGoods.setStock(stock);
 		}
-		
-		
+
 		return 0;
 	}
 
@@ -214,11 +213,10 @@ public class AdminServiceImpl implements AdminService {
 	public List<Orders> selectOrders(int parameter) {
 		List<Orders> orderList = null;
 
-		//0은 지난 주문조회 1은 신규주문조회
+		// 0은 지난 주문조회 1은 신규주문조회
 		if (parameter == 0) {
 			orderList = ordersRep.selectLastOrders();
-			
-			
+
 		} else if (parameter == 1) {
 			orderList = ordersRep.selectNewOrders();
 		} else {
@@ -228,113 +226,100 @@ public class AdminServiceImpl implements AdminService {
 		return orderList;
 	}
 
-	
 	/**
-	 * 상품출고
-	 * Orders 테이블의 Del_state가 배송중으로 변경
+	 * 상품출고 Orders 테이블의 Del_state가 배송중으로 변경
 	 */
 	@Override
 	public int updateDelState(Long orderNo) {
 		Orders orders = ordersRep.findById(orderNo).orElse(null);
-		if(orders == null) {
+		if (orders == null) {
 			throw new RuntimeException("주문정보를 확인할 수 없습니다.");
 		}
 		orders.setDelState("배송중");
-		
+
 		return 0;
 	}
 
 	/**
-	 * 환불신청상품 조회
-	 * 관리자가 모든 환불신청목록을 조회할 떄 사용됨
+	 * 환불신청상품 조회 관리자가 모든 환불신청목록을 조회할 떄 사용됨
 	 */
 	@Override
 	public List<Refund> selectRefundGoods() {
-		
+
 		List<Refund> refundList = refundRep.selectRefundAllNew();
 		return refundList;
 	}
 
 	/**
-	 * 환불신청상품 환불처리 (환불 승인, 환불 거절 - update refundtable -> refundstate를 변경)
-	 * 0일 때 환불승인
+	 * 환불신청상품 환불처리 (환불 승인, 환불 거절 - update refundtable -> refundstate를 변경) 0일 때 환불승인
 	 * 1일 때 환불거절
 	 * 
-	 * 더 추가될 수도 있음
-	 * 	if(refundState == 0){
-		환불상태
-		order 날리고
-		재고량 고치고
-		잔액
-		포인트
-		예치금
-		
-		}else {
-			환불상태 변경 - 메세지도 입력
-		}
+	 * 더 추가될 수도 있음 if(refundState == 0){ 환불상태 order 날리고 재고량 고치고 잔액 포인트 예치금
+	 * 
+	 * }else { 환불상태 변경 - 메세지도 입력 }
 	 */
 	@Override
 	public int refundGoods(Long RefundNo, String refundReply, int refundState) {
-		
-		Refund dbRefund = refundRep.findById(RefundNo).orElse(null);
-		if(dbRefund == null) {
-			throw new RuntimeException("환불신청 정보가 없습니다.");
-		}else {
 
-			if(refundState == 0){
-				//환불상태 - 환불승인으로 변경
+		Refund dbRefund = refundRep.findById(RefundNo).orElse(null);
+		if (dbRefund == null) {
+			throw new RuntimeException("환불신청 정보가 없습니다.");
+		} else {
+
+			if (refundState == 0) {
+				// 환불상태 - 환불승인으로 변경
 				dbRefund.setRefundState("환불승인");
 //				재고량 고치고
 				List<OrderLine> dborderLineList = dbRefund.getOrders().getList();
-				for(OrderLine ol : dborderLineList) {
+				for (OrderLine ol : dborderLineList) {
 					RegisterGoods dbRegisterGoods = registerGoodsRep.findByRegNo(ol.getRegisterGoods().getRegNo());
 					dbRegisterGoods.setStock(dbRegisterGoods.getStock() + ol.getQuntity());
 				}
-				
+
 				//////////////////////////////////////////
-				Refund refund =refundRep.findById(RefundNo).orElse(null);
+				Refund refund = refundRep.findById(RefundNo).orElse(null);
 				Long orderNo = refund.getOrders().getOrderNo();
-				Long userNo=refund.getOrders().getUserList().getUserNo();
-				Long gradeNo=refund.getOrders().getUserList().getUsergrade().getGradeNo();
-				int realPay =refund.getOrders().getRealpay();
-				double point =0;
-				if(gradeNo==1) {
-					point=-0.02*realPay;
-				}else if(gradeNo==2) {
-					point=-0.05*realPay;
-				}else {
-					point=-0.08*realPay;
+				Long userNo = refund.getOrders().getUserList().getUserNo();
+				Long gradeNo = refund.getOrders().getUserList().getUsergrade().getGradeNo();
+				int realPay = refund.getOrders().getRealpay();
+				double point = 0;
+				if (gradeNo == 1) {
+					point = -0.02 * realPay;
+				} else if (gradeNo == 2) {
+					point = -0.05 * realPay;
+				} else {
+					point = -0.08 * realPay;
 				}
-				
-				//포인트 차감
-				userListRep.addPoints((int)Math.round(point),userNo);
-				
-				//주문테이블 주문상태 환불상품로 변경
-				ordersRep.updateDeliveryState("환불상품",orderNo);
-				
-				//등급 재조정
-				List<Orders> dbo=ordersRep.selectRefundOrders(userNo);
-				int totalPay=0;
-				for(Orders o : dbo) {
-					totalPay +=o.getRealpay();   
+
+				// 포인트 차감
+				userListRep.addPoints((int) Math.round(point), userNo);
+
+				// 주문테이블 주문상태 환불상품로 변경
+				ordersRep.updateDeliveryState("환불상품", orderNo);
+
+				// 등급 재조정
+				List<Orders> dbo = ordersRep.selectRefundOrders(userNo);
+				int totalPay = 0;
+				for (Orders o : dbo) {
+					totalPay += o.getRealpay();
 				}
-				UserList userList =userListRep.findById(userNo).orElse(null);
-				String grade=userGradeRep.findGrade(totalPay);
-				int afterGradeNo=userGradeRep.findGradeNo(grade);
-				//System.out.println("grade                      "+grade);
-				//System.out.println("userList.getUsergrade().getGrade()           "+ userList.getUsergrade().getGrade());
-				if(gradeNo!=afterGradeNo){
-					userListRep.updateUserGrade((long)userGradeRep.findGradeNo(grade),userNo);
+				UserList userList = userListRep.findById(userNo).orElse(null);
+				String grade = userGradeRep.findGrade(totalPay);
+				int afterGradeNo = userGradeRep.findGradeNo(grade);
+				// System.out.println("grade "+grade);
+				// System.out.println("userList.getUsergrade().getGrade() "+
+				// userList.getUsergrade().getGrade());
+				if (gradeNo != afterGradeNo) {
+					userListRep.updateUserGrade((long) userGradeRep.findGradeNo(grade), userNo);
 				}
-				
-				
-			}else if(refundState == 1){
-				//환불거절
-				dbRefund.setRefundReply(refundReply); 
+
+			} else if (refundState == 1) {
+				// 환불거절
+				dbRefund.setRefundReply(refundReply);
 				dbRefund.setRefundState("환불거절");
 			}
 		}
-		
+
 		return 0;
 	}
 
@@ -407,34 +392,46 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<Review> selectReview() {
 
-		List<Review> reviewList =  reviewRep.findAll();
-		
+		List<Review> reviewList = reviewRep.findAll();
+
 		return reviewList;
 	}
 
 	@Override
-	public int checkProfit(String startDate, String endDate) {
-		int result = adminRep.checkProfits();
-		return result;
-	}
-	/*
-	@Override
-	public List<Orders> checkDayProfit(String orderDate) {
-		
-		return adminRep.checkDayProfit(orderDate);
-	}*/
-
-	@Override
-	public List<UserList> searchAllUser(String grade, String keyword) {
-		return userListRep.selectAllUser();
-	}
+	public List<String> checkProfit(String startDate, String endDate) {
 
 	
+		List<String> profit = adminRep.groupByYearAndMonth();
+		return profit;
+	}
+	/*
+	 * @Override public List<Orders> checkDayProfit(String orderDate) {
+	 * 
+	 * return adminRep.checkDayProfit(orderDate); }
+	 */
+
+
 	@Override
 	public UserList searchById(String userId) {
 		return userListRep.findByIdUser(userId);
 	}
 
-	
+	/**
+	 *  admin 마이페이지 회원조회
+	 * */
+	@Override
+	public List<UserList> searchAllUser(int state) {
+		List<UserList> userList = null;
+		
+		if(state == 0) {
+			userList = userListRep.selectAllUser();
+		} else if(state == 1) {
+			userList = userListRep.sortNoAllUser();
+		} else if(state == 2) {
+			userList =userListRep.sortIdAllUser();
+		}
+		
+		return userList;
+	}
 
 }

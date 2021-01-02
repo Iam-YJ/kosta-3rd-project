@@ -417,4 +417,28 @@ public class UserServiceImpl implements UserService {
 		//6. 등급 비교 후 감가.
 		return 0;
 	}
+
+
+	@Override
+	public int selectUserPay(Long userNo) {
+//		List<Orders> dbOrders=ordersRep.findByUserListUserNo(userNo);
+//		int totalPay=0;
+//		for(Orders o : dbOrders) {
+//			totalPay +=o.getRealpay();   
+//		}
+//		return totalPay;
+		int result =0;
+		if(ordersRep.selectUserPay(userNo)==null) {
+			result =0;
+		}else {
+			result = ordersRep.selectUserPay(userNo);
+		}
+		return result;
+	}
+
+
+	@Override
+	public UserGrade selectNextGrade(Long userGrade) {
+		return userGradeRep.findById(userGrade).orElse(null);
+	}
 }

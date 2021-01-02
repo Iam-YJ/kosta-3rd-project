@@ -8,36 +8,40 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
-	<table class="adminGoodsTable" id="adminGoodsTable" width="100%" cellspacing="0">
-			<thead>
-				<tr>
-					<th>regNo</th>
-					<th>AD</th>
-					<th>price</th>
-					<th>regDate</th>
-					<th>sellcount</th>
-					<th>title</th>
-					<th>mainCategoryNo</th>
-					<th>subCategoryNo</th>
-				</tr>
-			</thead>
+
+	<div class="OrderListInfo">
+		<c:if test="${empty listRegisterGoods}">
+					등록된 상품이 없습니다.
+				</c:if>
+
+		<!--  -->
+		<c:if test="${not empty listRegisterGoods}">
 			<c:forEach items="${listRegisterGoods}" var="listRegisterGoods">
-				<tbody>
-					<tr>
-						<td>${listRegisterGoods.regNo}</td>
-						<td>${listRegisterGoods.ad}</td>
-						<td>${listRegisterGoods.price}</td>
-						<td>${listRegisterGoods.regDate}</td>
-						<td>${listRegisterGoods.sellcount}</td>
-						<td>${listRegisterGoods.title}</td>
-						<td>${listRegisterGoods.mainCategories.mainCategoryNo}</td>
-						<td>${listRegisterGoods.subCategories.subCategoryNo}</td>
+				<div class="Orders border rounded"
+					style="margin-bottom: 20px; padding-bottom: 10px">
+					<div class="row" style="padding: 10px">
+						<div class="col-xl" style="margin-left: 30px;">
+							<b>상품고유번호 : ${listRegisterGoods.regNo}</b>
+						</div>
 						
-					</tr>
-				</tbody>
-			</c:forEach>	
-		</table>
+						<div class="col-xl" style="text-align: right; margin-right: 40px;"></div>
+					</div>
+					<div class="row" style="padding: 10px">
+						<div class="col-xl" style="text-align: left; margin-left: 20px;">
+							카테고리 : ${listRegisterGoods.mainCategories.mainCategoryName} &nbsp - &nbsp ${listRegisterGoods.subCategories.subCategoryName}
+							<br><br>
+							<a href = "${pageContext.request.contextPath}/main/goodsDetail/${listRegisterGoods.regNo}"> 상품명 : ${listRegisterGoods.title}</a>
+							
+						</div>
+					<br>
+					</div>
+					<!-- btn  -->
+				</div>
+				<!-- orders -->
+			</c:forEach>
+		</c:if>
+	</div>
+
 
 
 </body>

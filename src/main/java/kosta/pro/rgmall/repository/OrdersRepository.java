@@ -42,4 +42,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	@Query("select o from Orders o where o.delState = '환불상품' and o.userList.userNo=?1")
 	List<Orders> selectRefundOrders(Long userNo);	
 	
+	@Query(value = "select sum(realpay) from orders where user_No=16 and del_state='배송완료'",nativeQuery = true)
+	Integer selectUserPay(Long userNo);
+	
 }//class

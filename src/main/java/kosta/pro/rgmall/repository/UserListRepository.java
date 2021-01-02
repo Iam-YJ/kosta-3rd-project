@@ -56,9 +56,18 @@ public interface UserListRepository extends JpaRepository<UserList, Long> {
 	@Query("update UserList u set u.passWord=?1,  u.addr=?2,  u.phone=?3,  u.email=?4 where u.userNo = ?5")
 	@Modifying
 	int updateUserList(String passWord, String addr, String phone, String email, Long userNo);
-
+	
+	//등급별 정렬
 	@Query("select  u from UserList u order by u.usergrade.gradeNo desc")
 	List<UserList> selectAllUser();
+	
+	//유저번호순 정렬
+	@Query("select u from UserList u order by u.userNo desc")
+	List<UserList> sortNoAllUser();
+	
+	//아이디 A-Z 정렬
+	@Query("select u from UserList u order by u.userId desc")
+	List<UserList> sortIdAllUser();
 
 	@Query("select u from UserList u where u.userId=?1")
 	UserList findByIdUser(String userId); 

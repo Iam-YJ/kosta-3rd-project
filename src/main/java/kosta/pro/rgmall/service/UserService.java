@@ -203,4 +203,13 @@ public interface UserService {
 
 	int updateCart2(int qua, Long regNo);
 
+	/**
+	 * 구매금액
+	 * */
+	public int selectUserPay(Long userNo);
+	
+	/**
+	 * 나의 다음등급
+	 * */
+	public UserGrade selectNextGrade(Long userGrade);
 }
