@@ -295,7 +295,7 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsQuestionUpdateAnswer/{agoodsNo}")
 	public String GoodsQuestionUpdateAnswer(@PathVariable Long agoodsNo, String refundReply) {
 
-		adminService.updateGoodsAnswer(agoodsNo, refundReply);
+		//adminService.updateGoodsAnswer(agoodsNo, refundReply);
 
 		return "redirect:/user/myPage";
 
@@ -362,6 +362,48 @@ public class AdminController {
 		return result;
 	}
 
+	/**
+	 * 상품상세조회 - 상품문의 - 답변달기
+	 */
+	@RequestMapping("/insert/goodsAnswer/{regNo}/{qgoodsNo}")
+	public ModelAndView insertGoodsAnswer(@PathVariable Long regNo, @PathVariable Long qgoodsNo, GoodsAnswer goodsAnswer) {
+		
+		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
+
+		goodsAnswer.setGoodsQuestion(new GoodsQuestion(qgoodsNo));
+		adminService.insertGoodsAnswer(goodsAnswer);
+		 
+		return mv;
+	}
+	
+	
+	/**
+	 * 상품상세조회 - 상품문의 - 답변수정하기
+	 */
+	@RequestMapping("/update/goodsAnswer/{regNo}/{agoodsNo}")
+	public ModelAndView updateGoodsAnswer(@PathVariable Long regNo, @PathVariable Long agoodsNo, GoodsAnswer goodsAnswer) {
+		
+		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
+
+		goodsAnswer.setAgoodsNo(agoodsNo);
+		adminService.updateGoodsAnswer(goodsAnswer);
+		 
+		return mv;
+	}
+	
+	/**
+	 * 상품상세조회 - 상품문의 - 답변삭제하기
+	 */
+	@RequestMapping("/delete/goodsAnswer/{regNo}/{agoodsNo}")
+	public ModelAndView deleteGoodsAnswer(@PathVariable Long regNo, @PathVariable Long agoodsNo) {
+		System.out.println("regNo : " + regNo);
+		System.out.println("agoodsNo : " + agoodsNo);
+		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
+		adminService.deleteGoodsAnswer(agoodsNo);
+		 
+		return mv;
+	}
+	
 	/**
 	 * 공지사항 전체검색
 	 */

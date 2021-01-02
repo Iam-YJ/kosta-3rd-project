@@ -63,11 +63,6 @@ public interface UserService {
 	public int insertGoodsQuestion(GoodsQuestion goodsQuestion);
 	
 	/**
-	 * 상품문의 조회하기
-	 * */
-	public List<GoodsQuestion> selectGoodsQuestion(Long userNo);
-	
-	/**
 	 * 상품문의 수정하기
 	 * */
 	public int updateGoodsQuestion(GoodsQuestion goodsQuestion);
@@ -76,6 +71,15 @@ public interface UserService {
 	 * 상품문의 삭제하기
 	 * */
 	public int deleteGoodsQuestion(Long qgoodsNo);
+	
+	/**
+	 * 상품문의 조회하기
+	 * */
+	public List<GoodsQuestion> selectGoodsQuestion(Long userNo);
+	
+	
+	
+	
 	
 	/**
 	 * 구매후기 등록하기

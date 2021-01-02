@@ -370,17 +370,38 @@ public class AdminServiceImpl implements AdminService {
 		return null;
 	}
 
+	/**
+	 * 상품문의내역 등록
+	 */
 	@Override
 	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
 		goodsAnswerRep.save(goodsAnswer);
 	}
-
+	
+	/**
+	 * 상품문의내역 수정
+	 */
 	@Override
-	public void updateGoodsAnswer(Long agoodsNo, String refundReply) {
+	public void updateGoodsAnswer(GoodsAnswer goodsAnswer) {
 
-		GoodsAnswer goodsAnwer = goodsAnswerRep.findById(agoodsNo).orElse(null);
-		goodsAnwer.setContent(refundReply);
-
+		GoodsAnswer dbGoodsAnswer = goodsAnswerRep.findById(goodsAnswer.getAgoodsNo()).orElse(null);
+		if(dbGoodsAnswer == null) {
+			throw new RuntimeException("상품문의 답변 번호에 해당하는 답변이 없습니다.");
+		}
+		
+		dbGoodsAnswer.setContent(goodsAnswer.getContent());
+	}
+	
+	/**
+	 * 상품문의내역 삭제
+	 */
+	@Override
+	public int deleteGoodsAnswer(Long agoodsNo) {
+		System.out.println(1);
+		goodsAnswerRep.deleteGoodsAnswerbyid(agoodsNo);
+		
+		System.out.println(2);
+		return 0;
 	}
 
 	@Override
@@ -414,10 +435,6 @@ public class AdminServiceImpl implements AdminService {
 		return userListRep.findByIdUser(userId);
 	}
 
-	@Override
-	public int deleteGoodsAnswer(Long agoodsNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 }

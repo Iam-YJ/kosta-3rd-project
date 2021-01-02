@@ -7,6 +7,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+function orderCancelconfirm(){
+	if( confirm("주문을 취소하시겠습니까?") ){
+		return true;
+	}
+	return false;
+}
+
+</script>
 </head>
 <body>
 	<div class="userOrderListSetcion">
@@ -36,7 +46,7 @@
 						 		<div class="col-xl-1"></div>
 						 		<div class="col-xl border rounded" style="margin: 5px">
 						 			<div class="row">
-						 				<div class="col-xl-2">
+						 				<div class="col-xl-2" style="margin: auto; text-align: center;">
 						 					<a href="${pageContext.request.contextPath}/main/goodsDetail/${orderLine.registerGoods.regNo}">
 												<img alt="" class="img-fluid"
 												src="${pageContext.request.contextPath}/images/thumbnail/${orderLine.registerGoods.thumbnailImg}" >
@@ -57,23 +67,15 @@
 						 				</div>
 						 				<div class="col-xl-3" style="margin: auto; padding: 10px;">
 						 					<div class="row">
-						 						<a href="" class="col-xl btn btn-success" style="margin: 10px">다시구매</a>	
+						 						<a href="${pageContext.request.contextPath}/main/goodsDetail/${orderLine.registerGoods.regNo}" 
+						 						class="col-xl btn btn-success" style="margin: 10px">다시구매</a>	
 						 					</div>
 											<c:if test="${orders.delState eq '배송완료'}">
 					 							<div class="row">
-					 								<a href="${pageContext.request.contextPath}/user//myPage/writeReviewForm/${orderLine.registerGoods.regNo}" class="col-xl btn btn-outline-success" style="margin: 10px">구매평쓰기</a>	
+					 								<a href="${pageContext.request.contextPath}/user/myPage/writeReviewForm/${orderLine.registerGoods.regNo}" class="col-xl btn btn-outline-success" style="margin: 10px"  
+					 								onclick="window.open(this.href, '_blanck','width=500,height=500'); return false;">구매후기작성</a>	
 					 							</div>
 											</c:if>
-											<c:choose>
-												<c:when test="${orders.delState eq '배송준비중'}">
-													<div class="row">
-						 								<a href="" class="col-xl btn btn-outline-success" style="margin: 5px">주문취소</a>	
-						 							</div>
-												</c:when>
-												<c:when test="${orders.delState eq '배송완료'}">
-						 							
-												</c:when>
-											</c:choose>											
 						 				</div>
 						 			</div>
 						 		</div>
@@ -95,7 +97,8 @@
 					 				</c:when>
 					 				<c:otherwise>
 					 					<div class="col-xl" style="text-align: right">
-		 									<a href="${pageContext.request.contextPath}/user/myPage/userOrderList/orderCancel/${orders.orderNo}" class="col-xl btn btn-outline-success" style="margin: 1px; width: 140px">주문취소</a>	
+		 									<a href="${pageContext.request.contextPath}/user/myPage/userOrderList/orderCancel/${orders.orderNo}" 
+		 									class="col-xl btn btn-outline-success" style="margin: 1px; width: 140px" onclick="return orderCancelconfirm();">주문취소</a>	
 		 								</div>
 					 				</c:otherwise>
 					 			</c:choose>

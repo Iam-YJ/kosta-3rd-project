@@ -226,21 +226,25 @@ $(document).ready(function(){
 						<!-- select box구간 -->
 						
 						<div class="row">
-						
-							<div class="col-xl-10"></div>
-								<div class="col-xl-3" style="font-size: 20px">키워드 검색</div>
-									<input type="text" class="col-xl" style="width: 60%" id="key">
-									<input type="button" class="btn btn-success col-xl-1" id="keyword" value="검색">
-									<div class="col-xl-2">
-										<div class="form-group" style="text-align: right;">
-											<select class="form-control" id="sel1" name="sellist1" >
-												<option value="0">정렬</option>
-												<option value="1">최신순</option>
-												<option value="2">인기순</option>
-												<option value="3">가격순</option>
-											</select>
-										</div>	
-									</div>
+							<div class="col-xl-3"></div>
+							<div class="col-xl" style="text-align: right">
+								<input type="text" class="form-control" id="key">
+							</div>
+							
+							<div class="col-xl-2" style="text-align: left;">
+								<input type="button" class="btn btn-success" id="keyword" value="제목검색">
+							</div>
+							<div class="col-xl-2">
+								<div class="form-group" style="text-align: right;">
+									<select class="form-control" id="sel1" name="sellist1" >
+										<option value="0">정렬</option>
+										<option value="1">최신순</option>
+										<option value="2">인기순</option>
+										<option value="3">가격순</option>
+									</select>
+								</div>	
+							</div>
+									
 						</div><!-- row -->
 						
 						<!-- select box구간  끝-->

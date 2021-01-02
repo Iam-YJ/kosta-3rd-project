@@ -172,14 +172,16 @@ public interface AdminService {
 	public void insertGoodsAnswer(GoodsAnswer goodsAnswer);
 	
 	/**
+	 * 상품문의내역 수정
+	 */
+	public void updateGoodsAnswer(GoodsAnswer goodsAnswer);
+	
+	
+	/**
 	 * 상품문의내역 삭제
 	 */
 	public int deleteGoodsAnswer(Long agoodsNo);
 	
-	/**
-	 * 상품문의내역 수정
-	 */
-	public void updateGoodsAnswer(Long agoodsNo, String refundReply);
 	
 	/**
 	 * 상품평 조회

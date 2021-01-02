@@ -5,62 +5,82 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<title>배송 서비스</title>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/rpmall.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
-$(function(){
-	
-	   $("#requestForm").click(function(){
-		   //document.requestForm.action="${pageContext.request.contextPath}/board/updateForm";
-		   alert(1);
-		  //$("#requestForm").attr("action", "${pageContext.request.contextPath}/delivery/listDelivery/{orderNo}");
-		  //$("#requestForm").submit();
-	   })
-			
-})//ready
-
+function delConfirm(){
+	if (confirm("해당 상품을 배송 완료하였습니까?")) {
+		return true;
+	}
+	return false;
+}
 
 
 </script>
-
 </head>
 <body>
-
-
-<table class="deliveryTable" id="deliveryTable" width="100%" cellspacing="0">
-			<thead>
-				<tr>
-					<th>orderNo</th>
-					<th>userList</th>
-					<th>addr</th>
-					<th>totalPrice</th>
-					<th>delState</th>
-					<th>상태</th>
-				</tr>
-			</thead>
-			<c:forEach items="${orderList}" var="orderList">
-				<tbody>
-					<tr>
-						<td>${orderList.orderNo}</td>
-						<td>${orderList.userList.userNo}</td>
-						<td>${orderList.addr}</td>
-						<td>${orderList.totalPrice}</td>
-						<td>${orderList.delState}</td>
-						<td>
-						<form action="${pageContext.request.contextPath}/delivery/${orderList.orderNo}">
-							<input type="submit" value="배송완료" >
-						</form>
-						</td>
-					</tr>
-				</tbody>
-			</c:forEach>
-			
-			
-				
-			
-		</table>
-		
-		
+<div class="delListSection">
+	<div class="container">
+		<div class="titleSection row">
+			<div class="col-xl" style="text-align: center; margin: 20px;"> 
+				<h3>배송목록</h3>
+			</div>
+		</div><!-- titleSection row -->
+		<div class="subtitleSection row" style="margin-bottom: 10px;">
+			<div class="col-xl-1" style="text-align: center;"> 
+				번호
+			</div>
+			<div class="col-xl-1" style="text-align: center;"> 
+				이름	
+			</div>
+			<div class="col-xl" style="text-align: center;"> 
+				주소	
+			</div>
+			<div class="col-xl-2" style="text-align: center;"> 
+				연락처	
+			</div>
+			<div class="col-xl-2" style="text-align: center;"> 
+				상태	
+			</div>
+		</div><!-- subtitleSection row -->
+		<c:choose>
+			<c:when test="${empty orderList}">
+				<div class="delInfoSection row" style="margin-top:5px;">
+					<div class="col-xl" style="text-align: center;"> 
+						현재 배송가능한 상품이 없습니다.
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<c:forEach items="${orderList}" var="orderList" varStatus="index">
+					<div class="delInfoSection row" style="margin-top:5px;">
+						<div class="col-xl-1" style="text-align: center;"> 
+							${index.count}
+						</div>
+						<div class="col-xl-1" style="text-align: center;"> 
+							${orderList.userList.name}
+						</div>
+						<div class="col-xl" style="text-align: center;"> 
+							${orderList.addr}
+						</div>
+						<div class="col-xl-2" style="text-align: center;"> 
+							${orderList.userList.phone}
+						</div>
+						<div class="col-xl-2" style="text-align: center;"> 
+							<a href="${pageContext.request.contextPath}/delivery/${orderList.orderNo}"
+							onclick="return delConfirm();">배송완료</a>
+						</div>
+					</div><!-- delInfoSection row -->
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</div>
 </body>
 </html>

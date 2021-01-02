@@ -43,7 +43,7 @@ $(document).ready(function(){
 			  <div class="carousel-inner" style="text-align: center;">
 			    <div class="carousel-item active">
 					<img src="${pageContext.request.contextPath}/images/banner/banner.png" alt=""
-					style="max-height: 250px;  width: 1920px;">
+					style="height: 250px;  width: 1920px;">
 			    </div>
 			  </div>
 			
@@ -79,7 +79,7 @@ $(document).ready(function(){
 							<div class="carousel-item active">
 								<a href="${pageContext.request.contextPath}/main/goodsDetail/${registerGoodsADList.regNo}">	
 									<img src="${pageContext.request.contextPath}/images/banner/${registerGoodsADList.adImg}" alt=""
-									style="max-height: 250px;  width: 1920px;">
+									style="height: 250px;  width: 1920px;">
 								</a>
 							</div>
 						</c:when>
@@ -87,7 +87,7 @@ $(document).ready(function(){
 							<div class="carousel-item">
 						    	<a href="${pageContext.request.contextPath}/main/goodsDetail/${registerGoodsADList.regNo}">	
 									<img src="${pageContext.request.contextPath}/images/banner/${registerGoodsADList.adImg}" alt=""
-									style="max-height: 250px;  width: 1920px;">
+									style="height: 250px;  width: 1920px;">
 								</a>
 							</div>		
 						</c:otherwise>			  	

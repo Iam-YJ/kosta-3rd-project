@@ -144,41 +144,68 @@ public class UserServiceImpl implements UserService {
 		return refundList;
 	}
 
+	/**
+	 * 상품문의 등록하기
+	 * */
 	@Override
 	public int insertGoodsQuestion(GoodsQuestion goodsQuestion) {
-		// TODO Auto-generated method stub
+		goodsQuestionRep.save(goodsQuestion);
+		
+		return 0;
+	}
+	
+	/**
+	 * 상품문의 수정하기
+	 * */
+	@Override
+	public int updateGoodsQuestion(GoodsQuestion goodsQuestion) {
+
+		GoodsQuestion dbGoodsQuestion = goodsQuestionRep.findById(goodsQuestion.getQgoodsNo()).orElse(null);
+		if(dbGoodsQuestion == null) {
+			throw new RuntimeException("해당 번호에 대한 상품문의가 존재하지 않습니다.");
+		}
+		
+		dbGoodsQuestion.setContent(goodsQuestion.getContent());
 		return 0;
 	}
 
+	/**
+	 * 상품문의 삭제하기
+	 * */
+	@Override
+	public int deleteGoodsQuestion(Long qgoodsNo) {
+
+		goodsQuestionRep.deleteById(qgoodsNo);
+		
+		return 0;
+	}
+	
 	@Override
 	public List<GoodsQuestion> selectGoodsQuestion(Long userNo) {
 		List<GoodsQuestion> goodsQuestion =  goodsQuestionRep.selectGoodsQuestionsByUserNo(userNo);
 		return goodsQuestion;
 	}
 
-	@Override
-	public int updateGoodsQuestion(GoodsQuestion goodsQuestion) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int deleteGoodsQuestion(Long qgoodsNo) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
+	/**
+	 * 구매후기 등록하기
+	 * */
 	@Override
 	public int insertReview(Review review) {
 		reviewRep.save(review);
 		return 1;
 	}
 
+	/**
+	 * 구매후기 조회하기
+	 * */
 	@Override
 	public List<Review> selectReview(Long userNo) {
 		return reviewRep.selectReviewByUserNo(userNo);
 	}
 
+	/**
+	 * 구매후기 수정하기
+	 * */
 	@Override
 	public int updateReview(Review review) {
 		String content = review.getContent();
@@ -186,11 +213,15 @@ public class UserServiceImpl implements UserService {
 		return reviewRep.updateReview(content, reviewNo);
 	}
 
+	/**
+	 * 구매후기 삭제하기
+	 * */
 	@Override
 	public int deleteReview(Long reviewNo) {
 		return reviewRep.deleteReview(reviewNo);
 	}
 
+	
 	@Override
 	public int insertWishList(WishList wishList) {
 		wishListRep.save(wishList);
