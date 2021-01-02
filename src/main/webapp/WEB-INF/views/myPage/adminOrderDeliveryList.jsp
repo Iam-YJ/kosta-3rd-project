@@ -9,8 +9,11 @@
 <title>Insert title here</title>
 <style>
 .goodsDetailBottom{width:700px; margin:0 auto;}
-.ul {  float:left; text-align:center; }
-.li { display:inline-block; text-align:center; }
+
+.goodsDetailBottom ul,.goodsDetailBottom li{
+	padding: 0px;
+	margin: 0px;
+}
 </style>
 
 <script type="text/javascript">
@@ -31,24 +34,19 @@
 	<div class="goodsDetailBottom">
 
 		<ul class="nav nav-tabs row border">
-			<li class="nav-item col-xl"><a
-				class="nav-link active btn btn-outline-success" data-toggle="tab"
-				href="#home">배송준비중</a></li>
-			<li class="nav-item col-xl"><a
-				class="nav-link btn btn-outline-success" data-toggle="tab"
-				href="#menu2">배송중</a></li>
-			<li class="nav-item col-xl"><a
-				class="nav-link btn btn-outline-success" data-toggle="tab"
-				href="#menu3">배송완료</a></li>
-	
-
+			<li class="nav-item col-xl">
+				<a class="nav-link active btn btn-outline-success" data-toggle="tab" href="#home">배송준비중</a>
+			</li>
+			<li class="nav-item col-xl">
+				<a class="nav-link btn btn-outline-success" data-toggle="tab" href="#menu2">배송중</a>
+			</li>
+			<li class="nav-item col-xl">
+				<a class="nav-link btn btn-outline-success" data-toggle="tab" href="#menu3">배송완료</a>
+			</li>
 		</ul>
-		<br> <br> <br>
 
 		<!-- Tab panes -->
-		<div class="tab-content">
-	
-
+		<div class="tab-content" style="margin-top: 15px;">
 
 			<div id="home" class="tab-pane active">
 				<div class="goodsDetailInfo">
