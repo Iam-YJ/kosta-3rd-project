@@ -52,6 +52,13 @@ input[type=password]{
 	background-color: #3e8e41;
 }
 
+.footer {
+	background-color: #f0f6e8;
+	padding-top: 40px;
+	padding-bottom: 20px;
+	
+}
+
 
 .indexBestItemSection, .indexSellItemSection{
 	margin-top: 100px; 
