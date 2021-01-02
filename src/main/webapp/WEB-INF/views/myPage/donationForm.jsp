@@ -13,14 +13,14 @@ table th {
   font-weight: bold;
   vertical-align: top;
   color: #fff;
-  background: #ce4869 ;
+  background: #28a745 ;
 }
 table td {
   width: 155px;
   padding: 10px;
   vertical-align: top;
   border-bottom: 1px solid #ccc;
-  background: #eee;
+  background: #fff;
 }
 </style>
 </head>
