@@ -36,6 +36,7 @@ import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.service.AdminService;
 import kosta.pro.rgmall.service.MainService;
 import lombok.RequiredArgsConstructor;
+import oracle.net.aso.i;
 
 @Controller
 @RequestMapping("/admin")
@@ -124,6 +125,111 @@ public class AdminController {
 
 	}// insertGoods
 
+	/**
+	 * 관리자 마이페이지 - 상품 수정하기 폼열기
+	 */
+	@RequestMapping("updateGoods/{regNo}")
+	public ModelAndView updateGoodsForm(@PathVariable Long regNo) {
+		
+		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
+		
+		ModelAndView mv = new ModelAndView("admin/updateGoodsForm", "registerGoods", registerGoods);
+		mv.addObject("list", mainService.selectCategories());
+		return mv;
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 상품 수정하기
+	 */
+	@PostMapping("updateGoods/{regNo}")
+	public ModelAndView updateGoods(HttpSession session, RegisterGoods registerGoods, Long mainCateNo, Long subCateNo, @PathVariable Long regNo,
+			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
+
+		String realPath = session.getServletContext().getRealPath("/");
+
+		String path = realPath + "/images";
+		File Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+
+		path = realPath + "/images/thumbnail";
+		Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+
+		path = realPath + "/images/banner";
+		Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+
+		String currentTime = Long.toString(System.currentTimeMillis());
+		String tfileName = currentTime + tfile.getOriginalFilename();
+		String adfileName = currentTime + adfile.getOriginalFilename();
+		
+		registerGoods.setRegNo(regNo);
+		registerGoods.setMainCategories(new MainCategories(mainCateNo));
+		registerGoods.setSubCategories(new SubCategories(subCateNo));
+		
+		try {
+			
+			if(tfile.getSize() != 0) {
+				System.out.println(1);
+				System.out.println(tfileName);
+				registerGoods.setThumbnailImg(tfileName);
+				tfile.transferTo(new File(realPath + "/images/thumbnail/" + tfileName));
+			}
+			
+			if(adfile.getSize() != 0) {
+				System.out.println(2);
+				System.out.println(adfileName);
+				registerGoods.setAdImg(adfileName);
+				adfile.transferTo(new File(realPath + "/images/banner/" + adfileName));
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		RegisterGoods dbRegisteGoods = adminService.updateGoodsDetail(registerGoods);
+		
+		return new ModelAndView("redirect:/main/goodsDetail/" + dbRegisteGoods.getRegNo());
+
+	}// insertGoods
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * 관리자 마이페이지 - 판매상품목록 조회
 	 */

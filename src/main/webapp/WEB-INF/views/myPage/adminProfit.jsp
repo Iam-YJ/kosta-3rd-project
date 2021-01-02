@@ -6,8 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/Chart.min.js"></script>
@@ -22,13 +21,6 @@
 	
 
 	<script type="text/javascript">
-var randomScalingFactor = function(){ 
-	
-	console.log(${realProfit});
-	//return ${profit}
-
-
-}; 
 
 var jan = ${realProfit[0]}
 var feb = ${realProfit[1]}

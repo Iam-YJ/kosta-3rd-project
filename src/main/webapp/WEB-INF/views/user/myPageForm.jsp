@@ -35,6 +35,7 @@ $(document).ready(function(){
 		}else if(${state == 8}){
 			userGoodsQuestionList();
 		}
+		
 	}
 		
 	 

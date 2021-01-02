@@ -33,8 +33,6 @@ $(document).ready(function(){
 		
 	})//insertGoodsQBtn_click
 	
-	
-	
 	//3자리마다 Comma넣어주는 함수
 	function AddComma(num){
 		var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -77,6 +75,12 @@ function instantBuybtn(regNo){
 	}
 	
 	var qua=document.getElementById("quantity").value
+	
+	if(qua > ${goodsQuestionMap.registerGoods.stock}){
+		alert("최대 구매 수량을 넘길 수 없습니다.");
+		return false;
+	}
+		
 	//console.log(document.getElementById("quantity").value)
 	 if(confirm("상품을 구매하시겠습니까?")){
 		location.href=
@@ -133,7 +137,17 @@ function deleteConfirm(){
 				<div class="col-xl-1"></div>
 				<div class="expainSetion col-xl">
 					<!-- GoodSDetial 간단 들어가는 부분 -->
-					<h3>${goodsQuestionMap.registerGoods.title}</h3>
+					<div class="row">
+						<div class="col-xl"> 						
+							<h3>${goodsQuestionMap.registerGoods.title}</h3>
+						</div>
+						<c:if test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
+							<div class="col-xl-3">
+								<a href="${pageContext.request.contextPath}/admin/updateGoods/${goodsQuestionMap.registerGoods.regNo}" class="btn btn-outline-success">상품 수정</a>
+							</div>
+						</c:if>
+					</div>
+					
 					
 					<hr>
 					<div class="row">
