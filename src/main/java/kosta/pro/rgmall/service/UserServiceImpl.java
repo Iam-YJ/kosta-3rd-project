@@ -418,7 +418,12 @@ public class UserServiceImpl implements UserService {
 			orderLineRep.save(orderLine);
 			
 			//3. 재고감소
-			dbRegisterGoods.setStock(dbRegisterGoods.getStock()-dbcart.getQuantity());
+			if(dbRegisterGoods.getStock()-dbcart.getQuantity()<0) {
+				throw new RuntimeException("재고 부족으로 결제가 불가능합니다.");
+			}else {
+				dbRegisterGoods.setStock(dbRegisterGoods.getStock()-dbcart.getQuantity());
+			}
+			
 			
 			goodsName +=dbcart.getRegisterGoods().getName()+",";
 			//4. 카트제거

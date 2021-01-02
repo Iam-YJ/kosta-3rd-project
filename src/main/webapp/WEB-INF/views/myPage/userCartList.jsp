@@ -16,7 +16,11 @@
 			}
 	}
 	
-	function buyCartGoods(){
+	function buyGoods(regNo){
+		location.href="${pageContext.request.contextPath}/user/instantBuy/"+regNo+"?quantity=1";
+	}
+	
+	function buyCartGoods(regNo){
 		if(confirm("모든 상품을 구매하시겠습니까?")){
 			location.href=
 				"${pageContext.request.contextPath}/user/buyCartGoods";
@@ -121,7 +125,7 @@
 							
 						</div>
 						<div class="col-xl-2" style="margin: auto;">
-						 	<input type="button" class="btn btn-success col-xl" onclick="" value="바로구매" style="margin: 5px;">
+						 	<input type="button" class="btn btn-success col-xl" onclick="buyGoods(${list.registerGoods.regNo});" value="바로구매" style="margin: 5px;">
 			 				<input type="button"  class="btn btn-outline-success col-xl" onclick="deleteCartList(${list.registerGoods.regNo});"  value="삭제" style="margin: 5px;"> 
 						</div>
 						<div class="col-xl-1"></div>
