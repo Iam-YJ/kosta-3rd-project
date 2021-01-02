@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kosta.pro.rgmall.controller.MailController;
 import kosta.pro.rgmall.domain.Cart;
 import kosta.pro.rgmall.domain.CartList;
 import kosta.pro.rgmall.domain.Donation;
@@ -61,6 +62,8 @@ public class UserServiceImpl implements UserService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
+	
+	private final MailController mailController;
 
 	/**
 	 * userNo에 해당하는 User정보 받아오기
@@ -391,6 +394,7 @@ public class UserServiceImpl implements UserService {
 		Orders orders = new Orders(null, shippingAddr, totalPrice, null, "배송준비중", realPay, dbUserList, dbPay);;
 		ordersRep.save(orders);
 		
+		String goodsName="";
 		for(Cart cart : cartList.getCartList()) {
 			System.out.println(cart.getCartNo());
 			//Cart에서 regNo를 불러와 RegisterGoodsdb불러오기;
@@ -406,15 +410,26 @@ public class UserServiceImpl implements UserService {
 			//3. 재고감소
 			dbRegisterGoods.setStock(dbRegisterGoods.getStock()-dbcart.getQuantity());
 			
+			goodsName +=dbcart.getRegisterGoods().getName()+",";
 			//4. 카트제거
 			cartRep.delete(dbcart);
 		}
+		
+		//구매완료 메일 보내기
+		
+		UserList userList=userListRep.findById(userNo).orElse(null);
+		System.out.println(goodsName+"333333333333333333");
+		goodsName.substring(0, goodsName.length()-1);
+		mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 입니다",goodsName+"이 주문 완료 되었습니다");
 
 		//5. 유저 포인트 감소(배송완료 후 포인트 추가)
 		//if(dbUserList.getUsergrade())<--사용해야함
 		
 		dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
 		//6. 등급 비교 후 감가.
+		
+		
+		
 		return 0;
 	}
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kosta.pro.rgmall.controller.MailController;
 import kosta.pro.rgmall.domain.Admin;
 import kosta.pro.rgmall.domain.FAQ;
 import kosta.pro.rgmall.domain.GoodsAnswer;
@@ -64,6 +65,8 @@ public class AdminServiceImpl implements AdminService {
 	private final UserGradeRepository userGradeRep;
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
+	
+	private final MailController mailController;
 
 	@Override
 	public Admin adminLogin(String adminId, String adminPwd) {
@@ -236,6 +239,10 @@ public class AdminServiceImpl implements AdminService {
 			throw new RuntimeException("주문정보를 확인할 수 없습니다.");
 		}
 		orders.setDelState("배송중");
+		
+		Long userNo=orders.getUserList().getUserNo();
+		UserList userList = userListRep.findById(userNo).orElse(null);
+		mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 입니다.","고객님이 주문하신 상품이"+orders.getAddr()+"로 지금 배송시작 되었습니다");
 
 		return 0;
 	}
@@ -312,11 +319,21 @@ public class AdminServiceImpl implements AdminService {
 				if (gradeNo != afterGradeNo) {
 					userListRep.updateUserGrade((long) userGradeRep.findGradeNo(grade), userNo);
 				}
+				
+				//환불승인 답변 메일 보내기
+				mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 환불신청 답변입니다.","환불이 승인 되었습니다 빠른시일내 제품 반송 부탁드립니다.");
 
 			} else if (refundState == 1) {
 				// 환불거절
 				dbRefund.setRefundReply(refundReply);
 				dbRefund.setRefundState("환불거절");
+				
+				//환불거절 답변 메일 보내기
+				Refund refund = refundRep.findById(RefundNo).orElse(null);
+				Long userNo = refund.getOrders().getUserList().getUserNo();
+				UserList userList = userListRep.findById(userNo).orElse(null);
+				mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 환불신청 답변입니다."," 죄송합니다 환불이 불가합니다. \n 사유:"+refundReply);
+				
 			}
 		}
 

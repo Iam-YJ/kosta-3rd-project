@@ -15,35 +15,24 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/mail")
 public class MailController {
 	private final JavaMailSender mailSender;
-	
 	private final Environment env;
 	
-	@RequestMapping("/a")
-	public boolean sendMail() {
-		String sendTo = "a9552449@naver.com";
-		String mailTitle = "안녕하세요 RGMALL 입니다";
-		String mailContent = "하이방가";
-			
+	public boolean sendMail(String email, String title,String content) {
+		String sendTo = email;
+		String mailTitle = title;
+		String mailContent = content;
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-				
 			@Override
 			public void prepare(MimeMessage mimeMessage) throws Exception {
 				final MimeMessageHelper message = new MimeMessageHelper(mimeMessage,true,"UTF-8");
-
 				message.setTo(sendTo);
 				message.setFrom(env.getProperty("spring.mail.username"));	//env.getProperty("spring.mail.username")
 				message.setSubject(mailTitle);
 				message.setText(mailContent, true); //ture : html 형식 사용
-					
-				//Mail에 img 삽입
-				//ClassPathResource resource = new ClassPathResource("img 주소/img 이름.png");
-				//message.addInline("img", resource.getFile());
 			}
 		};
-			
 		try{
 			mailSender.send(preparator);
 		} catch (MailException e){
