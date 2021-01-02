@@ -20,7 +20,6 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#payBtn").click(function(){
-
 		$.ajax({
 			type : 'post',
 			url : '${pageContext.request.contextPath}/user/payGoods',
@@ -35,9 +34,8 @@ $(document).ready(function(){
 					alert("결제가 실패하였습니다.");
 				}
 			},
-			
 		});
-	})//payBtnClick
+	})//payBtnClick 
 });//jquery_ready
 </script>
 </head>
@@ -45,7 +43,7 @@ $(document).ready(function(){
 <div class="payCardSection">
 	<div class="container"> 
 		<div class="titleSection row-col">
-			카드결제		
+			계좌이체		
 		</div>
 		<div class="payInfoSection">
 			<div class="row">
