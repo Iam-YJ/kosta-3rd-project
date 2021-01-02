@@ -3,8 +3,9 @@ package kosta.pro.rgmall.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -323,11 +324,21 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/profit")
 	public ModelAndView profit(String startDate, String endDate) {
-		//int profit = adminService.checkProfit(startDate, endDate);
-		List<Integer> profit = new ArrayList<>();
-		profit.add(12);
-		profit.add(15);
+		List<String> profit = adminService.checkProfit("11", "22");	
+
+		for(String s : profit) {
+			System.out.println(s);
+		}
 		
+		for(int i=0; i<profit.size(); i++) {
+			
+			
+		}
+		
+		
+		/*
+		 * List<Integer> profit = new ArrayList<>(); profit.add(12); profit.add(15);
+		 */		
 		return new ModelAndView("myPage/adminProfit", "profit",profit);
 	}
 	/*

@@ -20,7 +20,17 @@
 <input type="button" id="btnAdd" value="add data">
 
 <script type="text/javascript">
-var randomScalingFactor = function(){ return ${profit}};
+var randomScalingFactor = function(){ 
+	
+	console.log(${profit});
+	//return ${profit}
+
+
+}; 
+
+var qq = ${profit[1]}
+var qw = ${profit[1]}
+
 var months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"];
 var barChart = null;
 var barChartData = {
@@ -31,7 +41,7 @@ var barChartData = {
 			strokeColor : "#ffc107",
 			highlightFill: "#ffc107",
 			highlightStroke: "#ffc107",
-			data : [randomScalingFactor().[0]]
+			data : [qq, qw]
 		},
 		
 	]
