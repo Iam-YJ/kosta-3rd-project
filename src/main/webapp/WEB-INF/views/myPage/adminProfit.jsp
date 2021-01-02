@@ -13,7 +13,15 @@
 </head>
 
 <body>
-	<h1>ADMIN의 마이페이지</h1>
+	<div class="insertOrdersForm">
+	<div class="container-fluid">
+		<div class="titleSection">
+			<div class="row">
+				<div class="col-xl">
+					매출조회
+				</div>
+			</div>
+		</div><!-- titleSection -->
 
 	<div style="width: 60%">
 		<canvas id="canvas" height="800" width="700"></canvas>
@@ -100,6 +108,8 @@ $("canvas").on("click", function(e) {
 
 </script>
 
+</div>
+</div>
 
 
 
