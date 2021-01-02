@@ -332,7 +332,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "main/index";
+		return "redirect:/main/";
 	}// logout
 
 	/**
