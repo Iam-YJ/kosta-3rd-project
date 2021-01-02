@@ -396,16 +396,16 @@ public class AdminController {
 
 		adminService.insertGoodsAnswer(goodsAnswer);
 
-		return "redirect:/user/myPage";
+		return "redirect:/user/myPage?state=6";
 
 	}
 
 	@RequestMapping("/myPage/goodsQuestionUpdateAnswer/{agoodsNo}")
 	public String GoodsQuestionUpdateAnswer(@PathVariable Long agoodsNo, String refundReply) {
 
-		// adminService.updateGoodsAnswer(agoodsNo, refundReply);
+		 adminService.updateGoodsAnswer(agoodsNo, refundReply);
 
-		return "redirect:/user/myPage";
+		return "redirect:/user/myPage?state=6";
 
 	}
 
