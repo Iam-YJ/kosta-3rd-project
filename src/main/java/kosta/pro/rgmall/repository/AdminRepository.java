@@ -14,11 +14,6 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 	@Query("select a from Admin a where a.adminId=?1 and a.password=?2")
 	Admin adminLogin(String adminId, String password);
 	
-	//총매출
-	@Query("select sum(o.realpay) from Orders o")
+	@Query("select sum(o.orderdate) from Orders o")
 	int checkProfits();
-	
-	//일매출
-	//@Query("select sum(o.realpay) from Orders o where=o.Orderdate=?1")
-	//List<Orders> checkDayProfit(String orderdate);
 }// class
