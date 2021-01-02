@@ -362,7 +362,7 @@ public class AdminServiceImpl implements AdminService {
 	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
 		goodsAnswerRep.save(goodsAnswer);
 	}
-	
+
 	/**
 	 * 상품문의내역 수정
 	 */
@@ -370,13 +370,13 @@ public class AdminServiceImpl implements AdminService {
 	public void updateGoodsAnswer(GoodsAnswer goodsAnswer) {
 
 		GoodsAnswer dbGoodsAnswer = goodsAnswerRep.findById(goodsAnswer.getAgoodsNo()).orElse(null);
-		if(dbGoodsAnswer == null) {
+		if (dbGoodsAnswer == null) {
 			throw new RuntimeException("상품문의 답변 번호에 해당하는 답변이 없습니다.");
 		}
-		
+
 		dbGoodsAnswer.setContent(goodsAnswer.getContent());
 	}
-	
+
 	/**
 	 * 상품문의내역 삭제
 	 */
@@ -384,7 +384,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteGoodsAnswer(Long agoodsNo) {
 		System.out.println(1);
 		goodsAnswerRep.deleteGoodsAnswerbyid(agoodsNo);
-		
+
 		System.out.println(2);
 		return 0;
 	}
@@ -400,16 +400,9 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<String> checkProfit(String startDate, String endDate) {
 
-	
-		List<String> profit = adminRep.groupByYearAndMonth();
+		List<String> profit = adminRep.groupByYearAndMonth(startDate, endDate);
 		return profit;
 	}
-	/*
-	 * @Override public List<Orders> checkDayProfit(String orderDate) {
-	 * 
-	 * return adminRep.checkDayProfit(orderDate); }
-	 */
-
 
 	@Override
 	public UserList searchById(String userId) {
@@ -417,20 +410,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 *  admin 마이페이지 회원조회
-	 * */
+	 * admin 마이페이지 회원조회
+	 */
 	@Override
 	public List<UserList> searchAllUser(int state) {
 		List<UserList> userList = null;
-		
-		if(state == 0) {
+
+		if (state == 0) {
 			userList = userListRep.selectAllUser();
-		} else if(state == 1) {
+		} else if (state == 1) {
 			userList = userListRep.sortNoAllUser();
-		} else if(state == 2) {
-			userList =userListRep.sortIdAllUser();
+		} else if (state == 2) {
+			userList = userListRep.sortIdAllUser();
 		}
-		
+
 		return userList;
 	}
 

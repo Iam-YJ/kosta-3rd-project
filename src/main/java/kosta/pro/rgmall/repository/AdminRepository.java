@@ -20,6 +20,8 @@ public interface AdminRepository extends JpaRepository<Admin, Long> {
 	//List<Orders> checkDayProfit(String orderdate);
 	
 	//년 - 월 그룹지어 매출액 가져오기
-	@Query("select to_char(o.orderdate,'YYYY-MM'), sum(o.realpay) from Orders o where o.orderdate>='2021-01-01' and o.orderdate<'2021-12-31' group by to_char(o.orderdate, 'YYYY-MM')")
-	List<String> groupByYearAndMonth();
+	@Query("select cast(to_char(o.orderdate, 'YYYY-MM-DD') as date), sum(o.realpay) from Orders o \r\n" + 
+			"where (o.orderdate>='2020-01-01' and o.orderdate<'2021-12-31') \r\n" + 
+			"group by to_char(o.orderdate, 'YYYY-MM-DD') order by cast(to_char(o.orderdate, 'YYYY-MM-DD') as date) ")
+	List<String> groupByYearAndMonth(String startDate, String endDate);
 }// class

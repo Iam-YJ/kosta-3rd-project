@@ -6,30 +6,42 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/js/Chart.min.js"></script>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/Chart.min.js"></script>
 </head>
 
 <body>
 	<h1>ADMIN의 마이페이지</h1>
-	
-<div style="width: 60%">
-<canvas id="canvas" height="700" width="700"></canvas>
-</div>
-<input type="button" id="btnAdd" value="add data">
 
-<script type="text/javascript">
+	<div style="width: 60%">
+		<canvas id="canvas" height="800" width="700"></canvas>
+	</div>
+	
+
+	<script type="text/javascript">
 var randomScalingFactor = function(){ 
 	
-	console.log(${profit});
+	console.log(${realProfit});
 	//return ${profit}
 
 
 }; 
 
-var qq = ${profit[1]}
-var qw = ${profit[1]}
+var jan = ${realProfit[0]}
+var feb = ${realProfit[1]}
+var mar = ${realProfit[2]}
+var apr = ${realProfit[3]}
+var may = ${realProfit[4]}
+var jun = ${realProfit[5]}
+var jul = ${realProfit[6]}
+var aug = ${realProfit[7]}
+var sep = ${realProfit[8]}
+var oct = ${realProfit[9]}
+var nov = ${realProfit[10]}
+var dec = ${realProfit[11]}
 
 var months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"];
 var barChart = null;
@@ -41,7 +53,7 @@ var barChartData = {
 			strokeColor : "#ffc107",
 			highlightFill: "#ffc107",
 			highlightStroke: "#ffc107",
-			data : [qq, qw]
+			data : [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]
 		},
 		
 	]
@@ -49,23 +61,6 @@ var barChartData = {
 }; 
 
 
-
-/* var myChart = new Chart(context, {
-	type:'line',
-	data: {
-		labels:["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"],
-		datasets:[{
-			label:'매출액',
-			lineTension:0,
-			data:[1,2,3,4,5,7,6,8,9,10,11,12],
-			backgroundColor:"rgba(153,255,51,0.4)"
-			
-		}]
-		
-		
-	}
-	
-}) */
 
 $(function() {
 	var ctx = document.getElementById("canvas").getContext("2d");
@@ -112,18 +107,9 @@ $("canvas").on("click", function(e) {
 }); 
 
 </script>
-	
-	<%-- 
-	서브카테고리 :
-<select id="subCategory">
-<option value=0>서브카테고리</option>
-<c:forEach items="${requestScope.list}" var="list" state="state">
-	<c:forEach items="${list}" var="sub" >
-		<option value="${list}">${list[state]}</option>
-	</c:forEach>
-</c:forEach>
- </select> --%>
-	
-	
+
+
+
+
 </body>
 </html>
