@@ -18,6 +18,16 @@
 </script>
 </head>
 <body>
+
+<div class="insertOrdersForm">
+	<div class="container-fluid">
+		<div class="titleSection">
+			<div class="row">
+				<div class="col-xl">
+					상품 배송조회
+				</div>
+			</div>
+		</div><!-- titleSection -->
 	<div class="goodsDetailBottom">
 
 		<ul class="nav nav-tabs row border">
@@ -167,6 +177,8 @@
 			</div>
 		</div>
 
+	</div>
+	</div>
 	</div>
 	</div>
 	

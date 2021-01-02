@@ -8,7 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div class="insertOrdersForm">
+	<div class="container-fluid">
+		<div class="titleSection">
+			<div class="row">
+				<div class="col-xl">
+					판매상품목록 조회
+				</div>
+			</div>
+		</div><!-- titleSection -->
 	<div class="OrderListInfo">
 		<c:if test="${empty listRegisterGoods}">
 					등록된 상품이 없습니다.
@@ -30,7 +38,7 @@
 						<div class="col-xl" style="text-align: left; margin-left: 20px;">
 							카테고리 : ${listRegisterGoods.mainCategories.mainCategoryName} &nbsp - &nbsp ${listRegisterGoods.subCategories.subCategoryName}
 							<br><br>
-							<a href = "${pageContext.request.contextPath}/main/goodsDetail/${listRegisterGoods.regNo}"> 상품명 : ${listRegisterGoods.title}</a>
+							<a href = "${pageContext.request.contextPath}/main/goodsDetail/${listRegisterGoods.regNo}" style="color: black"> 상품명 : ${listRegisterGoods.title}</a>
 							
 						</div>
 					<br>
@@ -41,7 +49,8 @@
 			</c:forEach>
 		</c:if>
 	</div>
-
+</div>
+</div>
 
 
 </body>

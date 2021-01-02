@@ -81,6 +81,42 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
+	public RegisterGoods updateGoodsDetail(RegisterGoods registerGoods) {
+
+		RegisterGoods dbRegisterGoods = registerGoodsRep.findById(registerGoods.getRegNo()).orElse(null);
+		if(dbRegisterGoods == null) {
+			throw new RuntimeException();
+		}
+		
+		dbRegisterGoods.setAd(registerGoods.getAd());
+	
+		dbRegisterGoods.setArea(registerGoods.getArea());
+		dbRegisterGoods.setDetail(registerGoods.getDetail());
+		dbRegisterGoods.setMainCategories(registerGoods.getMainCategories());
+		dbRegisterGoods.setMethod(registerGoods.getMethod());
+		dbRegisterGoods.setName(registerGoods.getName());
+		dbRegisterGoods.setOptions(registerGoods.getOptions());
+		dbRegisterGoods.setPrice(registerGoods.getPrice());
+		dbRegisterGoods.setStock(registerGoods.getStock());
+		dbRegisterGoods.setSubCategories(registerGoods.getSubCategories());
+		dbRegisterGoods.setTitle(registerGoods.getTitle());
+		
+		if(registerGoods.getThumbnailImg() != null ) {
+			System.out.println(3);
+			dbRegisterGoods.setThumbnailImg(registerGoods.getThumbnailImg());
+		}
+		
+		if(registerGoods.getAdImg() != null ) {
+			System.out.println(4);
+			dbRegisterGoods.setAdImg(registerGoods.getAdImg());
+		}
+		
+		return dbRegisterGoods;
+	}
+	
+	
+	
+	@Override
 	public void insertNotice(Notice notice) {
 		Notice dbNotice = noticeRep.save(notice);
 		if (dbNotice == null) {

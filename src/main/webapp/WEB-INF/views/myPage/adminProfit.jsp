@@ -6,15 +6,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/Chart.min.js"></script>
 </head>
 
 <body>
-	<h1>ADMIN의 마이페이지</h1>
+	<div class="insertOrdersForm">
+	<div class="container-fluid">
+		<div class="titleSection">
+			<div class="row">
+				<div class="col-xl">
+					매출조회
+				</div>
+			</div>
+		</div><!-- titleSection -->
 
 	<div style="width: 60%">
 		<canvas id="canvas" height="800" width="700"></canvas>
@@ -108,6 +115,8 @@ $("canvas").on("click", function(e) {
 
 </script>
 
+</div>
+</div>
 
 
 
