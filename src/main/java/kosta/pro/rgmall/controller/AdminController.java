@@ -421,38 +421,74 @@ public class AdminController {
 	}
 
 	/**
-	 * 공지사항 전체검색
+	 * 고객센터 - FAQ - 등록폼 열기
 	 */
-	@RequestMapping("/notice")
-	public void selectAllNotice(Model model) {
-		List<Notice> list = mainService.selectAllNotice();
+	@RequestMapping("/writeFAQ")
+	public String writeFAQForm() {
+		return "/cs/writeFAQ";
+	}
+	
+	
+	/**
+	 * 고객센터 - FAQ - 등록하기
+	 */
+	@RequestMapping("/insertFAQ")
+	public String insert(FAQ faq) {
 
-		model.addAttribute("list", list);
+		adminService.insertFAQ(faq);
+
+		return "redirect:/main/csForm?state=1";
+	}
+	
+	/**
+	 * 고객센터 - FAQ - 수정하기
+	 */
+	@RequestMapping("/updateFAQ/{faqNo}")
+	public String faqUpdate(FAQ faq, @PathVariable Long faqNo) {
+		faq.setFaqNo(faqNo);
+		adminService.updateFAQ(faq);
+
+		return "redirect:/main/csForm?state=1";
+	}
+
+	/*
+	 * 고객센터 - FAQ - 삭제하기
+	 */
+	@RequestMapping("/deleteFAQ/{faqNo}")
+	public String faqDelete(@PathVariable Long faqNo) {
+		adminService.deleteFAQ(new FAQ(faqNo));
+
+		return "redirect:/main/csForm?state=1";
 	}
 
 	/**
-	 * 공지사항 등록하기 폼
+	 * 고객센터 - 공지사항 - 등록폼
 	 */
 	@RequestMapping("/writeNotice")
 	public String writeNotice() {
-
-		return "main/cs/writeNotice";
+		return "/cs/writeNotice";
 	}
-
+	
 	/**
-	 * 공지사항 등록하기
+	 * 고객센터 - 공지사항 - 등록하기
 	 */
-	@RequestMapping("/insert")
+	@RequestMapping("/insertNotice")
 	public String insertNotice(Notice notice) {
-		// content에 스크립트 요소(태그)를 문자로 교체
-		String content = notice.getContent().replace("<", "&lt;");
-		notice.setContent(content);
 
 		adminService.insertNotice(notice);
 
-		return "redirect:/main/notice";
+		return "redirect:/main/csForm?state=2";
 	}
 
+	/**
+	 * 고객센터 - 공지사항 - 삭제하기
+	 */
+	@RequestMapping("/deleteNotice/{noticeNo}")
+	public String deleteNotice(@PathVariable Long noticeNo) {
+		adminService.deleteNotice(noticeNo);
+		return "redirect:/main/csForm?state=2";
+	}
+	
 	/**
 	 * 공지사항 수정등록 폼
 	 */
@@ -469,93 +505,6 @@ public class AdminController {
 	public String updateNotice(Notice notice) {
 		adminService.updateNotice(notice);
 		return "redirect:/admin/readNotice/" + notice.getNoticeNo();
-	}
-
-	/**
-	 * 공지사항 상세보기
-	 */
-	@RequestMapping("/readNotice/{noticeNo}")
-	public ModelAndView readNotice(@PathVariable Long noticeNo) {
-
-		Notice notice = adminService.selectByNotice(noticeNo);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main/cs/readNotice"); // /WEB-INF/views/read.jsp
-		mv.addObject("notice", notice);
-
-		return mv;
-	}
-
-	/**
-	 * 삭제하기
-	 */
-	@RequestMapping("/deleteNotice")
-	public String deleteNotice(Long noticeNo) {
-		adminService.deleteNotice(noticeNo);
-		return "redirect:/main/notice";
-	}
-
-	/*
-	 * faq 수정등록 폼
-	 */
-	@RequestMapping("/updateForm")
-	public ModelAndView faqUpdateForm(Long faqNo) {
-		FAQ faq = adminService.selectByFaq(faqNo);
-		System.out.println(faq);
-		return new ModelAndView("main/cs/updateFAQForm", "faq", faq);
-	}
-
-	/*
-	 * 수정완료하기
-	 */
-	@RequestMapping("/update")
-	public String faqUpdate(FAQ faq) {
-		adminService.updateFAQ(faq);
-
-		return "redirect:/admin/read/" + faq.getFaqNo();// controller에서 controller 로 찾아 가는데 기존에 가지고있는 것은 버리고
-	}
-
-	/*
-	 * 삭제하기
-	 */
-	@RequestMapping("/delete")
-	public String faqDelete(FAQ faq) {
-		adminService.deleteFAQ(faq);
-
-		return "redirect:/admin/cs/list";
-	}
-
-	/*
-	 * FAQ 상세보기
-	 */
-	@RequestMapping("/read/{faqNo}")
-	public ModelAndView read(@PathVariable Long faqNo) {
-
-		FAQ faq = adminService.selectByFaq(faqNo);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main/cs/readFAQ"); // /WEB-INF/views/read.jsp
-		mv.addObject("faq", faq);
-
-		return mv;
-	}
-
-	/**
-	 * FAQ 등록하기 폼
-	 */
-	@RequestMapping("/writeFAQ")
-	public String write() {
-		return "main/cs/writeFAQ";
-	}
-
-	/**
-	 * FAQ 등록하기
-	 */
-	@RequestMapping("/insertFAQ")
-	public String insert(String question, String answer) {
-
-		FAQ faq = new FAQ(null, question, answer);
-		adminService.insertFAQ(faq);
-
-		return "redirect:/admin/cs/list";
 	}
 
 	/**

@@ -43,37 +43,56 @@ public class MainController {
 	private final UserService userService;
 	private final AdminService adminService;
 
+	
+	// 고객센터 - 폼열기
+	@RequestMapping("/csForm")
+	public ModelAndView csForm(HttpServletRequest request) {
+		
+		String state = request.getParameter("state");
+		ModelAndView mv = new ModelAndView("main/csForm");
+		if (state != null) {
+			mv.addObject("state", state);
+		}
+		return mv;
+	}
+	
 	// 고객센터 - 메인페이지
 	@RequestMapping("/cs/main")
 	public ModelAndView csMain() {
-		return new ModelAndView("cs/main");
+		
+		ModelAndView mv = new ModelAndView("cs/main");
+		
+		return mv;
 	}
 
-	// 고객센터 - FAQ
+	/**
+	 * 고객센터 - FAQ에서 제목 검색
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/csFormAjax", method = RequestMethod.POST)
+	public List<FAQ> searchCS(String word) {
+		List<FAQ> faq = mainService.findFAQByWord(word);
+		return faq;
+	}
+	
+	// 고객센터 - FAQ폼열기
 	@RequestMapping("/cs/FAQ")
 	public ModelAndView csFAQ() {
-		System.out.println("11");
-		List<FAQ> list = adminService.selectAllFAQ();
+		List<FAQ> faqList = adminService.selectAllFAQ();
 
-		/*
-		 * page처리 Pageable pageable = PageRequest.of(nowPage, 10, Direction.DESC,
-		 * "faqNo"); Page<FAQ> pageList = service.selectAll(pageable);
-		 * 
-		 * //pageList.getNumber() model.addAttribute("pageList" , pageList);
-		 */
-
-		return new ModelAndView("cs/FAQ", "list", list);
+		return new ModelAndView("cs/FAQ", "faqList", faqList);
 	}
 
-	// 고객센터 - 공지사항
+	// 고객센터 - 공지사항 폼열기
 	@RequestMapping("/cs/notice")
 	public ModelAndView csNotice() {
 
-		List<Notice> list = mainService.selectAllNotice();
+		List<Notice> noticeList = mainService.selectAllNotice();
 
-		return new ModelAndView("cs/notice", "list", list);
+		return new ModelAndView("cs/notice", "noticeList", noticeList);
 	}
 
+	
 	@RequestMapping("/{url}")
 	public void url() {
 	}
@@ -316,15 +335,7 @@ public class MainController {
 		return mv;
 	}
 
-	/**
-	 * FAQ에서 검색
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/csForm", method = RequestMethod.POST)
-	public List<FAQ> searchCS(String word) {
-		List<FAQ> faq = mainService.findFAQByWord(word);
-		return faq;
-	}
+
 
 	/**
 	 * 우편번호 api test

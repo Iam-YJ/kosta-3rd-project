@@ -6,64 +6,65 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+a{
+	color: black;
+}
+
+</style>
+<script type="text/javascript">
+
+function clientChk(){
+	if (${sessionScope.userList.authority != 'ROLE_USER'}) {
+		alert("회원전용 서비스 입니다.")
+		return false;
+	}
+	return true;
+}
+
+</script>
 </head>
 <body>
-	<!-- 내용이 들어갈 구간입니다 -->
-	고객센터를 통해 궁금증을 해결하세요.
-	<p>1:1 상담을 통하시면 빠른 상담이 가능합니다
-	<div class="parent1"
-		style="border: 1px solid black; float: left; width: 100%; box-sizing: border-box">
-		&nbsp&nbsp1:1 친절상담
-		<p>
-			&nbsp&nbsp궁금한 사항은 언제든 문의하세요.<br>
-		<div class="first"
-			style="border: 1px solid black; float: left; width: 15%; box-sizing: border-box; margin-left: 3%; margin-bottom: 3%; text-align: center">상담하기</div>
-		<div class="second"
-			style="border: 1px solid black; float: left; width: 15%; box-sizing: border-box; margin-left: 3%; margin-bottom: 3%; text-align: center">상담내역보기</div>
-		<p>
-	</div>
-
-	<div class="parent3">
-		<div class="first3"
-			style="border: 1px solid black; float: left; width: 30%; padding-top: 15%; padding-bottom: 15%; margin-top: 5%; margin-bottom: 5%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href="${pageContext.request.contextPath}">FAQ</a>
+<div class="csMainSection">
+	<div class="container-fluid">	
+		<div class="row titleSection">
+			<div class="col-xl">
+				<h4>고객센터를 	통해 궁금증을 해결하세요.</h4>
+			</div>
+		</div><!-- titleSection -->
+		<div class="row" style="margin-top: 25px;">
+			<div class="col-xl border rounded" style="margin: auto; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/main/csForm?state=1">FAQ</a></h4>
+			</div>
+			<div class="col-xl border rounded" style="margin-left: 30px; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/main/csForm?state=2">공지사항</a></h4>
+			</div>
 		</div>
-		<div class="second3"
-			style="border: 1px solid black; float: left; margin-left: 5%; padding-top: 15%; padding-bottom: 15%; margin-top: 5%; margin-bottom: 5%; width: 30%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href=${pageContext.request.contextPath}>공지사항</a>
+		
+		<div class="row" style="margin-top: 25px;">
+			<div class="col-xl border rounded" style="margin: auto; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/user/myPage?state=3" onclick="return clientChk();">찜목록</a></h4>
+			</div>
+			<div class="col-xl border rounded" style="margin: 30px; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/user/myPage?state=2" onclick="return clientChk();">장바구니</a></h4>
+			</div>
+			<div class="col-xl border rounded" style="margin: auto; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/user/myPage" onclick="return clientChk();">주문/배송조회</a></h4>
+			</div>
 		</div>
-		<div class="third3"
-			style="border: 1px solid black; float: left; margin-left: 5%; padding-top: 15%; padding-bottom: 15%; margin-top: 5%; margin-bottom: 5%; margin-top: 5%; margin-bottom: 5%; width: 30%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href="${pageContext.request.contextPath}/user/myPage/userGoodsQuestionList">상품문의</a>
+		
+		<div class="row" style="">
+			<div class="col-xl border rounded" style="margin: auto; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/user/myPage?state=8" onclick="return clientChk();">나의 상품문의</a></h4>
+			</div>
+			<div class="col-xl border rounded" style="margin: 30px; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/user/myPage?state=4" onclick="return clientChk();">나의 구매후기</a></h4>
+			</div>
+			<div class="col-xl border rounded" style="margin: auto; text-align: center; padding: 80px 0px;">
+				<h4><a href="${pageContext.request.contextPath}/user/myPage?state=7" onclick="return clientChk();">나의 포인트 내역</a></h4>
+			</div>
 		</div>
-	</div>
-	<br>
-	<div class="parent4">
-		<div class="first4"
-			style="border: 1px solid black; float: left; width: 30%; padding-top: 15%; padding-bottom: 15%; margin-bottom: 5%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href="${pageContext.request.contextPath}/user/myPage/userWishList">찜목록</a>
-		</div>
-		<div class="second4"
-			style="border: 1px solid black; float: left; margin-left: 5%; padding-top: 15%; padding-bottom: 15%; margin-bottom: 5%; width: 30%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href="${pageContext.request.contextPath}/user/myPage/userCartList">장바구니</a>
-		</div>
-		<div class="third4"
-			style="border: 1px solid black; float: left; margin-left: 5%; padding-top: 15%; padding-bottom: 15%; margin-bottom: 5%; width: 30%; box-sizing: border-box; text-align: center; font-size: 30px;">
-			<a href="${pageContext.request.contextPath}/user/myPage/userOrderList">주문/배송조회</a>
-		</div>
-	</div>
-	<br>
-	<div class="parent5">
-		<div class="first5"
-			style="border: 1px solid black; float: left; width: 30%; padding-top: 15%; padding-bottom: 15%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href="${pageContext.request.contextPath}/user/myPage/userPointGradeList">포인트 내역</a>
-		</div>
-		<div class="second5"
-			style="border: 1px solid black; float: left; margin-left: 5%; padding-top: 15%; padding-bottom: 15%; width: 30%; box-sizing: border-box; text-align: center; font-size: 30px">
-			<a href="${pageContext.request.contextPath}/user/myPage/userGoodsReviewList">구매후기</a>
-		</div>
-	</div>
-
-
+	</div><!-- container-fluid -->
+</div><!-- csMainSection -->
 </body>
 </html>

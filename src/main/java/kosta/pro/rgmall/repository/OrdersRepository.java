@@ -15,7 +15,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	List<Orders> selectOrdersByUserNo(Long userNo);
 	
 	//관리자가 신규주문목록을 확인할 수 있음. 배송상태로 확인
-	@Query("select orders from Orders orders where orders.delState = '배송준비중' and not orders.delState = '환불상품' order by orders.orderdate asc")
+	@Query("select orders from Orders orders where orders.delState = '배송준비중'  order by orders.orderdate asc")
 	List<Orders> selectNewOrders();
 	
 	//관리자가 배송중인 목록을 확인할 수 있음.
@@ -42,7 +42,7 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	@Query("select o from Orders o where o.delState = '환불상품' and o.userList.userNo=?1")
 	List<Orders> selectRefundOrders(Long userNo);	
 	
-	@Query(value = "select sum(realpay) from orders where user_No=16 and del_state='배송완료'",nativeQuery = true)
+	@Query(value = "select sum(realpay) from orders where user_No=?1 and del_state='배송완료'",nativeQuery = true)
 	Integer selectUserPay(Long userNo);
 	
 }//class

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kosta.pro.rgmall.controller.MailController;
 import kosta.pro.rgmall.domain.Orders;
 import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.repository.AdminRepository;
@@ -52,6 +53,7 @@ public class DeliveryServiceImpl implements DeliveryService {
 	private final UserListRepository userListRep;
 	private final WishListRepository wishListRep;
 	
+	private final MailController mailController;
 	
 	/**
 	 * 배송조회
@@ -104,6 +106,8 @@ public class DeliveryServiceImpl implements DeliveryService {
 		if(!userList.getUsergrade().getGrade().equals(grade)){
 			userListRep.updateUserGrade((long)userGradeRep.findGradeNo(grade),userNo);
 		}
+		
+		mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 입니다.","고객님이 주문하신 상품이 배송완료 되었습니다");
 		
 		return 0;
 	}
