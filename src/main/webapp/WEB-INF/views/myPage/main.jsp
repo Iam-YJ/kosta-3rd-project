@@ -14,49 +14,73 @@
 		<div class=titleSection>
 			<div class="row">
 				<div class="col-xl" style="text-align: left;">
-					포인트 / 등급 조회
+					나의 등급 조회
 				</div>
 			</div>
 		</div>
-	
-<table>
-  <tr>
-    <th>등급</th>
-    <th>구매 최소 금액</th>
-    <th>구매 최대 금액</th>
-  </tr>
-
-		<tr>
-			<td>
-					${userList.points}
-			</td>
-			<td >
-					${userList.usergrade.grade}
-			</td>
-		</tr>
-	</table>
-	
-	<br><br><br>
-	
-	<table align="center" >
-		<tr>
-			<td>
-					<b><span >등급&nbsp&nbsp</span></b>
-			</td>
-			<td >	
-					<b><span>최소금액&nbsp&nbsp</span></b>
-			</td>
-						<td >
-					<b><span>최대금액&nbsp&nbsp</span></b>
-			</td>
-						<td >
-					<b><span>포인트적립율</span></b>
-			</td>
-			
-			
-		</tr>
-		<tr>
-		<c:forEach var="user" items="${userGradeList}">
+	<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card rounded-0 border-0 shadow">
+                <div class="card-body p-5">
+                    
+                    <!--  Bootstrap table-->
+                    <div class="table-responsive">
+                        <table class="table" style="text-align: center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">현재 나의 등급</th>
+                                    <th scope="col">다음 등급까지 남은 나의 등급</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                             	<tr>
+                             		<td>
+                             		
+                             		${userList.usergrade.grade}
+                             		</td>
+                         
+                             		<td>
+                             		<fmt:formatNumber value="${aqPay}"  var="pay" />
+                             		${pay}원
+                             		</td>
+                             	</tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<Br>
+	<div class=titleSection>
+			<div class="row">
+				<div class="col-xl" style="text-align: left;">
+					R.P MALL 등급
+				</div>
+			</div>
+		</div>
+	<div class="container">
+    <div class="row">
+        <div class="col-lg">
+            <div class="card rounded-0 border-0 shadow">
+                <div class="card-body p-5">
+                    
+                    <!--  Bootstrap table-->
+                    <div class="table-responsive">
+                        <table class="table" style="text-align: center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">등급</th>
+                                    <th scope="col">구매 최소 금액</th>
+                                    <th scope="col">구매 최대 금액 </th>
+                                    <th scope="col">포인트 적립률</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                              <c:forEach var="user" items="${userGradeList}">
 		<tr>
 			<td>
 				${user.grade}<p>
@@ -74,14 +98,15 @@
 			</td>
 			</tr>
 		</c:forEach>
-
-		</tr>
-	</table>
-
-
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
 </div>
-
-	
-
 </body>
 </html>
