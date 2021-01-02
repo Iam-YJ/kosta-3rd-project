@@ -39,7 +39,7 @@ table td {
 		</div><!-- titleSection -->
 		<div>
 			<form method="post" action="${pageContext.request.contextPath}/user/myPage/donation">기부 포인트 :  
-			<input type="text" name="dona" size="7px"><button type="submit">기부하기</button></form><br>
+			<input type="number"  min="0" name="dona" size="7px"><button type="submit">기부하기</button></form><br>
 		</div>
 		<div class="donationList">
 			<c:if test="${empty donaList}">
