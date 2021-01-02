@@ -26,11 +26,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	@Query("select orders from Orders orders where orders.delState = '배송완료' order by orders.orderdate asc")
 	List<Orders> selectLastOrders();
 	
-	//딜리버리맨 배송완료하기
-	@Query("update Orders o set o.delState='배송완료' where o.orderNo=?1") 
-	@Modifying
-	int updateDeliveryState(Long orderNo);
-	
 	//주문번호로 유저 등급가져오기
 	@Query("select orders from Orders orders where orders.orderNo=?1 ")  
 	Orders selectOrders(Long orderNo); 
@@ -46,5 +41,8 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	//해당 유저의 환불상품 가져오기
 	@Query("select o from Orders o where o.delState = '환불상품' and o.userList.userNo=?1")
 	List<Orders> selectRefundOrders(Long userNo);	
+	
+	@Query(value = "select sum(realpay) from orders where user_No=16 and del_state='배송완료'",nativeQuery = true)
+	Integer selectUserPay(Long userNo);
 	
 }//class

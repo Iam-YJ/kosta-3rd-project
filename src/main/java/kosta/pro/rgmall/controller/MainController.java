@@ -302,16 +302,11 @@ public class MainController {
 	public ModelAndView goodsDetail(@PathVariable Long regNo) {
 
 		Map<String, Object> goodsQuestionMap = new HashMap<String, Object>();
-		List<GoodsAnswer> goodsAnswerList = null;
 
 		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
-
-		List<GoodsQuestion> goodsQuestionList = mainService.selectGoodsQuestions(regNo);
-		for (int i = 0; i < goodsQuestionList.size(); i++) {
-			goodsAnswerList = mainService.selectGoodsAnswer((long) goodsQuestionList.get(i).getQgoodsNo());
-		}
-
 		goodsQuestionMap.put("registerGoods", registerGoods);
+		
+		List<GoodsQuestion> goodsQuestionList = mainService.selectGoodsQuestions(regNo);
 		goodsQuestionMap.put("goodsQuestionList", goodsQuestionList);
 
 		List<Review> review = mainService.selectReview(regNo);
@@ -319,82 +314,6 @@ public class MainController {
 
 		ModelAndView mv = new ModelAndView("main/goodsDetail", "goodsQuestionMap", goodsQuestionMap);
 		return mv;
-	}
-
-	/**
-	 * 상품문의 A에 대한 기능(only 관리자)
-	 */
-	@RequestMapping("/goodsDetail/{qgoodsNo}/goodsAnswer/{state}") // 나중에 세션 인수로 받아야할듯?
-	public String UpdateGoodsAnswer(@PathVariable Long qgoodsNo, @PathVariable String state, HttpServletRequest request,
-			HttpSession session) {
-
-		Admin sessionUserList = (Admin) session.getAttribute("userList");
-		String authority = sessionUserList.getAuthority();
-		if (authority.equals("ROLE_ADMIN")) {
-
-			if (state.equals("update")) {
-				String content = request.getParameter("content");
-
-				GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
-				GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
-
-				mainService.updateGoodsAnswer(goodsAnswer);
-
-			} else if (state.equals("delete")) {
-				mainService.deleteGoodsAnswer(qgoodsNo);
-			} else if (state.equals("insert")) {
-
-				String content = request.getParameter("content");
-
-				GoodsQuestion goodsQuestion = new GoodsQuestion(qgoodsNo);
-				GoodsAnswer goodsAnswer = new GoodsAnswer(content, goodsQuestion);
-
-				mainService.insertGoodsAnswer(goodsAnswer);
-
-			}
-		} /*
-			 * else if (authority.equals("ROLE_USER")) {
-			 * 
-			 * }
-			 */
-
-		return "redirect:/main/goodsList/0/0/0";
-	}
-
-	/**
-	 * 상품문의 Q에 대한 기능(유저)
-	 */
-	@RequestMapping("/goodsDetail/{regNo}/goodsQuestion/{state}") // 나중에 세션 인수로 받아야할듯?
-	public String UpdateGoodsQuestion(@PathVariable Long regNo, @PathVariable String state, HttpServletRequest request,
-			HttpSession session) {
-
-		if (state.equals("update")) {
-
-			String content = request.getParameter("content");
-
-			GoodsQuestion goodsQuestion = new GoodsQuestion(regNo, content);
-
-			mainService.updateGoodsQuestion(goodsQuestion);
-
-		} else if (state.equals("delete")) {
-			mainService.deleteGoodsQuestion(regNo);
-		} else if (state.equals("insert")) {
-
-			String content = request.getParameter("content");
-
-			UserList sessionUserList = (UserList) session.getAttribute("userList");
-			Long userNo = sessionUserList.getUserNo();
-
-			UserList userList = new UserList(userNo);
-			RegisterGoods registerGoods = new RegisterGoods(regNo);
-
-			GoodsQuestion goodsQuestion = new GoodsQuestion(content, userList, registerGoods);
-
-			mainService.insertGoodsQuestion(goodsQuestion);
-
-		}
-
-		return "redirect:/main/goodsList/0/0/0";
 	}
 
 	/**

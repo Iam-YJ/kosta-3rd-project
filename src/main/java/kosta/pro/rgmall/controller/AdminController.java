@@ -3,8 +3,9 @@ package kosta.pro.rgmall.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -295,7 +296,7 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsQuestionUpdateAnswer/{agoodsNo}")
 	public String GoodsQuestionUpdateAnswer(@PathVariable Long agoodsNo, String refundReply) {
 
-		adminService.updateGoodsAnswer(agoodsNo, refundReply);
+		//adminService.updateGoodsAnswer(agoodsNo, refundReply);
 
 		return "redirect:/user/myPage";
 
@@ -323,11 +324,21 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/profit")
 	public ModelAndView profit(String startDate, String endDate) {
-		//int profit = adminService.checkProfit(startDate, endDate);
-		List<Integer> profit = new ArrayList<>();
-		profit.add(12);
-		profit.add(15);
+		List<String> profit = adminService.checkProfit("11", "22");	
+
+		for(String s : profit) {
+			System.out.println(s);
+		}
 		
+		for(int i=0; i<profit.size(); i++) {
+			
+			
+		}
+		
+		
+		/*
+		 * List<Integer> profit = new ArrayList<>(); profit.add(12); profit.add(15);
+		 */		
 		return new ModelAndView("myPage/adminProfit", "profit",profit);
 	}
 	/*
@@ -341,9 +352,20 @@ public class AdminController {
 	 * 관리자 마이페이지 - 회원조회
 	 */
 	@RequestMapping("/myPage/clientList")
-	public ModelAndView clientList(String grade, String keyword) {
-		List<UserList> userList = adminService.searchAllUser(grade, keyword);
-		return new ModelAndView("myPage/adminClientList", "userList", userList);
+	public ModelAndView clientList() {
+		
+		
+		List<UserList> sortGrade = adminService.searchAllUser(0);
+		List<UserList> sortNo = adminService.searchAllUser(1);
+		List<UserList> sortId = adminService.searchAllUser(2);
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("sortGrade", sortGrade);
+		System.out.println(sortGrade);
+		mv.addObject("sortNo", sortNo);
+		mv.addObject("sortId", sortId);
+		mv.setViewName("myPage/adminClientList");
+		return mv;
 	}
 
 	/**
@@ -362,6 +384,48 @@ public class AdminController {
 		return result;
 	}
 
+	/**
+	 * 상품상세조회 - 상품문의 - 답변달기
+	 */
+	@RequestMapping("/insert/goodsAnswer/{regNo}/{qgoodsNo}")
+	public ModelAndView insertGoodsAnswer(@PathVariable Long regNo, @PathVariable Long qgoodsNo, GoodsAnswer goodsAnswer) {
+		
+		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
+
+		goodsAnswer.setGoodsQuestion(new GoodsQuestion(qgoodsNo));
+		adminService.insertGoodsAnswer(goodsAnswer);
+		 
+		return mv;
+	}
+	
+	
+	/**
+	 * 상품상세조회 - 상품문의 - 답변수정하기
+	 */
+	@RequestMapping("/update/goodsAnswer/{regNo}/{agoodsNo}")
+	public ModelAndView updateGoodsAnswer(@PathVariable Long regNo, @PathVariable Long agoodsNo, GoodsAnswer goodsAnswer) {
+		
+		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
+
+		goodsAnswer.setAgoodsNo(agoodsNo);
+		adminService.updateGoodsAnswer(goodsAnswer);
+		 
+		return mv;
+	}
+	
+	/**
+	 * 상품상세조회 - 상품문의 - 답변삭제하기
+	 */
+	@RequestMapping("/delete/goodsAnswer/{regNo}/{agoodsNo}")
+	public ModelAndView deleteGoodsAnswer(@PathVariable Long regNo, @PathVariable Long agoodsNo) {
+		System.out.println("regNo : " + regNo);
+		System.out.println("agoodsNo : " + agoodsNo);
+		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
+		adminService.deleteGoodsAnswer(agoodsNo);
+		 
+		return mv;
+	}
+	
 	/**
 	 * 공지사항 전체검색
 	 */

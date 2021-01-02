@@ -1,6 +1,7 @@
 package kosta.pro.rgmall.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -172,14 +173,16 @@ public interface AdminService {
 	public void insertGoodsAnswer(GoodsAnswer goodsAnswer);
 	
 	/**
+	 * 상품문의내역 수정
+	 */
+	public void updateGoodsAnswer(GoodsAnswer goodsAnswer);
+	
+	
+	/**
 	 * 상품문의내역 삭제
 	 */
 	public int deleteGoodsAnswer(Long agoodsNo);
 	
-	/**
-	 * 상품문의내역 수정
-	 */
-	public void updateGoodsAnswer(Long agoodsNo, String refundReply);
 	
 	/**
 	 * 상품평 조회
@@ -190,18 +193,18 @@ public interface AdminService {
 	 * 매출조회(기간별 조회 - 동적쿼리)
 	 * Orders의 realPay를 계산해서 가져오기
 	 */
-	public int checkProfit(String startDate,String endDate); 
+	public List<String> checkProfit(String startDate,String endDate); 
 	
 	//public List<Orders> checkDayProfit(String orderDate);
 	/**
 	 * 회원조회
 	 * (전체조회, 등급별조회, 검색어-사용자이름 조회)
+	 * state ==0 등급별조회
+	 * state ==1 유저번호순 조회
+	 * state ==2 아이디 A-Z 조회
 	 */
-	public List<UserList> searchAllUser(String grade, String keyword);
-	
-
-
-	
+	public List<UserList> searchAllUser(int state);
+		
 	public UserList searchById(String userId);
 
 	

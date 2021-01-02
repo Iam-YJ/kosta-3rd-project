@@ -12,20 +12,19 @@
 table{width:800px;}
 </style>
 <script type="text/javascript">
-	function deleteWishList(regNo){
+	function delWishList(){
 		if(confirm("정말로 삭제하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/user/deleteWishList?regNo="+regNo;
+			return true;
 		}else{
 			return false;
 		}
 	}
 	
-	function insertCart(regNo){
+	function cartbtn(){
 		if(confirm("장바구니에 추가 하시겠습니까?")){
-		location.href="${pageContext.request.contextPath}/user/insertcart?regNo="+regNo+"&qua=0";
-		}else{
-			return false;
+			return true;
 		}
+		return false;
 	}
 	
 	function confirmDelete(){
@@ -50,7 +49,7 @@ table{width:800px;}
 				</div>
 				<c:if test="${!empty wishList}">
 					<div class="col-xl" style="text-align: right;">
-						<a href="${pageContext.request.contextPath}/user/deleteWishList?state=all" class="btn btn-outline-success" 
+						<a href="${pageContext.request.contextPath}/user/delWishList/0?state=all" class="btn btn-outline-success" 
 						onclick="return confirmDelete();">전체삭제</a>
 					</div>
 				</c:if>
@@ -86,10 +85,12 @@ table{width:800px;}
 						</div>
 						<div class="col-xl-3" style="margin: auto;">
 							<div class="row" style="margin: 10px;">
-								<input type="button"  class="btn btn-success col-xl" onclick="insertCart(${list.registerGoods.regNo});" value="장바구니 담기">
+								<a href="${pageContext.request.contextPath}/user/insertcart/${list.registerGoods.regNo}?state=my"  
+								class="btn btn-success col-xl" onclick="return cartbtn();">장바구니 담기</a>
 							</div>
 						 	<div class="row" style="margin: 10px;">
-								<input type="button"  class="btn btn-outline-success col-xl" onclick="deleteWishList(${list.registerGoods.regNo});"  value="삭제">
+						 		<a href="${pageContext.request.contextPath}/user/delWishList/${list.wishNo}"
+						 		class="btn btn-outline-success col-xl" onclick="return delWishList();">삭제</a>
 							</div>
  							 
 						</div>

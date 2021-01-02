@@ -9,23 +9,44 @@
 <script type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 
+<style>
+#userTable {
+	border-collapse: collapse;
+	width: 100%;
+	border: 1px solid #ddd;
+	font-size: 18px;
+}
+
+#userTable th, #userTable td {
+	text-align: left;
+	padding: 12px;
+	
+}
+
+#userTable tr {
+	border-bottom: 1px solid #ddd;
+}
+
+#userTable tr.header, #userTable tr:hover {
+	background-color: #f1f1f1;
+}
+</style>
 
 <script type="text/javascript">
 	$(function() {
 		$("#keyword").keyup(
-			function() {
+						function() {
 
-				var k = $(this).val();
-				$("#userTable > tbody > tr").hide();
-				var findId = $("#userTable > tbody > tr > td:nth-child(5n+3):contains('"+ k + "')");
-				var findName = $("#userTable > tbody > tr > td:nth-child(5n+2):contains('"+ k + "')");
+							var k = $(this).val();
+							$("#table > tbody > tr").hide();
+							var findId = $("#table > tbody > tr > td:nth-child(5n+3):contains('"+ k + "')");
+							var findName = $("#table > tbody > tr > td:nth-child(5n+2):contains('"+ k + "')");
 
-			$(findId).parent().show();
-			$(findName).parent().show();
+							$(findId).parent().show();
+							$(findName).parent().show();
 
-		})//keyup 
+						})//keyup 
 		
-		$("#userTable").tablesorter({sortList:[[0,0],[1,0]]});
 		
 	})
 </script>
@@ -33,31 +54,53 @@
 </head>
 
 <body>
-	<div id="container">
-		<div id="input-form">
-			검색 : <input type="text" id="keyword">
+	<div id="container" class="container">
+		
+		<div class="row">
+			<div class="col-lg">
+				<div class="card rounded-0 border-0 shadow">
+					<div class="card-body p-5">
+						
+						<div id="input-form">
+							검색 : <input type="text" id="keyword" style="margin-bottom:5px">
+						</div>
+						
+						<!--  Bootstrap table-->
+						<div class="table-responsive">
+							<table class="table" id="table" style="text-align: center">
+								<thead>
+									<tr>
+										<th scope="col">회원 번호</th>
+										<th scope="col">회원 아이디</th>
+										<th scope="col">회원 이름</th>
+										<th scope="col">회원 등급</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach var="sortGrade" items="${sortGrade}">
+										<tr>
+											<td>${sortGrade.userNo}
+												<p>
+											</td>
+											<td><a href="${pageContext.request.contextPath}/admin/myPage/userRead/${sortGrade.userId}">${sortGrade.userId}</a>
+												<p>
+											</td>
+											<td>${sortGrade.name}
+												<p>
+											</td>
+											<td>${sortGrade.usergrade.gradeNo}
+												<p>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
-		<table class="userTable" id="userTable" width="100%" cellspacing="0">
-			<thead>
-				<tr>
-					<th>UserNo</th>
-					<th>UserId</th>
-					<th>UserName</th>
-					<th>UserGrade</th>
-				</tr>
-			</thead>
-			<c:forEach items="${userList}" var="userList">
-				<tbody>
-					<tr>
-						<td>${userList.userNo}</td>
-						<td><a href="${pageContext.request.contextPath}/admin/myPage/userRead/${userList.userId}">${userList.userId}</a></td>
-						<td>${userList.name}</td>
-						<td>${userList.usergrade.gradeNo}</td>
-					</tr>
-				</tbody>
-			</c:forEach>	
-		</table>
 	</div>
 
 </body>

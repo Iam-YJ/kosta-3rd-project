@@ -60,7 +60,6 @@ public class GoodsQuestion {
 	}
 
 	public GoodsQuestion(Long qgoodsNo, String content) {
-		super();
 		this.qgoodsNo = qgoodsNo;
 		this.content = content;
 	}

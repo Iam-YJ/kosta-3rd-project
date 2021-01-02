@@ -316,7 +316,7 @@ public class MainServiceImpl implements MainService {
 	}
 	
 	/**
-	 * 문의사항 조회 (자기자신꺼만)
+	 * 상품문의 조회(글번호에 해당하는 것만)
 	 */
 	@Override
 	public List<GoodsQuestion> selectGoodsQuestions(Long userNo) {
@@ -329,47 +329,6 @@ public class MainServiceImpl implements MainService {
 	public List<GoodsAnswer> selectAllGoodsAnswer() {
 		List<GoodsAnswer> goodsAnswer = goodsAnswerRep.findAll();
 		return goodsAnswer;
-	}
-
-	@Override
-	public int updateGoodsAnswer(GoodsAnswer goodsAnswer) {
-		System.out.println(goodsAnswer.getContent());
-		System.out.println(goodsAnswer.getGoodsQuestion().getQgoodsNo());
-		int result = goodsAnswerRep.updateGoodsAnswer(goodsAnswer.getContent(),
-				goodsAnswer.getGoodsQuestion().getQgoodsNo());
-		return result;
-	}
-
-	@Override
-	public int deleteGoodsAnswer(long qgoodsNo) {
-		int result = goodsAnswerRep.deleteGoodsAnswer(qgoodsNo);
-		return result;
-	}
-
-	@Override
-	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
-		goodsAnswerRep.save(goodsAnswer);
-
-	}
-
-	@Override
-	public void insertGoodsQuestion(GoodsQuestion goodsQuestion) {
-		goodsQuestionRep.save(goodsQuestion);
-
-	}
-
-	@Override
-	public void deleteGoodsQuestion(Long regNo) {
-		goodsQuestionRep.deleteById(regNo);
-
-	}
-
-	@Override
-	public int updateGoodsQuestion(GoodsQuestion goodsQuestion) {
-		System.out.println(goodsQuestion.getContent());
-		System.out.println(goodsQuestion.getQgoodsNo());
-		goodsQuestionRep.updateGoodsQuestion(goodsQuestion.getContent(), goodsQuestion.getQgoodsNo());
-		return 0;
 	}
 
 	/**

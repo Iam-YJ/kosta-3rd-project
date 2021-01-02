@@ -162,7 +162,7 @@ public interface MainService {
 	public List<SubCategories> selectSubCategories(Long mainCateNo);
 
 	/**
-	 * 상품문의 조회(자기자신것만)
+	 * 상품문의 조회(글번호에 해당하는 것만)
 	 */
 	public List<GoodsQuestion> selectGoodsQuestions(Long regNo);
 
@@ -175,36 +175,6 @@ public interface MainService {
 	 * 상품 답변 조회
 	 */
 	public List<GoodsAnswer> selectGoodsAnswer(long qgoodsNo);
-	
-	/**
-	 * 상품 답변 수정 (only 관리자)
-	 */
-	public int updateGoodsAnswer(GoodsAnswer goodsAnswer);
-	
-	/**
-	 * 상품 답변 삭제 (only 관리자)
-	 */
-	public int deleteGoodsAnswer(long qgoodsNo);
-	
-	/**
-	 * 상품 답변 추가 (only 관리자)
-	 */
-	public void insertGoodsAnswer(GoodsAnswer goodsAnswer);
-	
-	/**
-	 * 상품 문의 추가(only 회원)
-	 */
-	public void insertGoodsQuestion(GoodsQuestion goodsQuestion);
-	
-	/**
-	 * 상품 문의 삭제(only 회원)
-	 */
-	public void deleteGoodsQuestion(Long regNo);
-	
-	/**
-	 * 상품 문의 수정(only 회원)
-	 */
-	public int updateGoodsQuestion(GoodsQuestion goodsQuestion);
 	
 	/**
 	 * faq검색하기

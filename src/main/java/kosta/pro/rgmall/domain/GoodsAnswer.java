@@ -40,10 +40,14 @@ public class GoodsAnswer {
 	private GoodsQuestion goodsQuestion;
 
 	public GoodsAnswer(String content, GoodsQuestion goodsQuestion) {
-		super();
 		this.content = content;
 		this.goodsQuestion = goodsQuestion;
 	}
+
+	public GoodsAnswer(Long agoodsNo) {
+		this.agoodsNo = agoodsNo;
+	}
+	
 	
 	
 	

@@ -17,7 +17,7 @@ $(document).ready(function(){
 			$("#myPageContentSection").empty();
 			$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/newOrderList");
 		} 
-	}else{ 
+	}else{
 		if(${state == 1}){
 			adminOrderRefundList();
 		}else if(${state == 2}) {
@@ -32,6 +32,8 @@ $(document).ready(function(){
 			adminGoodsQuestionList();
 		}else if(${state == 7}){
 			userPointDonate();
+		}else if(${state == 8}){
+			userGoodsQuestionList();
 		}
 	}
 		

@@ -136,7 +136,6 @@ input[type="number"]::-webkit-inner-spin-button {
 				$("#stock").focus();
 				return false;
 			}
-			
 
 			if($("#price").val() == null || $("#price").val() == "" || $("#price").val() == 0){
 				alert("가격을 입력해주세요.")
@@ -144,9 +143,21 @@ input[type="number"]::-webkit-inner-spin-button {
 				return false;
 			}
 			
+			if($("#tfile").val() == null || $("#tfile").val() == ""){
+				alert("썸네일 이미지를 첨부해주세요.")
+				$("#tfile").focus();
+				return false;
+			}
 			
-		
+			var ad = $('input[name="ad"]:checked').val();
 			
+			if(ad == 1){
+				if($("#adfile").val() == null || $("#adfile").val() == ""){
+					alert("배너 이미지를 첨부해주세요.")
+					$("#adfile").focus();
+					return false;
+				}
+			}
 			
 			$("#insertGoodsForm").submit();
 			
@@ -277,7 +288,7 @@ input[type="number"]::-webkit-inner-spin-button {
 						썸네일 이미지
 					</div>
 					<div class="col-xl" style="margin: auto;">
-						<input type="file" name="tfile" class="form-control">
+						<input type="file" id="tfile" name="tfile" class="form-control">
 					</div>
 				</div>
 				
@@ -286,7 +297,7 @@ input[type="number"]::-webkit-inner-spin-button {
 						배너 이미지
 					</div>
 					<div class="col-xl" style="margin: auto;">
-						<input type="file" name="adfile" class="form-control">
+						<input type="file" id="adfile" name="adfile" class="form-control">
 					</div>
 				</div>
 				

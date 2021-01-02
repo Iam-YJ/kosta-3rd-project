@@ -7,6 +7,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+
+function goodsReleaseConfirm(){
+	if( confirm("상품을 출고하시겠습니까?") ){
+		return true;
+	}
+	return false;
+}
+</script>
 </head>
 <body>
 	<div class="newOrderListSetcion">
@@ -39,13 +48,14 @@
 						 		<div class="col-xl-1"></div>
 						 		<div class="col-xl border rounded" style="margin: 5px">
 						 			<div class="row">
-						 				<div class="col-xl-2">
+						 				<div class="col-xl-2" style="margin: 10px 0px;">
 						 					<a href="${pageContext.request.contextPath}/main/goodsDetail/${orderLine.registerGoods.regNo}">
 												<img alt="" class="img-fluid"
 												src="${pageContext.request.contextPath}/images/thumbnail/${orderLine.registerGoods.thumbnailImg}" >
 											</a>
 						 				</div>
-						 				<div class="col-xl-7" style="margin: auto;">
+						 				<div class="col-xl-1"></div>
+						 				<div class="col-xl" style="margin: auto;">
 						 					<div class="row">
 						 						<div class="col-xl" style="padding: 5px">
 						 							${orderLine.registerGoods.title}
@@ -56,12 +66,12 @@
 						 							받는사람 : ${orders.userList.name}
 						 						</div>
 						 						<div class="col-xl-6" style="padding: 5px">
-						 								연락처 : ${orders.userList.phone}
+						 							연락처 : ${orders.userList.phone}
 						 						</div>
 						 					</div>
 						 					<div class="row">
 						 						<div class="col-xl" style="padding: 5px">
-						 								주소 : ${orders.addr}
+						 							주소 : ${orders.addr}
 						 						</div>
 						 					</div>
 						 				</div>
@@ -71,8 +81,9 @@
 						 	</div>
 					 	</c:forEach><!-- orderLine -->
 					 	<div class="row">
-					 		<div class="col-xl" style="text-align: right">
-					 			<a href="${pageContext.request.contextPath}/admin/myPage/newOrderList/goodsRelease/${orders.orderNo}" class="btn btn-success">상품출고</a>
+					 		<div class="col-xl" style="text-align: right; margin-top: 5px;">
+					 			<a href="${pageContext.request.contextPath}/admin/myPage/newOrderList/goodsRelease/${orders.orderNo}" 
+					 			class="btn btn-success" onclick="return goodsReleaseConfirm();">상품출고</a>
 					 		</div>
 					 		<div class="col-xl-1"></div>
 					 	</div><!-- btn  -->

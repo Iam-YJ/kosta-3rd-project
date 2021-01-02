@@ -53,38 +53,47 @@ public class DeliveryServiceImpl implements DeliveryService {
 	private final WishListRepository wishListRep;
 	
 	
+	/**
+	 * 배송조회
+	 * delstate가 '배송중'인 상품을 검색하여 List를 출력한다.
+	 */
 	@Override
 	public List<Orders> selectAllDelivery() {
-		List<Orders> listOrders = ordersRep.selectNewOrders();
-		return listOrders;
+		List<Orders> ordersList = ordersRep.selectNowDelOrders();
+		return ordersList;
 	}
 
+	/**
+	 * 배송상태변경
+	 */
 	@Override
 	public int updateDeliveryState(Long orderNo) {
 		//주문상태 변경
-		ordersRep.updateDeliveryState(orderNo);
-		
+		Orders dbOrders = ordersRep.findById(orderNo).orElse(null);
+		if(dbOrders==null) {
+			throw new RuntimeException("OrderNo오류로 배송완료 실패");
+		}
+		dbOrders.setDelState("배송완료");
 		
 		//유저 포인트 적립
-		Orders orders= ordersRep.selectOrders(orderNo);
-		Long userNo=orders.getUserList().getUserNo();
-		Long gradeNo=orders.getUserList().getUsergrade().getGradeNo();
+		Long userNo=dbOrders.getUserList().getUserNo();
+		Long gradeNo=dbOrders.getUserList().getUsergrade().getGradeNo();
 		double point=0;
 		if(gradeNo==1) {
-			point=0.02*orders.getRealpay();
+			point=0.002 * dbOrders.getRealpay();
 		}else if(gradeNo==2) {
-			point=0.05*orders.getRealpay();
+			point=0.005 * dbOrders.getRealpay();
 		}else {
-			point=0.08*orders.getRealpay();
+			point=0.008 * dbOrders.getRealpay();
 		}
-		System.out.println("point======================"+Math.round(point));
+		
 		userListRep.addPoints((int)Math.round(point),userNo);
 		
 		
 		//누적금액에 따른 자동 등업
-		List<Orders> dbOrders=ordersRep.findByUserListUserNo(userNo);
+		List<Orders> dbOrderList=ordersRep.findByUserListUserNo(userNo);
 		int totalPay=0;
-		for(Orders o : dbOrders) {
+		for(Orders o : dbOrderList) {
 			totalPay +=o.getRealpay();   
 		}
 		//System.out.println("totalPay                         " +totalPay);

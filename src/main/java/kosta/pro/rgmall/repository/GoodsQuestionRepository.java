@@ -14,7 +14,7 @@ public interface GoodsQuestionRepository extends JpaRepository<GoodsQuestion, Lo
 	
 	
 	
-	  @Query("select g from GoodsQuestion g where g.registerGoods.regNo=?1")
+	  @Query("select g from GoodsQuestion g where g.registerGoods.regNo=?1 order by g.regDate desc")
 	  List<GoodsQuestion> selectGoodsQuestions(Long regNo);
 	  
 	  @Query("select g from GoodsQuestion g where g.userList.userNo=?1")
