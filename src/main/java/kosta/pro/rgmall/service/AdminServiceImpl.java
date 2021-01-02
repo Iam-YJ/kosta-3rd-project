@@ -79,9 +79,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void insertNotice(Notice notice) {
-		Notice not = noticeRep.save(notice);
-		System.out.println("not = " + not);
-		if (not == null) {
+		Notice dbNotice = noticeRep.save(notice);
+		if (dbNotice == null) {
 			throw new RuntimeException("내용이 존재하지 않습니다");
 		}
 	}
@@ -120,40 +119,44 @@ public class AdminServiceImpl implements AdminService {
 		return FAQRep.findAll(pageable);
 	}
 
+	/**
+	 * 고객센터 - FAQ - 등록하기
+	 */
 	@Override
 	public void insertFAQ(FAQ faq) {
-		if (FAQRep.save(faq) == null) {
-			throw new RuntimeException("내용이 존재하지 않습니다");
+		
+		FAQ dbFAQ = FAQRep.save(faq);
+		if(dbFAQ == null) {
+			throw new RuntimeException("FAQ 등록에 실패하였습니다.");
 		}
-		FAQRep.save(faq);
+		
 	}
 
+	/**
+	 * 고객센터 - FAQ - 수정하기
+	 */
 	@Override
 	public void updateFAQ(FAQ faq) {
 
-		System.out.println("===============================");
-		System.out.println("faq =" + faq);
-
-		System.out.println("===============================");
-		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
-		System.out.println("dbFaq" + dbFaq);
-//		
-		if (dbFaq == null) {
+		FAQ dbFAQ = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		if(dbFAQ == null) {
 			throw new RuntimeException("FAQ번호 오류로 수정 실패");
 		}
-//		
-		dbFaq.setQuestion(faq.getQuestion());
-		dbFaq.setAnswer(faq.getAnswer());
-//		
+		
+		dbFAQ.setQuestion(faq.getQuestion());
+		dbFAQ.setAnswer(faq.getAnswer());
 	}
 
+	/**
+	 * 고객센터 - FAQ - 삭제하기
+	 */
 	@Override
 	public void deleteFAQ(FAQ faq) {
 		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
 		if (dbFaq == null) {
 			throw new RuntimeException("FAQ번호 오류로 삭제 실패");
 		}
-
+		
 		FAQRep.deleteById(faq.getFaqNo());
 	}
 

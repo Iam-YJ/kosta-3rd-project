@@ -93,10 +93,6 @@ public class UserList {
 	@OneToOne//(cascade = CascadeType.ALL)
 	@JoinColumn(name = "gradeNo")
 	private UserGrade usergrade;
-
-	
-	
-	
 	
 }//class
 

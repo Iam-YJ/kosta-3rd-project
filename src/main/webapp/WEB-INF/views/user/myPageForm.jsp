@@ -196,7 +196,7 @@ function adminClientList(){
 											<a href="#" onclick="passWordCheck()">개인정보확인/수정</a>
 										</div>
 										<div class="row col-xl">
-											<a href="#" onclick="userPointGradeList()">포인트/등급 조회</a>
+											<a href="#" onclick="userPointGradeList()">등급 조회</a>
 										</div>
 										<div class="row col-xl" style="margin-bottom: 15px">
 											<a href="#" onclick="userPointDonate()">포인트 기부</a>

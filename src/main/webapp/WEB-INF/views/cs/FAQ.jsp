@@ -5,109 +5,119 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
-<style>
-/* FAQ */
-.faq{border-bottom:0px solid #ddd;margin:1em 0;}
-.faq .faqHeader{position:relative;zoom:1}
-.faq .faqHeader .showAll{position:absolute;bottom:0;right:0;border:0;padding:0;overflow:visible;background:none;cursor:pointer}
-.faq .faqBody{margin:0;padding:0}
-.faq .faqBody .article{list-style:none}
-.faq .q{margin:}
-.faq .q a{display:block;text-align:left; 
-    background:url("faq1_icon_q.png") no-repeat 0 0;
-    padding:0 0 0 35px;
-    font-size:18px;
-    color:#5e5e5e;
-    font-weight:bold;
-    line-height: 27px;
-    cursor:pointer;
-    margin: 10px 0; !important}
-.faq .q a:hover, .faq .q a:active, .faq .q a:focus{}
-.faq .a{background:#f8f8f8 url("faq1_icon_a.png") no-repeat 40px 10px;padding: 10px 75px 10px 75px;
-    font-size: 16px;
-    color: #444444;
-    line-height: 22px;http://localhost:8000/admin/list#a1
-    border-top: 1px solid #bdbdbd;
-    margin:5px 0 0 0;}
+<style type="text/css">
+a{
+	color: black;
+}
 </style>
-<script type="text/javascript" src="https://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+function deleteChk(){
+	if (confirm("삭제하시겠습니까?")){
+		return true;
+	}
+	return false;
+}
 
-
-<script>
-$(function(){
-    // Frequently Asked Question
-    var article = $('.faq>.faqBody>.article');
-    article.addClass('hide');
-    article.find('.a').hide();
-    article.eq(0).removeClass('hide');
-    article.eq(0).find('.a').show();
-    $('.faq>.faqBody>.article>.q>a').click(function(){
-        var myArticle = $(this).parents('.article:first');
-        if(myArticle.hasClass('hide')){
-            article.addClass('hide').removeClass('show');
-            article.find('.a').slideUp(100);
-            myArticle.removeClass('hide').addClass('show');
-            myArticle.find('.a').slideDown(100);
-        } else {
-            myArticle.removeClass('show').addClass('hide');
-            myArticle.find('.a').slideUp(100);
-        }
-        return false;
-    });
-    $('.faq>.faqHeader>.showAll').click(function(){
-        var hidden = $('.faq>.faqBody>.article.hide').length;
-        if(hidden > 0){
-            article.removeClass('hide').addClass('show');
-            article.find('.a').slideDown(100);
-        } else {
-            article.removeClass('show').addClass('hide');
-            article.find('.a').slideUp(100);
-        }
-    });
-	
-    $("input[value=등록하기]").click(function(){
-        
-		   $("#writeFAQ").attr("action", "${pageContext.request.contextPath}/admin/writeForm");
-		   $("#writeFAQ").submit();
-	   
-})
-  
-    
-});
 </script>
-
 </head>
 <body>
 <div class="csFAQSection">
 	<div class="container-fluid">
-		<c:if test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
-			<div class="row">
-				<div class="col-xl text-right" style="margin: 10px;">
-					<input type="button" value="FAQ등록" class="btn btn-success text-right">
-				</div>
+		<div class="row titleSection">
+			<div class="col-xl-6" style="text-align: left;">
+				<h4>FAQ</h4>
 			</div>
-		</c:if>
-		<c:forEach items="${list}" var="list">
-			<div class="row csFAQ_Question border border-left-0 border-rigth-0">
-				<div class="col-xl-1 align-self-center" style="text-align: center;">
-					<h5><b>Q</b></h5>
+			<c:if test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
+				<div class="col-xl-6" style="text-align: right; margin: auto;">
+					<a href="${pageContext.request.contextPath}/main/csForm?state=3" class="btn btn-success">FAQ등록</a>
 				</div>
-				<div class="col-xl" style="padding: 5px;">
-					<a href="#" data-toggle="collapse" data-target="#demo${list.faqNo}">${list.question}</a>
+			</c:if>
+		</div><!-- titleSection -->
+		<c:choose>
+			<c:when test="${empty faqList}">
+				등록된 게시글이 없습니다.
+			</c:when>
+			<c:otherwise>
+				<div class="row border rounded" style="margin-top: 15px;">
+					<div class="col-xl">
+						<c:forEach items="${faqList}" var="list">
+							
+							<div class="row csFAQ_Question" style="margin-top: 15px;">
+								<div class="col-xl-1" style="margin: auto; text-align: center;">
+									<h5><b>Q</b></h5>
+								</div>
+								<div class="col-xl" style="margin: auto; text-align: left;">
+									<a href="#" data-toggle="collapse" data-target="#demo${list.faqNo}">${list.question}</a>
+								</div>
+							</div>
+							<div class="row csFAQ_Answer collapse" id="demo${list.faqNo}">
+								<div class="col-xl">
+									<div class="row">
+										<div class="col-xl">
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl-1"></div>
+										<div class="col-xl-1" style="margin: auto; text-align: center;">
+											<h5><b>A</b></h5>
+										</div>
+										<div class="col-xl" style="padding: 5px;">
+											${list.answer}
+										</div>
+									</div>
+									<c:if test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
+										<div class="row">
+											<div class="col-xl" style="text-align: right; color: gray; font-family: 10px;">
+												<a href="#" style="text-align: right; color: gray; font-family: 10px;"
+												data-toggle="collapse" data-target="#updateFAQ${list.faqNo}">수정</a> |
+												<a href="${pageContext.request.contextPath}/admin/deleteFAQ/${list.faqNo}" 
+												style="text-align: right; color: gray; font-family: 10px;" onclick="return deleteChk();">삭제</a> 
+											</div>
+										</div>
+										<div id="updateFAQ${list.faqNo}" class="collapse">
+											<div class="col-xl">                               
+												<form id="updateFAQForm" method="post" action="${pageContext.request.contextPath}/admin/updateFAQ/${list.faqNo}">
+													<div class="FQ row">
+														<div class="col-xl-2" style="margin: auto; text-align: center; padding: 10px 0px;">
+															질문
+														</div>
+														<div class="col-xl" style="margin: auto; text-align: center; padding: 10px 0px;"> 
+															<input class="form-control" name="question" id="question" value="${list.question}">
+														</div>
+														<div class="col-xl-1"></div>
+													</div>
+												
+													<div class="FQ row">
+														<div class="col-xl-2" style="margin: auto; text-align: center;">
+															답변
+														</div>
+														<div class="col-xl" style="margin: auto; text-align: center; padding: 10px 0px;"> 
+															<textarea rows="5" class="form-control" name="answer" id="answer">${list.answer}</textarea>
+														</div>
+														<div class="col-xl-1"></div>
+													</div>
+													
+													<div class="FQ row" style="padding: 5px;">
+														<div class="col-xl" style="margin: auto; text-align: right;">
+															<input class="btn btn-success" id="updateFAQBtn" type="submit" value="수정하기"> 
+														</div>
+														<div class="col-xl-1"></div>
+													</div>
+												</form>	
+											</div>
+										</div>
+									</c:if>
+								</div>								
+							</div>
+						</c:forEach>
+					</div>
+					<div class="col-xl-1"></div>
 				</div>
-			</div>
-			<div class="row csFAQ_Answer collapse" id="demo${list.faqNo}">
-				<div class="col-xl-1 align-self-center" style="text-align: center;">
-					<h5><b>A</b></h5>
-				</div>
-				<div class="col-xl" style="padding: 5px;">
-					<a href="#">${list.answer}</a>
-				</div>
-			</div>
-		</c:forEach>
-	</div>
-</div>
+			</c:otherwise>
+		</c:choose>
+	</div><!-- container-fluid -->
+</div><!-- csFAQSection -->
 
 	
 
