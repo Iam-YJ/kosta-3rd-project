@@ -387,8 +387,9 @@ public class UserController {
 	 * 회원 및 관리자의 로그아웃 기능
 	 */
 	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpSession sessionStorage) {
 		session.invalidate();
+		
 		return "redirect:/main/";
 	}// logout
 
@@ -397,7 +398,6 @@ public class UserController {
 	 */
 	@RequestMapping("insertwish")
 	public String wish(Long regNo, HttpSession session) {
-		System.out.println("33333333333333333333" + regNo);
 		UserList userInfo = (UserList) session.getAttribute("userList");
 		Long userNo = userInfo.getUserNo();
 		List<WishList> list = userService.selectWishList(userNo);

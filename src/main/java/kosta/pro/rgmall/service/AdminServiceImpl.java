@@ -82,9 +82,8 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public void insertNotice(Notice notice) {
-		Notice not = noticeRep.save(notice);
-		System.out.println("not = " + not);
-		if (not == null) {
+		Notice dbNotice = noticeRep.save(notice);
+		if (dbNotice == null) {
 			throw new RuntimeException("내용이 존재하지 않습니다");
 		}
 	}
@@ -123,40 +122,44 @@ public class AdminServiceImpl implements AdminService {
 		return FAQRep.findAll(pageable);
 	}
 
+	/**
+	 * 고객센터 - FAQ - 등록하기
+	 */
 	@Override
 	public void insertFAQ(FAQ faq) {
-		if (FAQRep.save(faq) == null) {
-			throw new RuntimeException("내용이 존재하지 않습니다");
+		
+		FAQ dbFAQ = FAQRep.save(faq);
+		if(dbFAQ == null) {
+			throw new RuntimeException("FAQ 등록에 실패하였습니다.");
 		}
-		FAQRep.save(faq);
+		
 	}
 
+	/**
+	 * 고객센터 - FAQ - 수정하기
+	 */
 	@Override
 	public void updateFAQ(FAQ faq) {
 
-		System.out.println("===============================");
-		System.out.println("faq =" + faq);
-
-		System.out.println("===============================");
-		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
-		System.out.println("dbFaq" + dbFaq);
-//		
-		if (dbFaq == null) {
+		FAQ dbFAQ = FAQRep.findById(faq.getFaqNo()).orElse(null);
+		if(dbFAQ == null) {
 			throw new RuntimeException("FAQ번호 오류로 수정 실패");
 		}
-//		
-		dbFaq.setQuestion(faq.getQuestion());
-		dbFaq.setAnswer(faq.getAnswer());
-//		
+		
+		dbFAQ.setQuestion(faq.getQuestion());
+		dbFAQ.setAnswer(faq.getAnswer());
 	}
 
+	/**
+	 * 고객센터 - FAQ - 삭제하기
+	 */
 	@Override
 	public void deleteFAQ(FAQ faq) {
 		FAQ dbFaq = FAQRep.findById(faq.getFaqNo()).orElse(null);
 		if (dbFaq == null) {
 			throw new RuntimeException("FAQ번호 오류로 삭제 실패");
 		}
-
+		
 		FAQRep.deleteById(faq.getFaqNo());
 	}
 
@@ -379,7 +382,7 @@ public class AdminServiceImpl implements AdminService {
 	public void insertGoodsAnswer(GoodsAnswer goodsAnswer) {
 		goodsAnswerRep.save(goodsAnswer);
 	}
-	
+
 	/**
 	 * 상품문의내역 수정
 	 */
@@ -387,13 +390,13 @@ public class AdminServiceImpl implements AdminService {
 	public void updateGoodsAnswer(GoodsAnswer goodsAnswer) {
 
 		GoodsAnswer dbGoodsAnswer = goodsAnswerRep.findById(goodsAnswer.getAgoodsNo()).orElse(null);
-		if(dbGoodsAnswer == null) {
+		if (dbGoodsAnswer == null) {
 			throw new RuntimeException("상품문의 답변 번호에 해당하는 답변이 없습니다.");
 		}
-		
+
 		dbGoodsAnswer.setContent(goodsAnswer.getContent());
 	}
-	
+
 	/**
 	 * 상품문의내역 삭제
 	 */
@@ -401,7 +404,7 @@ public class AdminServiceImpl implements AdminService {
 	public int deleteGoodsAnswer(Long agoodsNo) {
 		System.out.println(1);
 		goodsAnswerRep.deleteGoodsAnswerbyid(agoodsNo);
-		
+
 		System.out.println(2);
 		return 0;
 	}
@@ -417,16 +420,9 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<String> checkProfit(String startDate, String endDate) {
 
-	
-		List<String> profit = adminRep.groupByYearAndMonth();
+		List<String> profit = adminRep.groupByYearAndMonth(startDate, endDate);
 		return profit;
 	}
-	/*
-	 * @Override public List<Orders> checkDayProfit(String orderDate) {
-	 * 
-	 * return adminRep.checkDayProfit(orderDate); }
-	 */
-
 
 	@Override
 	public UserList searchById(String userId) {
@@ -434,20 +430,20 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	/**
-	 *  admin 마이페이지 회원조회
-	 * */
+	 * admin 마이페이지 회원조회
+	 */
 	@Override
 	public List<UserList> searchAllUser(int state) {
 		List<UserList> userList = null;
-		
-		if(state == 0) {
+
+		if (state == 0) {
 			userList = userListRep.selectAllUser();
-		} else if(state == 1) {
+		} else if (state == 1) {
 			userList = userListRep.sortNoAllUser();
-		} else if(state == 2) {
-			userList =userListRep.sortIdAllUser();
+		} else if (state == 2) {
+			userList = userListRep.sortIdAllUser();
 		}
-		
+
 		return userList;
 	}
 

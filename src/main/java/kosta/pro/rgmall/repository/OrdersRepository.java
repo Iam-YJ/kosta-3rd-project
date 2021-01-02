@@ -20,11 +20,11 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	List<Orders> selectNewOrders();
 	
 	//관리자가 배송중인 목록을 확인할 수 있음.
-	@Query("select orders from Orders orders where orders.delState = '배송중' order by orders.orderdate asc")
+	@Query("select orders from Orders orders where orders.delState = '배송중' and not orders.delState = '환불상품' order by orders.orderdate asc")
 	List<Orders> selectNowDelOrders();
 	
 	//관리자가 이전주문내역을 확인할 수 있음. 배송상태로 확인
-	@Query("select orders from Orders orders where orders.delState = '배송완료' order by orders.orderdate asc")
+	@Query("select orders from Orders orders where orders.delState = '배송완료' and not orders.delState = '환불상품' order by orders.orderdate asc")
 	List<Orders> selectLastOrders();
 	
 	//주문번호로 유저 등급가져오기

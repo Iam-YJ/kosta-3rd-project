@@ -1,14 +1,15 @@
 package kosta.pro.rgmall.controller;
 
-
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.query.criteria.internal.expression.function.SubstringFunction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,10 +66,10 @@ public class AdminController {
 			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
 
 		String realPath = session.getServletContext().getRealPath("/");
-		
+
 		String path = realPath + "/images";
 		File Folder = new File(path);
-		
+
 		if (!Folder.exists()) {
 			try {
 				Folder.mkdir(); // 폴더 생성합니다.
@@ -77,10 +78,10 @@ public class AdminController {
 				e.getStackTrace();
 			}
 		}
-		
+
 		path = realPath + "/images/thumbnail";
 		Folder = new File(path);
-		
+
 		if (!Folder.exists()) {
 			try {
 				Folder.mkdir(); // 폴더 생성합니다.
@@ -89,10 +90,10 @@ public class AdminController {
 				e.getStackTrace();
 			}
 		}
-		
+
 		path = realPath + "/images/banner";
 		Folder = new File(path);
-		
+
 		if (!Folder.exists()) {
 			try {
 				Folder.mkdir(); // 폴더 생성합니다.
@@ -101,25 +102,24 @@ public class AdminController {
 				e.getStackTrace();
 			}
 		}
-		
+
 		String currentTime = Long.toString(System.currentTimeMillis());
-		
+
 		String tfileName = currentTime + tfile.getOriginalFilename();
 		String adfileName = currentTime + adfile.getOriginalFilename();
-		RegisterGoods inRegisteGoods = new RegisterGoods(null, registerGoods.getTitle(), 
-				registerGoods.getDetail(), tfileName, adfileName, registerGoods.getName(), 
-				registerGoods.getOptions(), registerGoods.getArea(), registerGoods.getMethod(), 
-				registerGoods.getStock(), registerGoods.getPrice(), 0, registerGoods.getAd(), null, 
-				new MainCategories(mainCateNo) , new SubCategories(subCateNo));
+		RegisterGoods inRegisteGoods = new RegisterGoods(null, registerGoods.getTitle(), registerGoods.getDetail(),
+				tfileName, adfileName, registerGoods.getName(), registerGoods.getOptions(), registerGoods.getArea(),
+				registerGoods.getMethod(), registerGoods.getStock(), registerGoods.getPrice(), 0, registerGoods.getAd(),
+				null, new MainCategories(mainCateNo), new SubCategories(subCateNo));
 		RegisterGoods dbRegisteGoods = adminService.insertGoods(inRegisteGoods);
-		
+
 		try {
 			tfile.transferTo(new File(realPath + "/images/thumbnail/" + tfileName));
 			adfile.transferTo(new File(realPath + "/images/banner/" + adfileName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return new ModelAndView("redirect:/main/goodsDetail/" + dbRegisteGoods.getRegNo());
 
 	}// insertGoods
@@ -130,7 +130,7 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsList")
 	public ModelAndView goodsList() {
 		List<RegisterGoods> listRegisterGoods = adminService.selectGoods(0);
-		return new ModelAndView("myPage/adminGoodsList","listRegisterGoods",listRegisterGoods);
+		return new ModelAndView("myPage/adminGoodsList", "listRegisterGoods", listRegisterGoods);
 	}
 
 	/**
@@ -158,19 +158,19 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/orderDeliveryList")
 	public ModelAndView orderDeliveryList() {
-		
+
 		ModelAndView mv = new ModelAndView();
+
+		// 0 지난주문 조회 1은 신규주문조회 2
+		List<Orders> lastOrders = adminService.selectOrders(0); // 배송완료
+		List<Orders> newOrders = adminService.selectOrders(1); // 배송준비중
+		List<Orders> nowOrders = adminService.selectOrders(2); // 배송중
 		
-		//0 지난주문 조회    1은 신규주문조회
-		List<Orders> lastOrders = adminService.selectOrders(0);
-		
-		List<Orders> newOrders = adminService.selectOrders(1);
-		List<Orders> nowOrders = adminService.selectOrders(2);
-		mv.addObject("lastOrders", lastOrders);;
+		mv.addObject("lastOrders", lastOrders);
 		mv.addObject("newOrders", newOrders);
 		mv.addObject("nowOrders", nowOrders);
 		mv.setViewName("myPage/adminOrderDeliveryList");
-		
+
 		return mv;
 	}
 
@@ -215,11 +215,11 @@ public class AdminController {
 		List<RegisterGoods> list = adminService.selectGoods(2);
 		return new ModelAndView("myPage/adminGoodsStockList", "list", list);
 	}
-	
+
 	/**
 	 * 관리자 마이페이지 - 재고량 수정
 	 */
-	@RequestMapping(value= "/myPage/updateGoods", method = RequestMethod.POST)
+	@RequestMapping(value = "/myPage/updateGoods", method = RequestMethod.POST)
 	public String updateGoods(RegisterGoods registerGoods) {
 		adminService.updateGoods(registerGoods);
 		return "redirect:/user/myPage";
@@ -243,6 +243,7 @@ public class AdminController {
 		adminService.deleteAdGoods(regNo);
 		return "redirect:/user/myPage";
 	}
+
 	/**
 	 * 관리자 마이페이지 - 공지사항
 	 */
@@ -272,7 +273,7 @@ public class AdminController {
 
 		mv.addObject("GoodsQuestionList", goodsQuestion);
 		mv.addObject("GoodsAnswerList", goodsAnswer);
-		
+
 		mv.setViewName("myPage/adminGoodsQuestionList");
 
 		return mv;
@@ -292,11 +293,11 @@ public class AdminController {
 		return "redirect:/user/myPage";
 
 	}
-	
+
 	@RequestMapping("/myPage/goodsQuestionUpdateAnswer/{agoodsNo}")
 	public String GoodsQuestionUpdateAnswer(@PathVariable Long agoodsNo, String refundReply) {
 
-		//adminService.updateGoodsAnswer(agoodsNo, refundReply);
+		// adminService.updateGoodsAnswer(agoodsNo, refundReply);
 
 		return "redirect:/user/myPage";
 
@@ -308,7 +309,7 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsReviewList")
 	public ModelAndView GoodsReviewList() {
 		List<Review> review = adminService.selectReview();
-		return new ModelAndView("myPage/adminGoodsReviewList","review",review);
+		return new ModelAndView("myPage/adminGoodsReviewList", "review", review);
 	}
 
 	/**
@@ -324,42 +325,34 @@ public class AdminController {
 	 */
 	@RequestMapping("/myPage/profit")
 	public ModelAndView profit(String startDate, String endDate) {
-		List<String> profit = adminService.checkProfit("11", "22");	
+		System.out.println();
+		List<String> profit = adminService.checkProfit("2020-01-01", "2022-01-01");
 
-		for(String s : profit) {
-			System.out.println(s);
+		List<Integer> realProfit = new ArrayList<>();
+		int comma = 0;
+		Integer totalPay = 0;
+
+		for (int i = 0; i < profit.size(); i++) {
+
+			comma = profit.get(i).indexOf(",");
+			totalPay = Integer.parseInt(profit.get(i).substring(comma + 1));
+			realProfit.add(totalPay);
 		}
-		
-		for(int i=0; i<profit.size(); i++) {
-			
-			
-		}
-		
-		
-		/*
-		 * List<Integer> profit = new ArrayList<>(); profit.add(12); profit.add(15);
-		 */		
-		return new ModelAndView("myPage/adminProfit", "profit",profit);
+
+		return new ModelAndView("myPage/adminProfit", "realProfit", realProfit);
 	}
-	/*
-	@RequestMapping("/myPage/dayprofit")
-	public ModelAndView dayProfit(String orderDate) {
-		List<Orders> dayProfit = adminService.checkDayProfit(orderDate);
-		return new ModelAndView("myPage/adminProfit","dayProfit", dayProfit);
-	}*/
-	
+
 	/**
 	 * 관리자 마이페이지 - 회원조회
 	 */
 	@RequestMapping("/myPage/clientList")
 	public ModelAndView clientList() {
-		
-		
+
 		List<UserList> sortGrade = adminService.searchAllUser(0);
 		List<UserList> sortNo = adminService.searchAllUser(1);
 		List<UserList> sortId = adminService.searchAllUser(2);
 		ModelAndView mv = new ModelAndView();
-		
+
 		mv.addObject("sortGrade", sortGrade);
 		System.out.println(sortGrade);
 		mv.addObject("sortNo", sortNo);
@@ -388,31 +381,32 @@ public class AdminController {
 	 * 상품상세조회 - 상품문의 - 답변달기
 	 */
 	@RequestMapping("/insert/goodsAnswer/{regNo}/{qgoodsNo}")
-	public ModelAndView insertGoodsAnswer(@PathVariable Long regNo, @PathVariable Long qgoodsNo, GoodsAnswer goodsAnswer) {
-		
+	public ModelAndView insertGoodsAnswer(@PathVariable Long regNo, @PathVariable Long qgoodsNo,
+			GoodsAnswer goodsAnswer) {
+
 		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
 
 		goodsAnswer.setGoodsQuestion(new GoodsQuestion(qgoodsNo));
 		adminService.insertGoodsAnswer(goodsAnswer);
-		 
+
 		return mv;
 	}
-	
-	
+
 	/**
 	 * 상품상세조회 - 상품문의 - 답변수정하기
 	 */
 	@RequestMapping("/update/goodsAnswer/{regNo}/{agoodsNo}")
-	public ModelAndView updateGoodsAnswer(@PathVariable Long regNo, @PathVariable Long agoodsNo, GoodsAnswer goodsAnswer) {
-		
+	public ModelAndView updateGoodsAnswer(@PathVariable Long regNo, @PathVariable Long agoodsNo,
+			GoodsAnswer goodsAnswer) {
+
 		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
 
 		goodsAnswer.setAgoodsNo(agoodsNo);
 		adminService.updateGoodsAnswer(goodsAnswer);
-		 
+
 		return mv;
 	}
-	
+
 	/**
 	 * 상품상세조회 - 상품문의 - 답변삭제하기
 	 */
@@ -422,43 +416,79 @@ public class AdminController {
 		System.out.println("agoodsNo : " + agoodsNo);
 		ModelAndView mv = new ModelAndView("redirect:/main/goodsDetail/" + regNo);
 		adminService.deleteGoodsAnswer(agoodsNo);
-		 
+
 		return mv;
+	}
+
+	/**
+	 * 고객센터 - FAQ - 등록폼 열기
+	 */
+	@RequestMapping("/writeFAQ")
+	public String writeFAQForm() {
+		return "/cs/writeFAQ";
+	}
+	
+	
+	/**
+	 * 고객센터 - FAQ - 등록하기
+	 */
+	@RequestMapping("/insertFAQ")
+	public String insert(FAQ faq) {
+
+		adminService.insertFAQ(faq);
+
+		return "redirect:/main/csForm?state=1";
 	}
 	
 	/**
-	 * 공지사항 전체검색
+	 * 고객센터 - FAQ - 수정하기
 	 */
-	@RequestMapping("/notice")
-	public void selectAllNotice(Model model) {
-		List<Notice> list = mainService.selectAllNotice();
+	@RequestMapping("/updateFAQ/{faqNo}")
+	public String faqUpdate(FAQ faq, @PathVariable Long faqNo) {
+		faq.setFaqNo(faqNo);
+		adminService.updateFAQ(faq);
 
-		model.addAttribute("list", list);
+		return "redirect:/main/csForm?state=1";
+	}
+
+	/*
+	 * 고객센터 - FAQ - 삭제하기
+	 */
+	@RequestMapping("/deleteFAQ/{faqNo}")
+	public String faqDelete(@PathVariable Long faqNo) {
+		adminService.deleteFAQ(new FAQ(faqNo));
+
+		return "redirect:/main/csForm?state=1";
 	}
 
 	/**
-	 * 공지사항 등록하기 폼
+	 * 고객센터 - 공지사항 - 등록폼
 	 */
 	@RequestMapping("/writeNotice")
 	public String writeNotice() {
-
-		return "main/cs/writeNotice";
+		return "/cs/writeNotice";
 	}
-
+	
 	/**
-	 * 공지사항 등록하기
+	 * 고객센터 - 공지사항 - 등록하기
 	 */
-	@RequestMapping("/insert")
+	@RequestMapping("/insertNotice")
 	public String insertNotice(Notice notice) {
-		// content에 스크립트 요소(태그)를 문자로 교체
-		String content = notice.getContent().replace("<", "&lt;");
-		notice.setContent(content);
 
 		adminService.insertNotice(notice);
 
-		return "redirect:/main/notice";
+		return "redirect:/main/csForm?state=2";
 	}
 
+	/**
+	 * 고객센터 - 공지사항 - 삭제하기
+	 */
+	@RequestMapping("/deleteNotice/{noticeNo}")
+	public String deleteNotice(@PathVariable Long noticeNo) {
+		adminService.deleteNotice(noticeNo);
+		return "redirect:/main/csForm?state=2";
+	}
+	
 	/**
 	 * 공지사항 수정등록 폼
 	 */
@@ -475,93 +505,6 @@ public class AdminController {
 	public String updateNotice(Notice notice) {
 		adminService.updateNotice(notice);
 		return "redirect:/admin/readNotice/" + notice.getNoticeNo();
-	}
-
-	/**
-	 * 공지사항 상세보기
-	 */
-	@RequestMapping("/readNotice/{noticeNo}")
-	public ModelAndView readNotice(@PathVariable Long noticeNo) {
-
-		Notice notice = adminService.selectByNotice(noticeNo);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main/cs/readNotice"); // /WEB-INF/views/read.jsp
-		mv.addObject("notice", notice);
-
-		return mv;
-	}
-
-	/**
-	 * 삭제하기
-	 */
-	@RequestMapping("/deleteNotice")
-	public String deleteNotice(Long noticeNo) {
-		adminService.deleteNotice(noticeNo);
-		return "redirect:/main/notice";
-	}
-
-	/*
-	 * faq 수정등록 폼
-	 */
-	@RequestMapping("/updateForm")
-	public ModelAndView faqUpdateForm(Long faqNo) {
-		FAQ faq = adminService.selectByFaq(faqNo);
-		System.out.println(faq);
-		return new ModelAndView("main/cs/updateFAQForm", "faq", faq);
-	}
-
-	/*
-	 * 수정완료하기
-	 */
-	@RequestMapping("/update")
-	public String faqUpdate(FAQ faq) {
-		adminService.updateFAQ(faq);
-
-		return "redirect:/admin/read/" + faq.getFaqNo();// controller에서 controller 로 찾아 가는데 기존에 가지고있는 것은 버리고
-	}
-
-	/*
-	 * 삭제하기
-	 */
-	@RequestMapping("/delete")
-	public String faqDelete(FAQ faq) {
-		adminService.deleteFAQ(faq);
-
-		return "redirect:/admin/cs/list";
-	}
-
-	/*
-	 * FAQ 상세보기
-	 */
-	@RequestMapping("/read/{faqNo}")
-	public ModelAndView read(@PathVariable Long faqNo) {
-
-		FAQ faq = adminService.selectByFaq(faqNo);
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("main/cs/readFAQ"); // /WEB-INF/views/read.jsp
-		mv.addObject("faq", faq);
-
-		return mv;
-	}
-
-	/**
-	 * FAQ 등록하기 폼
-	 */
-	@RequestMapping("/writeFAQ")
-	public String write() {
-		return "main/cs/writeFAQ";
-	}
-
-	/**
-	 * FAQ 등록하기
-	 */
-	@RequestMapping("/insertFAQ")
-	public String insert(String question, String answer) {
-
-		FAQ faq = new FAQ(null, question, answer);
-		adminService.insertFAQ(faq);
-
-		return "redirect:/admin/cs/list";
 	}
 
 	/**
@@ -598,7 +541,6 @@ public class AdminController {
 		return mainService.selectSubCategories(mainCateNo);
 	}// subCate
 
-	
 	// 카테고리 수정 폼 띄우기 //카테고리 수정
 	@RequestMapping("/myPage/modiCategories")
 	public ModelAndView modiCategories() {

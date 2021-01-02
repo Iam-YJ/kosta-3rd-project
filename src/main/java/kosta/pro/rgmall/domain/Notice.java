@@ -32,6 +32,7 @@ public class Notice {
 	
 	@Column(nullable = false,length = 3000)
 	private String content;
+	
 	@CreationTimestamp
 	private LocalDateTime regdate;
 	
