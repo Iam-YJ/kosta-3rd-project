@@ -12,21 +12,25 @@
 <div class="container">
     <div class="row" style="background-color: #f0f6e8">
 			<div class="col-xl" style="margin: 15px">
-				<span style="font-size: 30px;margin:auto">
+				<span style="font-size: 25px;margin:auto">
 				  우리 R.P MALL의 베스트 상품! 고민없이 구매하세요!
 				</span>
 			</div>
-		</div><!-- row -->
+	</div><!-- row -->
+	<div class="row" >
+			<div class="col-xl" style="margin: 15px">
+			</div>
+	</div><!-- row -->
 <div class="row" id="content">
 					<!-- goodListSection -->
 					<c:forEach items="${registerGoods}" var="registerGoodsList">
-						<div class="col-xl-3" style="padding-bottom: 30px">
+						<div class="col-xl" style="padding-bottom: 30px">
 							<div class="border">
 								<div class="row">
-									<div class="col-xl">
+									<div class="col-xl" style="text-align: center;margin:auto;">
 										<div class="goodsListImgSection">
 											<a href="${pageContext.request.contextPath}/main/goodsDetail/${registerGoodsList.regNo}">
-												<img alt="" class="img-fluid" 
+												<img alt=""  width="195.91px" height="250px"
 												src="${pageContext.request.contextPath}/images/thumbnail/${registerGoodsList.thumbnailImg}" >
 											</a>
 										</div><!-- goodsListImgSection -->
@@ -46,7 +50,6 @@
 							</div><!-- 상품리스트 1개 영역 -->
 						</div><!-- col=3 -->
 					</c:forEach>	
-					
 					<!-- End : goodListSection  -->
 				</div><!-- row -->
 </div>

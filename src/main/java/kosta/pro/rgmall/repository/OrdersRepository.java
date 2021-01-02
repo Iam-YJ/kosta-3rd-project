@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import kosta.pro.rgmall.domain.OrderLine;
 import kosta.pro.rgmall.domain.Orders;
 
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
@@ -44,5 +45,6 @@ public interface OrdersRepository extends JpaRepository<Orders, Long> {
 	
 	@Query(value = "select sum(realpay) from orders where user_No=?1 and del_state='배송완료'",nativeQuery = true)
 	Integer selectUserPay(Long userNo);
+	
 	
 }//class

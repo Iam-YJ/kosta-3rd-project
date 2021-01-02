@@ -110,6 +110,16 @@ public class UserServiceImpl implements UserService {
 	 */
 	@Override
 	public int deleteOrders(Long orderNo) {
+		
+		//재고량 조절
+				List<OrderLine> dborderLineList = orderLineRep.findByOrdersOrderNo(orderNo);
+				for (OrderLine ol : dborderLineList) {
+					RegisterGoods dbRegisterGoods = registerGoodsRep.findByRegNo(ol.getRegisterGoods().getRegNo());
+					dbRegisterGoods.setStock(dbRegisterGoods.getStock() + ol.getQuntity());
+					registerGoodsRep.save(dbRegisterGoods);
+				}
+				
+		//주문목록삭제
 		ordersRep.deleteById(orderNo);
 		
 		return 0;
