@@ -302,7 +302,7 @@ public class UserController {
 		UserList sessionUser = (UserList) session.getAttribute("userList");
 		userList.setUserNo(sessionUser.getUserNo());
 		userService.updateUserList(userList);
-		return "user/myPageForm";
+		return "redirect:/user/logout";
 	}// updateUserList
 
 	
@@ -326,6 +326,10 @@ public class UserController {
 		}
 		
 		mv.addObject("donaList", userService.selectAllDonation());
+		
+		UserList dbUserList = userService.findByUserListbyUserNo(userNo);
+		mv.addObject("dbUserList", dbUserList);
+		
 		return mv;
 	}// donationForm
 

@@ -32,6 +32,9 @@ table td {
 	<div class="container">
 		<div class=titleSection>
 			<div class="row">
+			<div class="col-xl" style="text-align: left;">
+					나의 보유 포인트 : ${dbUserList.points} point
+				</div>
 				<div class="col-xl" style="text-align: left;">
 					나의 기부포인트 : ${donaPoint} point
 				</div>
@@ -78,24 +81,5 @@ table td {
     </div>
 </div>
 			
-			
-			
-			
-			
-			
-			
-			
-		</div>
-		
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
