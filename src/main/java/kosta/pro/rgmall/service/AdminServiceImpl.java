@@ -421,6 +421,10 @@ public class AdminServiceImpl implements AdminService {
 	public List<String> checkProfit(String startDate, String endDate) {
 
 		List<String> profit = adminRep.groupByYearAndMonth(startDate, endDate);
+		
+		for(String s : profit) {
+			System.out.println(s);
+		}
 		return profit;
 	}
 

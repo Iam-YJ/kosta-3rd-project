@@ -326,7 +326,7 @@ public class AdminController {
 	@RequestMapping("/myPage/profit")
 	public ModelAndView profit(String startDate, String endDate) {
 		System.out.println();
-		List<String> profit = adminService.checkProfit("2020-01-01", "2022-01-01");
+		List<String> profit = adminService.checkProfit("2021-01-01", "2022-01-01");
 
 		List<Integer> realProfit = new ArrayList<>();
 		int comma = 0;
