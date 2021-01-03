@@ -236,7 +236,7 @@ public class MainController {
 	@RequestMapping("/bestGoods")
 	public ModelAndView bestGoods() {
 		List<RegisterGoods> full = mainService.bestGoods();
-		return new ModelAndView("main/bestGoods", "registerGoods", full.subList(0, 16));
+		return new ModelAndView("main/bestGoods", "registerGoods", full.subList(0, 15));
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class MainController {
 	@RequestMapping("/soldout")
 	public ModelAndView soldout() {
 		List<RegisterGoods> full = mainService.soldout();
-		return new ModelAndView("main/soldout","registerGoods",full.subList(0, 16));
+		return new ModelAndView("main/soldout","registerGoods",full.subList(0, 15));
 	}
 	
 	/**
