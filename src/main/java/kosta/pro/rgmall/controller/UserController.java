@@ -286,12 +286,16 @@ public class UserController {
 		return new ModelAndView("myPage/passWordCheck");
 	}
 
+	
+	
 	// 마이페이지-개인정보확인/수정 - 개인정보수정폼
 	@RequestMapping("/myPage/updateUserListForm")
 	public String updateUserListForm() {
-		return "user/myPage/updateUserList";
+		return "myPage/updateUserList";
 	}// updateUserListForm
 
+	
+	
 	// 마이페이지-개인정보확인/수정 - //개인정보수정
 	@RequestMapping("/myPage/updateUserList")
 	public String updateUserList(UserList userList, HttpSession session) {

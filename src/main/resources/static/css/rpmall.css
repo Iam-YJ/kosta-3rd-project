@@ -334,7 +334,7 @@ input[type=password]{
 .userOrderListSetcion .OrderListTitle, .newOrderListSetcion .OrderListTitle,
 .userOrderCancelListSetcion .OrderCancelListTitle, .adminRefundListSetcion .refundListTitle,
 .userCartSection .titleSection, .userWishListSection .titleSection, .insertOrdersForm .titleSection,
-.userReviewSection .titleSection, .userGoodsQSection .titleSection{
+.userReviewSection .titleSection, .userGoodsQSection .titleSection, .pwdCheckSection . titleSection{
 	font-size: 20px;
 	margin-bottom: 10px; 
 }

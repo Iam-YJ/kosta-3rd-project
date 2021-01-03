@@ -13,7 +13,7 @@ $(document).ready(function(){
 		console.log(passWord);
 		console.log($("input[name=passWord]").val());
 		if(passWord==$("input[name=passWord]").val()) {
-			location.href="${pageCotext.request.contextPath}/user/myPage/updateUserListForm"
+			location.href="${pageCotext.request.contextPath}/user/myPage?state=9"
 		}else{
 			alert("비밀번호를 확인해주세요")
 		}
@@ -23,9 +23,53 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<h3>개인정보 수정을 위하여 비밀번호를 입력하여주세요</h3>
-
-비밀번호 : <input type="password" name = "passWord"><br>
-<input type="button" name="passWordCheck" value="확인">
+<div class="pwdCheckSection">
+	<div class="container-fluid">
+		<div class="titleSection row">
+			<div class="col-xl">
+				개인정보 수정
+			</div>
+		</div>
+		
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-xl-2"></div>
+			<div class="col-xl">
+				<div class="row border rounded" style="padding: 20px;">
+					<div class="col-xl">
+						<div class="row">
+							<div class="col-xl" style="text-align: center; margin: auto; font-size: 18px;">
+								개인정보 수정을 위하여 비밀번호를 입력해주세요
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl">
+								<hr>
+							</div>
+						</div>
+						<div class="row" style="height: 150px;">
+							<div class="col-xl-3" style="margin-top: 28px; text-align: center;">
+								비밀번호
+							</div>
+							<div class="col-xl" style="margin-top: 20px; text-align: center;">
+								<input type="password" name = "passWord" class="form-control">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl" style="text-align: right;">
+								<hr>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xl" style="text-align: right;">
+								<input type="button" name="passWordCheck" value="확인" class="btn btn-success">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xl-2"></div>
+		</div>
+	</div><!-- container-fluid -->
+</div><!-- pwdCheckSection -->
 </body>
 </html>
