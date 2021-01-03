@@ -424,24 +424,27 @@ public class UserServiceImpl implements UserService {
 				dbRegisterGoods.setStock(dbRegisterGoods.getStock()-dbcart.getQuantity());
 			}
 			
+			//4. sellcount 증가
+			dbRegisterGoods.setSellcount(dbRegisterGoods.getSellcount() + 1);
 			
-			goodsName +=dbcart.getRegisterGoods().getName()+",";
-			//4. 카트제거
+			
+			goodsName += dbcart.getRegisterGoods().getName()+",";
+			//5. 카트제거
 			cartRep.delete(dbcart);
 		}
 		
-		//구매완료 메일 보내기
+		//6. 구매완료 메일 보내기
 		
 		UserList userList=userListRep.findById(userNo).orElse(null);
 		System.out.println(goodsName+"333333333333333333");
 		goodsName.substring(0, goodsName.length()-1);
 		mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 입니다",goodsName+"이 주문 완료 되었습니다");
 
-		//5. 유저 포인트 감소(배송완료 후 포인트 추가)
+		//7. 유저 포인트 감소(배송완료 후 포인트 추가)
 		//if(dbUserList.getUsergrade())<--사용해야함
 		
 		dbUserList.setPoints(dbUserList.getPoints()-usingPoints);
-		//6. 등급 비교 후 감가.
+		//8. 등급 비교 후 감가.
 		
 		
 		
