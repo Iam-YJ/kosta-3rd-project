@@ -316,7 +316,7 @@ public class AdminController {
 	@RequestMapping(value = "/myPage/updateGoods", method = RequestMethod.POST)
 	public String updateGoods(RegisterGoods registerGoods) {
 		adminService.updateGoods(registerGoods);
-		return "redirect:/user/myPage";
+		return "redirect:/user/myPage?state=10";
 	}
 
 	/**
@@ -335,7 +335,7 @@ public class AdminController {
 	@RequestMapping("/myPage/goodsADListDelete/{regNo}")
 	public String deleteAdGoods(@PathVariable Long regNo) {
 		adminService.deleteAdGoods(regNo);
-		return "redirect:/user/myPage";
+		return "redirect:/user/myPage?state=11";
 	}
 
 	/**

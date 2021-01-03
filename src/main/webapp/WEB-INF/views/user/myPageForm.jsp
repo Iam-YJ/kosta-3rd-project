@@ -20,29 +20,75 @@ $(document).ready(function(){
 		} 
 	}else{
 		if(${state == 1}){
+			if (${sessionScope.userList.authority eq 'ROLE_USER'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			adminOrderRefundList();
 		}else if(${state == 2}) {
+			if (${sessionScope.userList.authority eq 'ROLE_ADMIN'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			userCartList();
 		}else if(${state == 3}) {
+			if (${sessionScope.userList.authority eq 'ROLE_ADMIN'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			userWishList();
 		}else if(${state == 4}){
+			if (${sessionScope.userList.authority eq 'ROLE_ADMIN'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			userGoodsReviewList();
 		}else if(${state == 5}){
+			if (${sessionScope.userList.authority eq 'ROLE_USER'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			adminGoodsADList();
 		}else if(${state == 6}){
+			if (${sessionScope.userList.authority eq 'ROLE_USER'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			adminGoodsQuestionList();
 		}else if(${state == 7}){
+			if (${sessionScope.userList.authority eq 'ROLE_ADMIN'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			userPointDonate();
 		}else if(${state == 8}){
+			if (${sessionScope.userList.authority eq 'ROLE_ADMIN'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			userGoodsQuestionList();
 		}else if(${state == 9}){
+			if (${sessionScope.userList.authority eq 'ROLE_ADMIN'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
 			$("#myPageContentSection").empty();
 			$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/updateUserListForm");
+		}else if(${state == 10}){
+			if (${sessionScope.userList.authority eq 'ROLE_USER'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
+			adminGoodsStockList();
+		}else if(${state == 11}){
+			if (${sessionScope.userList.authority eq 'ROLE_USER'}) {
+				alert("비정상적인 접근입니다.")	
+				history.back();
+			}
+			adminGoodsADList();
 		}
 		
 	}
-		
-	 
 	
 })//ready
 function userOrderList(){

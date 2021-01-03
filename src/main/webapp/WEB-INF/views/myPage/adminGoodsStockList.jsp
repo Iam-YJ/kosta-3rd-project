@@ -27,15 +27,10 @@
 </head>
 <body>
 
-
-	<form
-		action="${pageContext.request.contextPath}/admin/myPage/updateGoods"
-		method="post" id="addStockForm">
-		<input type="hidden" name="regNo" id="regNo"> <input
-			type="hidden" name="stock" id="stock">
+	<form action="${pageContext.request.contextPath}/admin/myPage/updateGoods" method="post" id="addStockForm">
+		<input type="hidden" name="regNo" id="regNo"> 
+		<input type="hidden" name="stock" id="stock">
 	</form>
-
-
 
 	<!-- --------------------------------------- -->
 
@@ -57,19 +52,21 @@
 						<div class="Orders border rounded"
 							style="margin-bottom: 20px; padding-bottom: 10px">
 							<div class="row" style="padding: 10px">
-								<div class="col-xl" style="margin-left: 40px;">
-									<b>상품고유번호 : ${registerGoods.regNo}</b>
+								<div class="col-xl" style="margin-left: 10px;">
+									<b>상품번호 : ${registerGoods.regNo}</b>
 								</div>
-								<div class="col-xl"
-									style="text-align: right; margin-right: 40px;"></div>
 							</div>
 							<div class="row" style="padding: 10px">
-								<div class="col-xl" style="text-align: left; margin-left: 20px;">
-									상품명 : ${registerGoods.name} &nbsp&nbsp&nbsp 재고량 :
-									${registerGoods.stock}&nbsp&nbsp&nbsp 추가할 수량은? : <input
-										type="hidden" name="addRegNo" value="${registerGoods.regNo}" />
-									<input type="text" name="addStock" id="addStock"> <input
-										type="button" value="추가" id="btn">
+								<div class="col-xl-4" style="text-align: left; margin-left: 10px;">
+									상품명 : ${registerGoods.name}
+								</div>
+								<div class="col-xl-2" style="text-align: left;">
+									 재고량 : ${registerGoods.stock}
+								</div>
+								<div class="col-xl" style="text-align: right;">
+									추가할 수량 : <input type="hidden" name="addRegNo" value="${registerGoods.regNo}" />
+												<input type="text" name="addStock" id="addStock">
+									 	<input type="button" value="추가" id="btn">
 								</div>
 							</div>
 							<!-- btn  -->
