@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.query.criteria.internal.expression.function.SubstringFunction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -419,7 +420,7 @@ public class AdminController {
 	@RequestMapping("/myPage/profit")
 	public ModelAndView profit(String startDate, String endDate) {
 		System.out.println();
-		List<String> profit = adminService.checkProfit("2020-01-01", "2022-01-01");
+		List<String> profit = adminService.checkProfit("2021-01-01", "2022-01-01");
 
 		List<Integer> realProfit = new ArrayList<>();
 		int comma = 0;
@@ -663,4 +664,10 @@ public class AdminController {
 	public int updateSubCategory(SubCategories subCategories) {
 		return adminService.updateSubCategory(subCategories);
 	}// updateSubCategory
+	
+	/**ExceptionHandler*/
+	@ExceptionHandler(Exception.class)
+	public ModelAndView error(Exception e) {
+		return new ModelAndView("error/error","errMsg",e.getMessage());
+	}//error
 }// class

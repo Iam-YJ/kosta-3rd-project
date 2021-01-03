@@ -97,7 +97,8 @@
 											<td>${sortGrade.name}
 												<p>
 											</td>
-											<td>${sortGrade.usergrade.gradeNo}
+											<td>
+											${sortGrade.usergrade.grade}
 												<p>
 											</td>
 										</tr>

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -344,5 +345,11 @@ public class MainController {
 	public void APITest() {
 
 	}
+	
+	/**ExceptionHandler*/
+	@ExceptionHandler(Exception.class)
+	public ModelAndView error(Exception e) {
+		return new ModelAndView("error/error","errMsg",e.getMessage());
+	}//error
 
 }// class

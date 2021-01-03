@@ -290,7 +290,6 @@ $(document).ready(function(){
 
 
 	
-
 <!-- 페이징 처리 -->
 <div style="text-align:center">
 <c:forEach begin="0" end="${goodsListMap.registerGoodsList.totalPages-1}" var="i">
@@ -304,7 +303,6 @@ $(document).ready(function(){
   </c:choose>
 </c:forEach>
 </div>
-
 	
 
 

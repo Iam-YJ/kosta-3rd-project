@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -302,7 +303,7 @@ public class UserController {
 		UserList sessionUser = (UserList) session.getAttribute("userList");
 		userList.setUserNo(sessionUser.getUserNo());
 		userService.updateUserList(userList);
-		return "user/myPageForm";
+		return "redirect:/user/logout";
 	}// updateUserList
 
 	
@@ -312,6 +313,7 @@ public class UserController {
 	public ModelAndView donationForm(HttpSession session) {
 		UserList userInfo = (UserList) session.getAttribute("userList");
 		Long userNo = userInfo.getUserNo();
+		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("myPage/donationForm");
 		
@@ -326,6 +328,10 @@ public class UserController {
 		}
 		
 		mv.addObject("donaList", userService.selectAllDonation());
+		
+		UserList dbUserList = userService.findByUserListbyUserNo(userNo);
+		mv.addObject("dbUserList", dbUserList);
+		
 		return mv;
 	}// donationForm
 
@@ -335,6 +341,10 @@ public class UserController {
 	public String donation(int dona, HttpSession session) {
 		UserList userInfo = (UserList) session.getAttribute("userList");
 		Long userNo = userInfo.getUserNo();
+		UserList dbUserList = userService.findByUserListbyUserNo(userNo);
+		if(dbUserList.getPoints()-dona<0) {
+			throw new RuntimeException("나의 포인트보다 많은 포인트를 기부 할 수 없습니다.");
+		}
 		UserList userList = new UserList();
 		userList.setUserNo(userNo);
 		Donation donation = new Donation();
@@ -546,6 +556,12 @@ public class UserController {
 		return result;
 	}
 	
+	
+	/**ExceptionHandler*/
+	@ExceptionHandler(Exception.class)
+	public ModelAndView error(Exception e) {
+		return new ModelAndView("error/error","errMsg",e.getMessage());
+	}//error
 	
 
 }// class

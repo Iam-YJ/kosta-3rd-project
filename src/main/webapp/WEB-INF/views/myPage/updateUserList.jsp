@@ -125,7 +125,9 @@ $(document).ready(function(){
 			alert("전화번호를 입력하세요");				
 			return false;
 		}	
-	
+		
+		alert("개인정보가 수정되어 로그아웃 됩니다.");
+		
 		$("#regForm").submit();	
 	});//submit
 	

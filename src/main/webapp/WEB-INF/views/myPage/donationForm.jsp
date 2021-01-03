@@ -32,6 +32,9 @@ table td {
 	<div class="container">
 		<div class=titleSection>
 			<div class="row">
+			<div class="col-xl" style="text-align: left;">
+					나의 보유 포인트 : ${dbUserList.points} point
+				</div>
 				<div class="col-xl" style="text-align: left;">
 					나의 기부포인트 : ${donaPoint} point
 				</div>
@@ -39,7 +42,8 @@ table td {
 		</div><!-- titleSection -->
 		<div>
 			<form method="post" action="${pageContext.request.contextPath}/user/myPage/donation">기부 포인트 :  
-			<input type="number"  min="0" name="dona" size="7px"><button type="submit">기부하기</button></form><br>
+				<input type="number"  min="0" name="dona" size="7px"><button type="submit" >기부하기</button><br>
+			</form><br>			
 		</div>
 		<div class="donationList">
 			<c:if test="${empty donaList}">
@@ -78,24 +82,5 @@ table td {
     </div>
 </div>
 			
-			
-			
-			
-			
-			
-			
-			
-		</div>
-		
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>
