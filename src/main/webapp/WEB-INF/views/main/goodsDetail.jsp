@@ -148,28 +148,73 @@ function deleteConfirm(){
 						</c:if>
 					</div>
 					
-					
 					<hr>
 					<div class="row">
-						<div class="columeName col-xl-5">
-							일반가<br><br>
-							상품명<br><br>
-							보관방법<br><br>
-							원산지<br><br>
-							용량/수량/크기<br><br>
-							최대구매가능수량<br><br>
-							구매수량<br><br>
-						</div>
-						<div class="columeValue col-xl">
-						<fmt:formatNumber value="${goodsQuestionMap.registerGoods.price}" var="CommaPrice"/>
-							${CommaPrice} 원<br><br>
-							${goodsQuestionMap.registerGoods.name}<br><br>
-							${goodsQuestionMap.registerGoods.method}<br><br>
-							${goodsQuestionMap.registerGoods.area}<br><br>
-							${goodsQuestionMap.registerGoods.options}<br><br>
-							<fmt:formatNumber value="${goodsQuestionMap.registerGoods.stock}" var="CommaStock"/>
-							 ${CommaStock} 개<br><br>
-							<input type="number" min="1" step="1" max="${registerGoods.registerGoods.stock}" value="1" id="quantity" class="quantity-field" width="100px"> 개
+						<div class="col-xl" style="margin: auto;">
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl-6" style="text-align: left; color: gray;">
+									일반가
+								</div>
+								<div class="col-xl-6">
+									<fmt:formatNumber value="${goodsQuestionMap.registerGoods.price}" var="CommaPrice"/>
+									${CommaPrice} 원
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									상품명
+								</div>
+								<div class="col-xl">
+									${goodsQuestionMap.registerGoods.name}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									보관방법
+								</div>
+								<div class="col-xl" >
+									${goodsQuestionMap.registerGoods.method}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									원산지
+								</div>
+								<div class="col-xl">
+									${goodsQuestionMap.registerGoods.area}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									용량/수량/크기
+								</div>
+								<div class="col-xl">
+									${goodsQuestionMap.registerGoods.options}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									최대구매가능수량
+								</div>
+								<div class="col-xl">
+									<fmt:formatNumber value="${goodsQuestionMap.registerGoods.stock}" var="CommaStock"/>
+									 ${CommaStock} 개
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									구매수량
+								</div>
+								<div class="col-xl">
+									<input type="number" min="1" step="1" max="${registerGoods.registerGoods.stock}" value="1" id="quantity" class="quantity-field" width="100px"> 개
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

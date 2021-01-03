@@ -296,10 +296,10 @@ $(document).ready(function(){
 <c:forEach begin="0" end="${goodsListMap.registerGoodsList.totalPages-1}" var="i">
   <c:choose>
     <c:when test="${goodsListMap.registerGoodsList.number==i}">
-       <a href="${pageContext.request.contextPath}/main/goodsList/${goodsListMap.main}/${goodsListMap.sub}/${goodsListMap.sort}?nowPage=${i}" style="color:red">[${i+1}]</a>
+       <a href="${pageContext.request.contextPath}/main/goodsList/${goodsListMap.main}/${goodsListMap.sub}/${goodsListMap.sort}?nowPage=${i}" style="color:green;font-size:20px">[${i+1}]</a>
     </c:when>
     <c:otherwise>
-       <a href="${pageContext.request.contextPath}/main/goodsList/${goodsListMap.main}/${goodsListMap.sub}/${goodsListMap.sort}?nowPage=${i}">[${i+1}]</a>
+       <a href="${pageContext.request.contextPath}/main/goodsList/${goodsListMap.main}/${goodsListMap.sub}/${goodsListMap.sort}?nowPage=${i}" style="color:black;font-size:20px">[${i+1}]</a>
     </c:otherwise>
   </c:choose>
 </c:forEach>
