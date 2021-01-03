@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,4 +35,10 @@ public class DeliveryController {
 		deliveryService.updateDeliveryState(orderNo);
 		return "redirect:/delivery/listDelivery";
 	}
+	
+	/**ExceptionHandler*/
+	@ExceptionHandler(Exception.class)
+	public ModelAndView error(Exception e) {
+		return new ModelAndView("error/error","errMsg",e.getMessage());
+	}//error
 }//class
