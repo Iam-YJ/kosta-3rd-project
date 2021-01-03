@@ -131,14 +131,14 @@
 					<div class="col-xl-6" style="font-size: 18px;">
 					</div>
 					<div class="col-xl-6" style="font-size: 17px; color: gray;">
-						Lee Kyung min 
+						Lee Kyung Min 
 					</div>
 				</div>
 				<div class="row" style="margin-top: 2px;">
 					<div class="col-xl-6" style="font-size: 18px;">
 					</div>
 					<div class="col-xl-6" style="font-size: 17px; color: gray;">
-						Choi Yun woo
+						Choi Yun Woo
 					</div>
 				</div>
 			
