@@ -483,4 +483,11 @@ public class AdminServiceImpl implements AdminService {
 		return userList;
 	}
 
+	@Override
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply) {
+		GoodsAnswer goodsAnswer=goodsAnswerRep.findById(agoodsNo).orElse(null);
+		goodsAnswer.setContent(refundReply);
+		goodsAnswerRep.save(goodsAnswer);
+	}
+
 }

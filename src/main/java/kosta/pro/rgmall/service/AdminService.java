@@ -212,6 +212,8 @@ public interface AdminService {
 		
 	public UserList searchById(String userId);
 
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply);
+
 	
 
 	
