@@ -433,7 +433,6 @@ public class UserServiceImpl implements UserService {
 		//구매완료 메일 보내기
 		
 		UserList userList=userListRep.findById(userNo).orElse(null);
-		System.out.println(goodsName+"333333333333333333");
 		goodsName.substring(0, goodsName.length()-1);
 		mailController.sendMail(userList.getEmail(),"안녕하세요 RPMALL 입니다",goodsName+"이 주문 완료 되었습니다");
 
