@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	
@@ -34,7 +35,11 @@ $(document).ready(function(){
 			userPointDonate();
 		}else if(${state == 8}){
 			userGoodsQuestionList();
+		}else if(${state == 9}){
+			$("#myPageContentSection").empty();
+			$("#myPageContentSection").load("${pageContext.request.contextPath}/user/myPage/updateUserListForm");
 		}
+		
 	}
 		
 	 
@@ -124,10 +129,10 @@ function adminGoodsReviewList(){
 	$("#myPageContentSection").empty();
 	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/goodsReviewList");
 }
-function adminCategoryList(){
+/* function adminCategoryList(){
 	$("#myPageContentSection").empty();
 	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/categoryList");
-}
+} */
 function adminProfit(){
 	$("#myPageContentSection").empty();
 	$("#myPageContentSection").load("${pageContext.request.contextPath}/admin/myPage/profit");
@@ -243,9 +248,9 @@ function adminClientList(){
 										<div class="row col-xl">
 											<a href="#" onclick="adminGoodsReviewList()">구매후기내역</a>
 										</div>
-										<div class="row col-xl">
+<!-- 										<div class="row col-xl">
 											<a href="#" onclick="adminCategoryList()">상품 카테고리</a>
-										</div>
+										</div> -->
 
 										<div class="row col-xl" style="margin-top: 50px">
 											<h4>

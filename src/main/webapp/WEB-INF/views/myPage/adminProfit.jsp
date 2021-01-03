@@ -1,20 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/js/Chart.min.js"></script>
 </head>
 
 <body>
-	<h1>ADMIN의 마이페이지</h1>
+	<div class="insertOrdersForm">
+	<div class="container-fluid">
+		<div class="titleSection">
+			<div class="row">
+				<div class="col-xl">
+					매출조회
+				</div>
+			</div>
+		</div><!-- titleSection -->
 
 	<div style="width: 60%">
 		<canvas id="canvas" height="800" width="700"></canvas>
@@ -26,7 +33,7 @@ var randomScalingFactor = function(){
 	
 	console.log(${realProfit});
 	//return ${profit}
-
+  
 
 }; 
 
@@ -42,6 +49,7 @@ var sep = ${realProfit[8]}
 var oct = ${realProfit[9]}
 var nov = ${realProfit[10]}
 var dec = ${realProfit[11]}
+
 
 var months = ["January","February","March","April","May","June","July", "August", "September", "October", "November", "December"];
 var barChart = null;
@@ -108,6 +116,8 @@ $("canvas").on("click", function(e) {
 
 </script>
 
+</div>
+</div>
 
 
 

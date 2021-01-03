@@ -154,8 +154,8 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
-												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
+ 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png">
 											</div>
 										</div>
 										<div class="row border border-left-0 border-bottom-0 border-right-0">
@@ -177,7 +177,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${bestFruit.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${bestFruit.thumbnailImg}" >
 												</a>
 											</div>
@@ -206,7 +206,7 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 											</div>
 										</div>
@@ -229,7 +229,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${bestVegetable.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${bestVegetable.thumbnailImg}" >
 												</a>
 											</div>
@@ -258,7 +258,7 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 											</div>
 										</div>
@@ -281,7 +281,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${bestGrain.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${bestGrain.thumbnailImg}" >
 												</a>
 											</div>
@@ -310,7 +310,7 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 											</div>
 										</div>
@@ -333,7 +333,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${bestNut.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${bestNut.thumbnailImg}" >
 												</a>
 											</div>
@@ -406,7 +406,7 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 											</div>
 										</div>
@@ -429,7 +429,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${soldFruit.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${soldFruit.thumbnailImg}" >
 												</a>
 											</div>
@@ -458,7 +458,7 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 											</div>
 										</div>
@@ -481,7 +481,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${soldVegetable.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${soldVegetable.thumbnailImg}" >
 												</a>
 											</div>
@@ -510,7 +510,7 @@ $(document).ready(function(){
 									<div class="col-xl border" style="margin: 15px;">
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 											</div>
 										</div>
@@ -533,7 +533,7 @@ $(document).ready(function(){
 										<div class="row">
 											<div class="col-xl" style="text-align: center; margin: 5px;">
 												<a href="${pageContext.request.contextPath}/main/goodsDetail/${soldGrain.regNo}">
-													<img alt="" class="img-fluid"
+													<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 													src="${pageContext.request.contextPath}/images/thumbnail/${soldGrain.thumbnailImg}" >
 												</a>
 											</div>
@@ -563,7 +563,7 @@ $(document).ready(function(){
 								<div class="col-xl border" style="margin: 15px;">
 									<div class="row">
 										<div class="col-xl" style="text-align: center; margin: 5px;">
-											<img alt="" class="img-fluid"
+											<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 											src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 										</div>
 									</div>
@@ -586,7 +586,7 @@ $(document).ready(function(){
 									<div class="row">
 										<div class="col-xl" style="text-align: center; margin: 5px;">
 											<a href="${pageContext.request.contextPath}/main/goodsDetail/${soldNut.regNo}">
-												<img alt="" class="img-fluid"
+												<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 												src="${pageContext.request.contextPath}/images/thumbnail/${soldNut.thumbnailImg}" >
 											</a>
 										</div>
@@ -642,7 +642,7 @@ $(document).ready(function(){
 							<div class="col-xl border" style="margin: 15px;" >
 								<div class="row">
 									<div class="col-xl" style="text-align: center; margin: 5px;">
-										<img alt="" class="img-fluid"
+										<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 										src="${pageContext.request.contextPath}/images/thumbnail/sample_thumbnail.png" >
 									</div>
 								</div>
@@ -670,7 +670,7 @@ $(document).ready(function(){
 												<div class="row">
 													<div class="col-xl" style="text-align: center; margin: 5px;">
 														<a href="${pageContext.request.contextPath}/main/goodsDetail/${review.registerGoods.regNo}">
-															<img alt="" class="img-fluid"
+															<img alt="" class="img-fluid" style="width: 200px; height: 280px;"
 															src="${pageContext.request.contextPath}/images/thumbnail/${review.registerGoods.thumbnailImg}" >
 														</a>
 													</div>

@@ -33,8 +33,6 @@ $(document).ready(function(){
 		
 	})//insertGoodsQBtn_click
 	
-	
-	
 	//3자리마다 Comma넣어주는 함수
 	function AddComma(num){
 		var regexp = /\B(?=(\d{3})+(?!\d))/g;
@@ -77,6 +75,12 @@ function instantBuybtn(regNo){
 	}
 	
 	var qua=document.getElementById("quantity").value
+	
+	if(qua > ${goodsQuestionMap.registerGoods.stock}){
+		alert("최대 구매 수량을 넘길 수 없습니다.");
+		return false;
+	}
+		
 	//console.log(document.getElementById("quantity").value)
 	 if(confirm("상품을 구매하시겠습니까?")){
 		location.href=
@@ -133,29 +137,84 @@ function deleteConfirm(){
 				<div class="col-xl-1"></div>
 				<div class="expainSetion col-xl">
 					<!-- GoodSDetial 간단 들어가는 부분 -->
-					<h3>${goodsQuestionMap.registerGoods.title}</h3>
+					<div class="row">
+						<div class="col-xl"> 						
+							<h3>${goodsQuestionMap.registerGoods.title}</h3>
+						</div>
+						<c:if test="${sessionScope.userList.authority eq 'ROLE_ADMIN'}">
+							<div class="col-xl-3">
+								<a href="${pageContext.request.contextPath}/admin/updateGoods/${goodsQuestionMap.registerGoods.regNo}" class="btn btn-outline-success">상품 수정</a>
+							</div>
+						</c:if>
+					</div>
 					
 					<hr>
 					<div class="row">
-						<div class="columeName col-xl-5">
-							일반가<br><br>
-							상품명<br><br>
-							보관방법<br><br>
-							원산지<br><br>
-							용량/수량/크기<br><br>
-							최대구매가능수량<br><br>
-							구매수량<br><br>
-						</div>
-						<div class="columeValue col-xl">
-						<fmt:formatNumber value="${goodsQuestionMap.registerGoods.price}" var="CommaPrice"/>
-							${CommaPrice} 원<br><br>
-							${goodsQuestionMap.registerGoods.name}<br><br>
-							${goodsQuestionMap.registerGoods.method}<br><br>
-							${goodsQuestionMap.registerGoods.area}<br><br>
-							${goodsQuestionMap.registerGoods.options}<br><br>
-							<fmt:formatNumber value="${goodsQuestionMap.registerGoods.stock}" var="CommaStock"/>
-							 ${CommaStock} 개<br><br>
-							<input type="number" min="1" step="1" max="${registerGoods.registerGoods.stock}" value="1" id="quantity" class="quantity-field" width="100px"> 개
+						<div class="col-xl" style="margin: auto;">
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl-6" style="text-align: left; color: gray;">
+									일반가
+								</div>
+								<div class="col-xl-6">
+									<fmt:formatNumber value="${goodsQuestionMap.registerGoods.price}" var="CommaPrice"/>
+									${CommaPrice} 원
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									상품명
+								</div>
+								<div class="col-xl">
+									${goodsQuestionMap.registerGoods.name}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									보관방법
+								</div>
+								<div class="col-xl" >
+									${goodsQuestionMap.registerGoods.method}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									원산지
+								</div>
+								<div class="col-xl">
+									${goodsQuestionMap.registerGoods.area}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									용량/수량/크기
+								</div>
+								<div class="col-xl">
+									${goodsQuestionMap.registerGoods.options}
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									최대구매가능수량
+								</div>
+								<div class="col-xl">
+									<fmt:formatNumber value="${goodsQuestionMap.registerGoods.stock}" var="CommaStock"/>
+									 ${CommaStock} 개
+								</div>
+							</div>
+							
+							<div class="row" style="margin-top: 20px;">
+								<div class="col-xl" style="text-align: left; color: gray;">
+									구매수량
+								</div>
+								<div class="col-xl">
+									<input type="number" min="1" step="1" max="${registerGoods.registerGoods.stock}" value="1" id="quantity" class="quantity-field" width="100px"> 개
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

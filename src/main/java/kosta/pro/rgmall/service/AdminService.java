@@ -32,6 +32,11 @@ public interface AdminService {
 	public RegisterGoods insertGoods(RegisterGoods registerGoods);
 	
 	/**
+	 * 상품수정
+	 */
+	public RegisterGoods updateGoodsDetail(RegisterGoods registerGoods);
+	
+	/**
 	 * 공지사항 등록
 	 */
 	public void insertNotice(Notice notice);
@@ -206,6 +211,8 @@ public interface AdminService {
 	public List<UserList> searchAllUser(int state);
 		
 	public UserList searchById(String userId);
+
+	public void updateGoodsAnswer(Long agoodsNo, String refundReply);
 
 	
 

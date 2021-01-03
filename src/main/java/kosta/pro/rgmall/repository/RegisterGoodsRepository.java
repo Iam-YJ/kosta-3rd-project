@@ -76,7 +76,7 @@ public interface RegisterGoodsRepository extends JpaRepository<RegisterGoods, Lo
 	List<RegisterGoods> findStock();
 	
 	//Header 품절임박
-	@Query("select registerGoods from RegisterGoods registerGoods order by registerGoods.stock asc")
+	@Query("select registerGoods from RegisterGoods registerGoods where registerGoods.stock > 0 order by registerGoods.stock asc")
 	List<RegisterGoods> soldout();
 
 

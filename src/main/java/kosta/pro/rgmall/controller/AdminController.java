@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.query.criteria.internal.expression.function.SubstringFunction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ import kosta.pro.rgmall.domain.UserList;
 import kosta.pro.rgmall.service.AdminService;
 import kosta.pro.rgmall.service.MainService;
 import lombok.RequiredArgsConstructor;
+import oracle.net.aso.i;
 
 @Controller
 @RequestMapping("/admin")
@@ -124,6 +126,98 @@ public class AdminController {
 
 	}// insertGoods
 
+	/**
+	 * 관리자 마이페이지 - 상품 수정하기 폼열기
+	 */
+	@RequestMapping("updateGoods/{regNo}")
+	public ModelAndView updateGoodsForm(@PathVariable Long regNo) {
+		
+		RegisterGoods registerGoods = mainService.goodsDetail(regNo);
+		
+		ModelAndView mv = new ModelAndView("admin/updateGoodsForm", "registerGoods", registerGoods);
+		mv.addObject("list", mainService.selectCategories());
+		return mv;
+	}
+	
+	/**
+	 * 관리자 마이페이지 - 상품 수정하기
+	 */
+	@PostMapping("updateGoods/{regNo}")
+	public ModelAndView updateGoods(HttpSession session, RegisterGoods registerGoods, Long mainCateNo, Long subCateNo, @PathVariable Long regNo,
+			@RequestParam("tfile") MultipartFile tfile, @RequestParam("adfile") MultipartFile adfile) {
+
+		String realPath = session.getServletContext().getRealPath("/");
+
+		String path = realPath + "/images";
+		File Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+
+		path = realPath + "/images/thumbnail";
+		Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+
+		path = realPath + "/images/banner";
+		Folder = new File(path);
+
+		if (!Folder.exists()) {
+			try {
+				Folder.mkdir(); // 폴더 생성합니다.
+				System.out.println("폴더가 생성되었습니다.");
+			} catch (Exception e) {
+				e.getStackTrace();
+			}
+		}
+
+		String currentTime = Long.toString(System.currentTimeMillis());
+		String tfileName = currentTime + tfile.getOriginalFilename();
+		String adfileName = currentTime + adfile.getOriginalFilename();
+		
+		registerGoods.setRegNo(regNo);
+		registerGoods.setMainCategories(new MainCategories(mainCateNo));
+		registerGoods.setSubCategories(new SubCategories(subCateNo));
+		
+		try {
+			
+			if(tfile.getSize() != 0) {
+				System.out.println(1);
+				System.out.println(tfileName);
+				registerGoods.setThumbnailImg(tfileName);
+				tfile.transferTo(new File(realPath + "/images/thumbnail/" + tfileName));
+			}
+			
+			if(adfile.getSize() != 0) {
+				System.out.println(2);
+				System.out.println(adfileName);
+				registerGoods.setAdImg(adfileName);
+				adfile.transferTo(new File(realPath + "/images/banner/" + adfileName));
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		RegisterGoods dbRegisteGoods = adminService.updateGoodsDetail(registerGoods);
+		
+		return new ModelAndView("redirect:/main/goodsDetail/" + dbRegisteGoods.getRegNo());
+
+	}// insertGoods
+	
 	/**
 	 * 관리자 마이페이지 - 판매상품목록 조회
 	 */
@@ -290,16 +384,16 @@ public class AdminController {
 
 		adminService.insertGoodsAnswer(goodsAnswer);
 
-		return "redirect:/user/myPage";
+		return "redirect:/user/myPage?state=6";
 
 	}
 
 	@RequestMapping("/myPage/goodsQuestionUpdateAnswer/{agoodsNo}")
 	public String GoodsQuestionUpdateAnswer(@PathVariable Long agoodsNo, String refundReply) {
 
-		// adminService.updateGoodsAnswer(agoodsNo, refundReply);
+		 adminService.updateGoodsAnswer(agoodsNo, refundReply);
 
-		return "redirect:/user/myPage";
+		return "redirect:/user/myPage?state=6";
 
 	}
 
@@ -570,4 +664,10 @@ public class AdminController {
 	public int updateSubCategory(SubCategories subCategories) {
 		return adminService.updateSubCategory(subCategories);
 	}// updateSubCategory
+	
+	/**ExceptionHandler*/
+	@ExceptionHandler(Exception.class)
+	public ModelAndView error(Exception e) {
+		return new ModelAndView("error/error","errMsg",e.getMessage());
+	}//error
 }// class

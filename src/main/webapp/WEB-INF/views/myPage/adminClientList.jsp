@@ -54,6 +54,15 @@
 </head>
 
 <body>
+<div class="insertOrdersForm">
+	<div class="container-fluid">
+		<div class="titleSection">
+			<div class="row">
+				<div class="col-xl">
+					회원조회
+				</div>
+			</div>
+		</div><!-- titleSection -->
 	<div id="container" class="container">
 		
 		<div class="row">
@@ -88,7 +97,8 @@
 											<td>${sortGrade.name}
 												<p>
 											</td>
-											<td>${sortGrade.usergrade.gradeNo}
+											<td>
+											${sortGrade.usergrade.grade}
 												<p>
 											</td>
 										</tr>
@@ -101,6 +111,8 @@
 			</div>
 		</div>
 
+	</div>
+	</div>
 	</div>
 
 </body>
