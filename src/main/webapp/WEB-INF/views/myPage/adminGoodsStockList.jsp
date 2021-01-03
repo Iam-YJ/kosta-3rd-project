@@ -52,8 +52,11 @@
 						<div class="Orders border rounded"
 							style="margin-bottom: 20px; padding-bottom: 10px">
 							<div class="row" style="padding: 10px">
-								<div class="col-xl" style="margin-left: 10px;">
+								<div class="col-xl-4" style="margin-left: 10px;">
 									<b>상품번호 : ${registerGoods.regNo}</b>
+								</div>
+								<div class="col-xl">
+									<b>글제목 : ${registerGoods.title}</b>
 								</div>
 							</div>
 							<div class="row" style="padding: 10px">
