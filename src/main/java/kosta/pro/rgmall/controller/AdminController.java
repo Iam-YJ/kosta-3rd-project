@@ -217,19 +217,6 @@ public class AdminController {
 
 	}// insertGoods
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * 관리자 마이페이지 - 판매상품목록 조회
 	 */

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="login_section">
+<div class="login_section" style="margin: 50px 0px;">
 	<div class="container">
 		<div class="row">
 			<div class="col-xl-3"></div>
